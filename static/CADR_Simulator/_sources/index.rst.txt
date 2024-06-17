@@ -1,0 +1,31 @@
+.. CADR Simulator documentation master file, created by
+   sphinx-quickstart on Sun Jan 15 13:08:02 2023.
+   You can adapt this file completely to your liking, but it should at least
+   contain the root `toctree` directive.
+
+Welcome to CADR Simulator's documentation!
+==========================================
+
+This program was developed to assist NASA's Cryogenics and Fluids branch with the analysis of their flagship CADR technology.
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Getting Started:
+
+   Installation
+   UserGuide
+   CADRLibrary
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Contents:
+
+   modules
+
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`

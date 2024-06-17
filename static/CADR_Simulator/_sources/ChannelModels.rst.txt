@@ -1,0 +1,7 @@
+ChannelModels module
+====================
+
+.. automodule:: ChannelModels
+   :members:
+   :undoc-members:
+   :show-inheritance:

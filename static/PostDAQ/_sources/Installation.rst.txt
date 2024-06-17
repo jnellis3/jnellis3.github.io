@@ -1,0 +1,32 @@
+Installation Overview
+======================
+
+.. _Installation Overview:
+
+PostDAQ can be installed by cloning the github repository. Access must be requested by emailing jnellis@postdaq.com.
+
+**NOTE** Your github account must be affiliated with a NASA email address to gain access to the codebase.
+
+.. code-block:: bash
+
+    git clone git@github.com:jnellis01/PostDAQ.git
+
+The PostDAQ software is written in Python and uses the following packages:
+
+* numpy
+* scipy
+* matplotlib
+* pyqtgraph
+* pyqt
+* markdown
+* markdownify
+* py2pdf
+
+
+The program can then be run by executing the following command:
+
+.. code-block:: bash
+
+    cd PostDAQ
+    python main.py
+

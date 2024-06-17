@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MainUI.Data_Lib package &mdash; Pyquisition 1.1.1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="MainUI.Displays package" href="MainUI.Displays.html" />
+    <link rel="prev" title="MainUI package" href="MainUI.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> Pyquisition
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Guide Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Installation.html">Installation Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user_guide.html">User Guide</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer Guide Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Pyquisition.html">Configuration Window</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="MainUI.html">MainUI package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="MainUI.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">MainUI.Data_Lib package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-MainUI.Data_Lib.accumulator">MainUI.Data_Lib.accumulator module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-MainUI.Data_Lib.config_tracker">MainUI.Data_Lib.config_tracker module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-MainUI.Data_Lib">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="MainUI.Displays.html">MainUI.Displays package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="MainUI.widgets.html">MainUI.widgets package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="MainUI.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="MainUI.html#module-MainUI.MainUI">Main Window</a></li>
+<li class="toctree-l2"><a class="reference internal" href="MainUI.html#channel-window-s">Channel Window’s</a></li>
+<li class="toctree-l2"><a class="reference internal" href="MainUI.html#module-MainUI">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Instrumentation.html">Instrumentation package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Instrumentation.html#module-Instrumentation.InstrumentModels">Instrument Models (Subclasses)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Instrumentation.html#instrument-model-manager">Instrument Model Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Channel_Lib.html">Channel_Lib package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Channel_Lib.widgets.html">Channel Widgets</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Pyquisition</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">&lt;no title&gt;</a></li>
+          <li class="breadcrumb-item"><a href="MainUI.html">MainUI package</a></li>
+      <li class="breadcrumb-item active">MainUI.Data_Lib package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/MainUI.Data_Lib.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="mainui-data-lib-package">
+<h1>MainUI.Data_Lib package<a class="headerlink" href="#mainui-data-lib-package" title="Permalink to this headline"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline"></a></h2>
+</section>
+<section id="module-MainUI.Data_Lib.accumulator">
+<span id="mainui-data-lib-accumulator-module"></span><h2>MainUI.Data_Lib.accumulator module<a class="headerlink" href="#module-MainUI.Data_Lib.accumulator" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="MainUI.Data_Lib.accumulator.Accumulator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">MainUI.Data_Lib.accumulator.</span></span><span class="sig-name descname"><span class="pre">Accumulator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_location</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MainUI/Data_Lib/accumulator.html#Accumulator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MainUI.Data_Lib.accumulator.Accumulator" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Object responsible for recording all outputs of channels displayed in the actChW.
+For the time being, this will only record in the long format. This means the file will need to be
+converted during post processing in order go to wide format.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>file_location</strong> (<em>str</em>) – Location of the file to record to</p></li>
+<li><p><strong>config</strong> (<em>dict</em>) – Dictionary containing the configuration of the channel. If present, the restoreState
+method will be called to restore the channel to the state it was in when config was created.</p></li>
+<li><p><strong>parent</strong> – The parent channel window (will likely always be actChW). This is used to get the channels displayed in the actChW.</p></li>
+<li><p><strong>autoUpdate</strong> – If true, the file name will change at midnight with the new date appended on</p></li>
+<li><p><strong>appendDate</strong> – If true, the date will be appended to the file name</p></li>
+<li><p><strong>timer</strong> – Timer used to call the process method</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="MainUI.Data_Lib.accumulator.Accumulator.convert_long_to_wide">
+<span class="sig-name descname"><span class="pre">convert_long_to_wide</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fromFile</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">toFile</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'\t'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">progress_callback</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MainUI/Data_Lib/accumulator.html#Accumulator.convert_long_to_wide"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MainUI.Data_Lib.accumulator.Accumulator.convert_long_to_wide" title="Permalink to this definition"></a></dt>
+<dd><p>Converts the long formatted data contained in “fromFile”, convert it to wide format and save it to “toFile”</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MainUI.Data_Lib.accumulator.Accumulator.get_filename">
+<span class="sig-name descname"><span class="pre">get_filename</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/MainUI/Data_Lib/accumulator.html#Accumulator.get_filename"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MainUI.Data_Lib.accumulator.Accumulator.get_filename" title="Permalink to this definition"></a></dt>
+<dd><p>This function will append a new data to the filename if autoUpdate is true and appendDate is true.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MainUI.Data_Lib.accumulator.Accumulator.initialize">
+<span class="sig-name descname"><span class="pre">initialize</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/MainUI/Data_Lib/accumulator.html#Accumulator.initialize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MainUI.Data_Lib.accumulator.Accumulator.initialize" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MainUI.Data_Lib.accumulator.Accumulator.record_output">
+<span class="sig-name descname"><span class="pre">record_output</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fileName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MainUI/Data_Lib/accumulator.html#Accumulator.record_output"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MainUI.Data_Lib.accumulator.Accumulator.record_output" title="Permalink to this definition"></a></dt>
+<dd><p>This is the signal slot for when channels want to record their outputs.
+A channel will pass along “data”; which is a list containing the channel name, and a dictionary of outputs.
+They can also specify a filename if they are saving their outputs to a different file than the large datafile.</p>
+<p>NOTE: The outputs in the dictionary could be a string, float, or int. The key of the dictionary is the name of the output.</p>
+<p>NOTE: There will always be a key called “time” in the dictionary. This value is the timestamp generated by calling time.time()</p>
+<p>Example of a channel passing along their packaged data:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Channel 1&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;Imag&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;Output 2&quot;</span><span class="p">:</span> <span class="s2">&quot;Kelvin&quot;</span><span class="p">,</span> <span class="s2">&quot;Output 3&quot;</span><span class="p">:</span> <span class="mf">3.1415</span><span class="p">,</span> <span class="s2">&quot;time&quot;</span><span class="p">:</span> <span class="mi">123456789</span><span class="p">}]</span>
+</pre></div>
+</div>
+<p>Long format would convert this to something like:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Time: 342342354, Channel_name_Variable: 234234
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MainUI.Data_Lib.accumulator.Accumulator.restoreState">
+<span class="sig-name descname"><span class="pre">restoreState</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MainUI/Data_Lib/accumulator.html#Accumulator.restoreState"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MainUI.Data_Lib.accumulator.Accumulator.restoreState" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MainUI.Data_Lib.accumulator.Accumulator.saveState">
+<span class="sig-name descname"><span class="pre">saveState</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/MainUI/Data_Lib/accumulator.html#Accumulator.saveState"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MainUI.Data_Lib.accumulator.Accumulator.saveState" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-MainUI.Data_Lib.config_tracker">
+<span id="mainui-data-lib-config-tracker-module"></span><h2>MainUI.Data_Lib.config_tracker module<a class="headerlink" href="#module-MainUI.Data_Lib.config_tracker" title="Permalink to this headline"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="MainUI.Data_Lib.config_tracker.compare">
+<span class="sig-prename descclassname"><span class="pre">MainUI.Data_Lib.config_tracker.</span></span><span class="sig-name descname"><span class="pre">compare</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">initial</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">final</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MainUI/Data_Lib/config_tracker.html#compare"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MainUI.Data_Lib.config_tracker.compare" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-MainUI.Data_Lib">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-MainUI.Data_Lib" title="Permalink to this headline"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="MainUI.html" class="btn btn-neutral float-left" title="MainUI package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="MainUI.Displays.html" class="btn btn-neutral float-right" title="MainUI.Displays package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Jacob Nellis, Matt Francom, Mark Kimball.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

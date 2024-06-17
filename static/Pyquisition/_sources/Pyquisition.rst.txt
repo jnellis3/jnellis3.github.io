@@ -1,0 +1,24 @@
+Configuration Window
+==================
+
+The Configuration_Window class is a custom QWidget for setting up the initial configuration of the program.
+It allows users to select or create a configuration file, set a raw data location, and toggle options such as appending the date to the file 
+and auto-updating the filename daily.
+
+**Features:**
+
+    **Project Name:** A QLineEdit field for setting the project name.
+
+    **Configuration File:** A QLineEdit field with a "Browse" button to select or create a configuration file. The selected file is used to load and store project settings.
+    
+    **Raw Data Location:** A QLineEdit field with a "Select New Location" button to choose the location for storing raw data.
+    
+    **Append Date to File:** A QCheckBox for enabling/disabling the appending of the current date to the data file.
+    
+    **Auto Update Filename Daily:** A QCheckBox for enabling/disabling the automatic updating of the filename daily.
+
+
+.. automodule:: Pyquisition
+   :members:
+   :undoc-members:
+   :show-inheritance:

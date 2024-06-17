@@ -1,0 +1,48 @@
+.. Pyquisition documentation master file, created by
+   sphinx-quickstart on Sat Apr 22 16:26:56 2023.
+   You can adapt this file completely to your liking, but it should at least
+   contain the root `toctree` directive.
+
+Welcome to Pyquisition's documentation!
+=======================================
+
+PyQuisition is a versatile data acquisition and instrumentation control application designed to streamline the process of collecting, processing, and analyzing data from various instruments and sensors. The modular architecture of PyQuisition enables users to easily manage multiple channels with customizable processing workflows, making it an ideal solution for a wide range of experimental setups and data collection tasks.
+
+**Key features of PyQuisition include:**
+
+    **Channel Management:** Users can create, modify, and manage channels in both active and inactive states. Active channels process data in real-time, while inactive channels are paused. Channels can be easily moved between active and inactive states according to user requirements.
+
+    **Instrument Integration:** PyQuisition supports seamless integration with a variety of instruments and sensors, allowing users to configure and control their devices directly within the application.
+
+    **Data Processing:** Channels can be configured with customizable processing workflows, enabling users to perform data analysis and transformations in real-time.
+
+    **Data Logging:** PyQuisition features a built-in data logging system that records processed data from active channels, making it easy to store and analyze results from experiments or data collection sessions.
+
+    **User Interface:** The intuitive user interface of PyQuisition allows users to easily manage channels, control instruments, and monitor data processing through various widgets and visualizations.
+
+    **Save and Restore:** Users can save and restore the state of channels, including their configurations and settings, ensuring consistent setups across different sessions or sharing configurations with other users.
+
+PyQuisition is a powerful and flexible tool that simplifies the data acquisition process, making it an essential resource for researchers, engineers, and professionals in various fields.
+
+
+.. toctree::
+   :maxdepth: 2
+   :caption: User Guide Contents:
+
+   Installation
+   user_guide
+
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Developer Guide Contents:
+
+   modules
+
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`

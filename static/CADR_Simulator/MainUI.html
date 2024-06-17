@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MainUI module &mdash; CADR Simulator 1.1.1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="PyQuisition module" href="PyQuisition.html" />
+    <link rel="prev" title="ChannelModels module" href="ChannelModels.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> CADR Simulator
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Installation.html">Installation Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="UserGuide.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CADRLibrary.html">Defining CADR components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CADRLibrary.html#defining-a-cadr-configuration">Defining a CADR Configuration</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">PyMacQ</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="ChannelModels.html">ChannelModels module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">MainUI module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="PyQuisition.html">PyQuisition module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="adrUtil.html">adrUtil module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configModels.html">configModels module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="help.html">help module</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">CADR Simulator</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">PyMacQ</a></li>
+      <li class="breadcrumb-item active">MainUI module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/MainUI.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-MainUI">
+<span id="mainui-module"></span><h1>MainUI module<a class="headerlink" href="#module-MainUI" title="Permalink to this headline"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="MainUI.Channel">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">MainUI.</span></span><span class="sig-name descname"><span class="pre">Channel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">channelName</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MainUI.Channel" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PyQt5.QtGui.QStandardItem</span></code></p>
+<p>Class used for displaying the channel name and
+keeping track of the channel’s values for the user.</p>
+<p>Class consisting of a :class:’qtg.QStandardItem
+&lt;qtg.QStandardItem&gt; with a :class:’qtg.QStandardItem (child)
+Args:</p>
+<blockquote>
+<div><p>qtg (QStandardItem): Parent item
+channelName (str): Name of the channel</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="MainUI.ChannelOptionsWindow">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">MainUI.</span></span><span class="sig-name descname"><span class="pre">ChannelOptionsWindow</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">channel</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MainUI.ChannelOptionsWindow" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PyQt5.QtWidgets.QDockWidget</span></code></p>
+<p>Class consists of a single widget that contains all the options for a channel
+This class is a window that pops up when the user clicks the properties button in the channel tree
+It will allow the user to change the properties of the channel</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="MainUI.ChannelWindow">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">MainUI.</span></span><span class="sig-name descname"><span class="pre">ChannelWindow</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">this_model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modelName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'unnamed'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MainUI.ChannelWindow" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PyQt5.QtWidgets.QDockWidget</span></code></p>
+<p>Class for keeping track of all the channels in the specified state (active/inactive)</p>
+<p>Class consisting of :class:’QDockWidget
+&lt;QDockWidget&gt; consisting of a :class:’QTreeView
+&lt;QTreeView&gt; with :arg: ‘this_model’ set as model</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>qtw (QDockWidget): Parent item
+parent (QWidget): Parent widget
+this_model (QStandardItemModel): Model for the QTreeView
+modelName (str): Name of the model</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="MainUI.ChannelWindow.AddChannelProperties">
+<span class="sig-name descname"><span class="pre">AddChannelProperties</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MainUI.ChannelWindow.AddChannelProperties" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MainUI.ChannelWindow.menuContext">
+<span class="sig-name descname"><span class="pre">menuContext</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MainUI.ChannelWindow.menuContext" title="Permalink to this definition"></a></dt>
+<dd><p>This method is used to create a context menu for the channel window
+It has options to add a channel, remove a channel, and save the data</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MainUI.ChannelWindow.moveChannel">
+<span class="sig-name descname"><span class="pre">moveChannel</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MainUI.ChannelWindow.moveChannel" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="MainUI.MainWindow">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">MainUI.</span></span><span class="sig-name descname"><span class="pre">MainWindow</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MainUI.MainWindow" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PyQt5.QtWidgets.QMainWindow</span></code></p>
+<p>This is the main window for the GUI
+It contains the main menu, the channel windows, and the plot windows
+It holds plots and channels in lists to keep track of them</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>qtw (QMainWindow): Parent item</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="MainUI.MainWindow.DisplayHelp">
+<span class="sig-name descname"><span class="pre">DisplayHelp</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MainUI.MainWindow.DisplayHelp" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MainUI.MainWindow.S1Mag">
+<span class="sig-name descname"><span class="pre">S1Mag</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MainUI.MainWindow.S1Mag" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MainUI.MainWindow.S2Mag">
+<span class="sig-name descname"><span class="pre">S2Mag</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MainUI.MainWindow.S2Mag" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MainUI.MainWindow.S3Mag">
+<span class="sig-name descname"><span class="pre">S3Mag</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MainUI.MainWindow.S3Mag" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MainUI.MainWindow.S4Mag">
+<span class="sig-name descname"><span class="pre">S4Mag</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MainUI.MainWindow.S4Mag" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MainUI.MainWindow.addPlotWindow">
+<span class="sig-name descname"><span class="pre">addPlotWindow</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MainUI.MainWindow.addPlotWindow" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MainUI.MainWindow.addStage">
+<span class="sig-name descname"><span class="pre">addStage</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MainUI.MainWindow.addStage" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MainUI.MainWindow.file_read">
+<span class="sig-name descname"><span class="pre">file_read</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MainUI.MainWindow.file_read" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MainUI.MainWindow.pickleState">
+<span class="sig-name descname"><span class="pre">pickleState</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MainUI.MainWindow.pickleState" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MainUI.MainWindow.setVMag">
+<span class="sig-name descname"><span class="pre">setVMag</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MainUI.MainWindow.setVMag" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="MainUI.PlotWindow">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">MainUI.</span></span><span class="sig-name descname"><span class="pre">PlotWindow</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MainUI.PlotWindow" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PyQt5.QtWidgets.QMdiSubWindow</span></code></p>
+<p>_summary_
+Class consisting of :class:’QMdiSubWindow
+&lt;qtw.MdiSubwindow&gt; with a :class:’qtw.QWidget
+&lt;qtw.QWidget&gt; as its central item
+&lt;qtw.QWidget&gt; with a :class:’pg.GraphicsLayoutWidget
+&lt;pg.GraphicsLayoutWidget&gt; with a :class:’QVboxLayout</p>
+<blockquote>
+<div><p>‘QHboxLayout</p>
+</div></blockquote>
+<p>This widget is the starting point for displaying plots
+in the mainUI.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="MainUI.PlotWindow.addChannel">
+<span class="sig-name descname"><span class="pre">addChannel</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MainUI.PlotWindow.addChannel" title="Permalink to this definition"></a></dt>
+<dd><p>When the add data button is pressed, this method is called
+It will add the selected data to the plot and append it to the list of lines</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MainUI.PlotWindow.adjustRange">
+<span class="sig-name descname"><span class="pre">adjustRange</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MainUI.PlotWindow.adjustRange" title="Permalink to this definition"></a></dt>
+<dd><p>This will set the number of points displayed on the plot</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MainUI.PlotWindow.dataSelectionMenu">
+<span class="sig-name descname"><span class="pre">dataSelectionMenu</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MainUI.PlotWindow.dataSelectionMenu" title="Permalink to this definition"></a></dt>
+<dd><p>dataSelectionMenu is used to create a context menu
+May not be used in final version</p>
+<p>_extended_summary_</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MainUI.PlotWindow.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MainUI.PlotWindow.update" title="Permalink to this definition"></a></dt>
+<dd><p>This method is called by the timer in the mainUI
+It will update the plot with the latest data</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MainUI.PlotWindow.updateActChannels">
+<span class="sig-name descname"><span class="pre">updateActChannels</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MainUI.PlotWindow.updateActChannels" title="Permalink to this definition"></a></dt>
+<dd><p>This method is called by the timer in the mainUI
+It is used to update the dropdown menu for selecting data to add to the plot</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="MainUI.StageControllerWindow">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">MainUI.</span></span><span class="sig-name descname"><span class="pre">StageControllerWindow</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MainUI.StageControllerWindow" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PyQt5.QtWidgets.QDockWidget</span></code></p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="MainUI.UpdatePlots">
+<span class="sig-prename descclassname"><span class="pre">MainUI.</span></span><span class="sig-name descname"><span class="pre">UpdatePlots</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MainUI.UpdatePlots" title="Permalink to this definition"></a></dt>
+<dd><p>This function is called by the timer to update the plots
+It will calculate the new values for the channels by performing an implicit analysis
+on the stages that are defined in the global scope
+This will be updated to be more general in the future</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="MainUI.saveState">
+<span class="sig-prename descclassname"><span class="pre">MainUI.</span></span><span class="sig-name descname"><span class="pre">saveState</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">object</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MainUI.saveState" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="ChannelModels.html" class="btn btn-neutral float-left" title="ChannelModels module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="PyQuisition.html" class="btn btn-neutral float-right" title="PyQuisition module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Jacob Nellis.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

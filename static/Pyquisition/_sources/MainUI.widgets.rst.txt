@@ -1,0 +1,29 @@
+MainUI.widgets package
+======================
+
+Submodules
+----------
+
+MainUI.widgets.channelWidgets module
+------------------------------------
+
+.. automodule:: MainUI.widgets.channelWidgets
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+MainUI.widgets.mainMenu module
+------------------------------
+
+.. automodule:: MainUI.widgets.mainMenu
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: MainUI.widgets
+   :members:
+   :undoc-members:
+   :show-inheritance:

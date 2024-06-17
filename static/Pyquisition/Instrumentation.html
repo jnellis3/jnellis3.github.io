@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Instrumentation package &mdash; Pyquisition 1.1.1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Channel_Lib package" href="Channel_Lib.html" />
+    <link rel="prev" title="MainUI.widgets package" href="MainUI.widgets.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> Pyquisition
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Guide Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Installation.html">Installation Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user_guide.html">User Guide</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer Guide Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Pyquisition.html">Configuration Window</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MainUI.html">MainUI package</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Instrumentation package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#instrument-models">Instrument Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#instrument-model-queueing-system">Instrument Model Queueing System:</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#module-Instrumentation.InstrumentModels">Instrument Models (Subclasses)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#instrument-model-manager">Instrument Model Manager</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-Instrumentation">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Channel_Lib.html">Channel_Lib package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Channel_Lib.widgets.html">Channel Widgets</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Pyquisition</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">&lt;no title&gt;</a></li>
+      <li class="breadcrumb-item active">Instrumentation package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/Instrumentation.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="instrumentation-package">
+<h1>Instrumentation package<a class="headerlink" href="#instrumentation-package" title="Permalink to this headline"></a></h1>
+<section id="instrument-models">
+<h2>Instrument Models<a class="headerlink" href="#instrument-models" title="Permalink to this headline"></a></h2>
+<p>The Instrument class represents a generic instrument in the PyQuisition application.
+It serves as a base class for more specific instrument classes,
+providing a standard interface for communication and defining functions that are expected to be implemented by the subclasses.
+This class can be considered as an abstract class, where the functions provide a basic structure but may not return meaningful
+results until they are overridden by more specific classes.</p>
+</section>
+<section id="instrument-model-queueing-system">
+<h2>Instrument Model Queueing System:<a class="headerlink" href="#instrument-model-queueing-system" title="Permalink to this headline"></a></h2>
+<p>Because each instrumentModel is unique to a physical instrument, a queue in implemented to prevent multiple channels from making requests all at once.</p>
+<p><strong>General Process for how the InstrumentModel handles communication requests</strong></p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p><strong>Request Reading:</strong> When a requestor (e.g., a channel or other component) needs a reading from an instrument, it calls the requestReading method of the instrument with the requestor object, the function to be executed, the arguments for the function, an optional request ID, and an optional priority flag. The priority flag can be set to True to prioritize the request at the front of the queue.</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">instrument</span><span class="o">.</span><span class="n">requestReading</span><span class="p">(</span><span class="n">requestor</span><span class="p">,</span> <span class="n">function</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">request_ID</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">priority</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p><strong>Add to Queue:</strong> The requestReading method checks if the requestor is already in the queue when the priority flag is False. If not, it creates a QueueElement instance that wraps the request data and priority value. If the priority flag is True, the priority value is set to 0; otherwise, it’s set to 1. The QueueElement instance is then added to the priority queue (self.readingQueue).</p></li>
+<li><p><strong>Start Worker:</strong> If there are no active threads in the thread pool, the requestReading method creates a new Worker instance and connects its progress signal to the reportStatus slot of the instrument. The worker is then started using the thread pool.</p></li>
+<li><p><strong>Process Queue:</strong> The handleQueue method of the instrument continuously processes the elements in the priority queue. It dequeues the next QueueElement instance from the queue with a timeout of 1 second, unwraps the request data, and calls the requested function with the provided arguments.</p></li>
+<li><p><strong>Send Reading:</strong> After processing the request, the handleQueue method directly calls the receiveReading method of the requestor with the reading data and the request ID as parameters.</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">getattr</span><span class="p">(</span><span class="n">currentJob</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s2">&quot;receiveReading&quot;</span><span class="p">)(</span><span class="n">reading</span><span class="o">=</span><span class="n">reading</span><span class="p">,</span> <span class="n">request_ID</span><span class="o">=</span><span class="n">request_ID</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>By using this queuing process, you can manage multiple reading requests from different components in a concurrent and efficient manner. The priority queue allows you to handle high-priority requests before other requests in the queue, and the thread pool prevents the overhead of constantly creating and destroying threads.</p>
+<p><strong>Alternative Processes Discussed</strong></p>
+<p>The following list describes some of the alternatives that were discuessed for handling instrument communication requests:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p><strong>Using a regular list instead of a priority queue:</strong> In the initial version of the code, a regular list was used to store the reading requests. However, using a regular list doesn’t support priority handling, making it difficult to prioritize specific requests. We decided to use a priority queue instead, as it allows for better control over the execution order of the requests based on their priority. It is also not thread safe.</p></li>
+<li><p><strong>Using PyQt signals and slots:</strong> Initially, we considered using PyQt signals and slots to send the reading data from the worker thread back to the requestor. However, this approach might lead to potential issues when multiple channels are connected to the same signal, as the signal would be emitted for all connected slots, not just for the requestor that is expecting the data. To avoid this issue, we decided to directly call the receiveReading method of the requestor from the worker thread.</p></li>
+<li><p><strong>Constantly creating and destroying threads:</strong> In one of our discussions, we explored the efficiency of constantly creating and destroying threads for handling reading requests. This approach would have a higher overhead, as creating and destroying threads can be computationally expensive. Instead, we decided to use a thread pool that manages a set of reusable threads, reducing the overhead and improving the efficiency of handling reading requests.</p></li>
+<li><p><strong>Using a regular queue with unique sequence numbers:</strong> At one point, we considered using a regular queue and assigning unique sequence numbers to the requests to maintain a strict FIFO order. This approach would work if all requests had the same priority. However, it would not provide a simple way to prioritize specific requests. Thus, we chose to use a priority queue that allows for easy prioritization of requests based on priority values.</p></li>
+</ol>
+</div></blockquote>
+</div></blockquote>
+</section>
+</section>
+<section id="module-Instrumentation.InstrumentModels">
+<span id="instrument-models-subclasses"></span><h1>Instrument Models (Subclasses)<a class="headerlink" href="#module-Instrumentation.InstrumentModels" title="Permalink to this headline"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="Instrumentation.InstrumentModels.Instrument_Model">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Instrumentation.InstrumentModels.</span></span><span class="sig-name descname"><span class="pre">Instrument_Model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adapter=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">virtualInstrument=&lt;class</span> <span class="pre">'pymeasure.instruments.instrument.Instrument'&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Instrumentation/InstrumentModels.html#Instrument_Model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Instrumentation.InstrumentModels.Instrument_Model" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Generic class for all instrument models. This class responsible for managing the communication
+between a channel and a virtual instrument. When a channel requests communication with an instrument,
+they will recieve an instrument model.</p>
+<p>The instrument model will have a reference to the virtual instrument(s) that it controls. This class will
+then wrap the virtual instrument properties with cached properties, so that we can enforce a queuing system
+on the threads accessing the instrument. The cache will also save the responses from the instrument
+so that we can quickly access the last value of a property without having to query the instrument.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>instrument</strong> – The virtual instrument that this model controls.</p></li>
+<li><p><strong>locked</strong> – A boolean that indicates whether the instrument is currently locked by another thread.</p></li>
+<li><p><strong>mutex</strong> – A mutex that is used to lock the instrument when it is being accessed by a thread.</p></li>
+<li><p><strong>_cache</strong> – A dictionary that stores the last value of all instrument properties.</p></li>
+<li><p><strong>_settingDicts</strong> – A dictionary that stores all the instrument settings dictionaries.</p></li>
+<li><p><strong>_property_dictionary</strong> – A dictionary that stores all the instrument properties.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="Instrumentation.InstrumentModels.Instrument_Model.get_address">
+<span class="sig-name descname"><span class="pre">get_address</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Instrumentation/InstrumentModels.html#Instrument_Model.get_address"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Instrumentation.InstrumentModels.Instrument_Model.get_address" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Instrumentation.InstrumentModels.Instrument_Model.restoreState">
+<span class="sig-name descname"><span class="pre">restoreState</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Instrumentation/InstrumentModels.html#Instrument_Model.restoreState"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Instrumentation.InstrumentModels.Instrument_Model.restoreState" title="Permalink to this definition"></a></dt>
+<dd><p>The saveState and restoreState methods enable users
+to save the current instrument state to a dictionary
+and restore the state from a dictionary, respectively.
+This can be helpful for maintaining consistent
+instrument configurations across different sessions or
+sharing configurations with other users.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Instrumentation.InstrumentModels.Instrument_Model.saveState">
+<span class="sig-name descname"><span class="pre">saveState</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">specific_settings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Instrumentation/InstrumentModels.html#Instrument_Model.saveState"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Instrumentation.InstrumentModels.Instrument_Model.saveState" title="Permalink to this definition"></a></dt>
+<dd><p>The saveState and restoreState methods enable users
+to save the current instrument state to a dictionary and
+restore the state from a dictionary, respectively. This can
+be helpful for maintaining consistent instrument configurations across
+different sessions or sharing configurations with other users.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Instrumentation.InstrumentModels.Instrument_Model.settable_parameters">
+<span class="sig-name descname"><span class="pre">settable_parameters</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#Instrumentation.InstrumentModels.Instrument_Model.settable_parameters" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="instrument-model-manager">
+<h1>Instrument Model Manager<a class="headerlink" href="#instrument-model-manager" title="Permalink to this headline"></a></h1>
+<p>The InstrumentModel_Manager class is responsible for managing instrument models in the application.</p>
+<span class="target" id="module-Instrumentation.Instrument_Model_Manager"></span><dl class="py class">
+<dt class="sig sig-object py" id="Instrumentation.Instrument_Model_Manager.InstrumentModel_Manager">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Instrumentation.Instrument_Model_Manager.</span></span><span class="sig-name descname"><span class="pre">InstrumentModel_Manager</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Resource_Manager</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">pyvisa.highlevel.ResourceManager</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">simulation_library</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Instrumentation/Instrument_Model_Manager.html#InstrumentModel_Manager"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Instrumentation.Instrument_Model_Manager.InstrumentModel_Manager" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PyQt6.QtCore.QObject</span></code></p>
+<p>The InstrumentModel_Manager class is responsible for managing instrument models in the application.</p>
+<p>This class is initialized when the main program window starts. It scans the GPIB bus for instruments and
+creates the necessary instrument models for each instrument. This ensures that each instrument is only
+created once, and that the instrument models are available to all channels.</p>
+<p>The class emits a signal called InstrumentListChanged when the list of available instruments has changed.</p>
+<dl>
+<dt>Constructor:</dt><dd><p>__init__(self, Resource_Manager: pyvisa.ResourceManager)</p>
+<p>The constructor takes a pyvisa.ResourceManager as an argument.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">\*</span> <span class="pre">resourceManager</span></span></dt>
+<dd><p>The pyvisa.ResourceManager that is used to scan the GPIB bus.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">\*</span> <span class="pre">InstrumentModels</span></span></dt>
+<dd><p>A dictionary of all the instrument models that have been created. The key is the
+instrument address, and the value is the instrument model.</p>
+</dd></dl>
+
+<dl class="simple">
+<dt>Signals:</dt><dd><ul class="simple">
+<li><p>InstrumentListChanged: This signal is emitted when the list of available instruments has changed.
+The signal contains a list of instrument IDs as a parameter.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Instrumentation.Instrument_Model_Manager.InstrumentModel_Manager.InstrumentListChanged">
+<span class="sig-name descname"><span class="pre">InstrumentListChanged</span></span><a class="headerlink" href="#Instrumentation.Instrument_Model_Manager.InstrumentModel_Manager.InstrumentListChanged" title="Permalink to this definition"></a></dt>
+<dd><p>int = …, arguments: Sequence = …) -&gt; PYQT_SIGNAL</p>
+<p>types is normally a sequence of individual types.  Each type is either a
+type object or a string that is the name of a C++ type.  Alternatively
+each type could itself be a sequence of types each describing a different
+overloaded signal.
+name is the optional C++ name of the signal.  If it is not specified then
+the name of the class attribute that is bound to the signal is used.
+revision is the optional revision of the signal that is exported to QML.
+If it is not specified then 0 is used.
+arguments is the optional sequence of the names of the signal’s arguments.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>pyqtSignal(<a href="#id1"><span class="problematic" id="id2">*</span></a>types, name</p>
+</dd>
+<dt class="field-even">Type</dt>
+<dd class="field-even"><p>str = …, revision</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Instrumentation.Instrument_Model_Manager.InstrumentModel_Manager.get_instrument">
+<span class="sig-name descname"><span class="pre">get_instrument</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">instrument_ID</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Instrumentation/Instrument_Model_Manager.html#InstrumentModel_Manager.get_instrument"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Instrumentation.Instrument_Model_Manager.InstrumentModel_Manager.get_instrument" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Instrumentation.Instrument_Model_Manager.InstrumentModel_Manager.rescan_GPIB_Bus">
+<span class="sig-name descname"><span class="pre">rescan_GPIB_Bus</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Instrumentation/Instrument_Model_Manager.html#InstrumentModel_Manager.rescan_GPIB_Bus"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Instrumentation.Instrument_Model_Manager.InstrumentModel_Manager.rescan_GPIB_Bus" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<section id="module-Instrumentation">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-Instrumentation" title="Permalink to this headline"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="MainUI.widgets.html" class="btn btn-neutral float-left" title="MainUI.widgets package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Channel_Lib.html" class="btn btn-neutral float-right" title="Channel_Lib package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Jacob Nellis, Matt Francom, Mark Kimball.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

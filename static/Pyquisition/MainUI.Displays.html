@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MainUI.Displays package &mdash; Pyquisition 1.1.1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="MainUI.widgets package" href="MainUI.widgets.html" />
+    <link rel="prev" title="MainUI.Data_Lib package" href="MainUI.Data_Lib.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> Pyquisition
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Guide Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Installation.html">Installation Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user_guide.html">User Guide</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer Guide Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Pyquisition.html">Configuration Window</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="MainUI.html">MainUI package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="MainUI.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="MainUI.Data_Lib.html">MainUI.Data_Lib package</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">MainUI.Displays package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-MainUI.Displays.Converter_widget">MainUI.Displays.Converter_widget module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-MainUI.Displays.Display_Widget">MainUI.Displays.Display_Widget module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-MainUI.Displays.PlotWindow">MainUI.Displays.PlotWindow module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-MainUI.Displays.data_options_widget">MainUI.Displays.data_options_widget module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-MainUI.Displays">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="MainUI.widgets.html">MainUI.widgets package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="MainUI.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="MainUI.html#module-MainUI.MainUI">Main Window</a></li>
+<li class="toctree-l2"><a class="reference internal" href="MainUI.html#channel-window-s">Channel Window’s</a></li>
+<li class="toctree-l2"><a class="reference internal" href="MainUI.html#module-MainUI">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Instrumentation.html">Instrumentation package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Instrumentation.html#module-Instrumentation.InstrumentModels">Instrument Models (Subclasses)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Instrumentation.html#instrument-model-manager">Instrument Model Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Channel_Lib.html">Channel_Lib package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Channel_Lib.widgets.html">Channel Widgets</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Pyquisition</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">&lt;no title&gt;</a></li>
+          <li class="breadcrumb-item"><a href="MainUI.html">MainUI package</a></li>
+      <li class="breadcrumb-item active">MainUI.Displays package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/MainUI.Displays.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="mainui-displays-package">
+<h1>MainUI.Displays package<a class="headerlink" href="#mainui-displays-package" title="Permalink to this headline"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline"></a></h2>
+</section>
+<section id="module-MainUI.Displays.Converter_widget">
+<span id="mainui-displays-converter-widget-module"></span><h2>MainUI.Displays.Converter_widget module<a class="headerlink" href="#module-MainUI.Displays.Converter_widget" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="MainUI.Displays.Converter_widget.ConverterDisplay">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">MainUI.Displays.Converter_widget.</span></span><span class="sig-name descname"><span class="pre">ConverterDisplay</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Data</span> <span class="pre">Converter'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">acc</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="MainUI.Data_Lib.html#MainUI.Data_Lib.accumulator.Accumulator" title="MainUI.Data_Lib.accumulator.Accumulator"><span class="pre">MainUI.Data_Lib.accumulator.Accumulator</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MainUI/Displays/Converter_widget.html#ConverterDisplay"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MainUI.Displays.Converter_widget.ConverterDisplay" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#MainUI.Displays.Display_Widget.DisplayWidget" title="MainUI.Displays.Display_Widget.DisplayWidget"><code class="xref py py-class docutils literal notranslate"><span class="pre">MainUI.Displays.Display_Widget.DisplayWidget</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="MainUI.Displays.Converter_widget.ConverterDisplay.convert">
+<span class="sig-name descname"><span class="pre">convert</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/MainUI/Displays/Converter_widget.html#ConverterDisplay.convert"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MainUI.Displays.Converter_widget.ConverterDisplay.convert" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MainUI.Displays.Converter_widget.ConverterDisplay.launchConverterThread">
+<span class="sig-name descname"><span class="pre">launchConverterThread</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">function</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MainUI/Displays/Converter_widget.html#ConverterDisplay.launchConverterThread"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MainUI.Displays.Converter_widget.ConverterDisplay.launchConverterThread" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MainUI.Displays.Converter_widget.ConverterDisplay.selectReadFile">
+<span class="sig-name descname"><span class="pre">selectReadFile</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/MainUI/Displays/Converter_widget.html#ConverterDisplay.selectReadFile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MainUI.Displays.Converter_widget.ConverterDisplay.selectReadFile" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MainUI.Displays.Converter_widget.ConverterDisplay.selectWriteFile">
+<span class="sig-name descname"><span class="pre">selectWriteFile</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/MainUI/Displays/Converter_widget.html#ConverterDisplay.selectWriteFile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MainUI.Displays.Converter_widget.ConverterDisplay.selectWriteFile" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MainUI.Displays.Converter_widget.ConverterDisplay.updateProgress">
+<span class="sig-name descname"><span class="pre">updateProgress</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">progress</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MainUI/Displays/Converter_widget.html#ConverterDisplay.updateProgress"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MainUI.Displays.Converter_widget.ConverterDisplay.updateProgress" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-MainUI.Displays.Display_Widget">
+<span id="mainui-displays-display-widget-module"></span><h2>MainUI.Displays.Display_Widget module<a class="headerlink" href="#module-MainUI.Displays.Display_Widget" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="MainUI.Displays.Display_Widget.DisplayWidget">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">MainUI.Displays.Display_Widget.</span></span><span class="sig-name descname"><span class="pre">DisplayWidget</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">configDict</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inputList</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MainUI/Displays/Display_Widget.html#DisplayWidget"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MainUI.Displays.Display_Widget.DisplayWidget" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PyQt6.QtWidgets.QMdiSubWindow</span></code></p>
+<p>Abstract class to be used as a base class for all widgets that will be displayed in the mdi area, excluding channel control widgets.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> – Name of the widget, this can be any string, should be unique if it’s output will be used as an input for another widget.</p></li>
+<li><p><strong>configDict</strong> – Dictionary containing the configuration of the widget. If present, the restoreState method will be called to restore the widget to the state it was in when the dictionary was created.</p></li>
+<li><p><strong>inputList</strong> – List of input objects that can be used as inputs to the widget. This is used to populate the input comboboxes in the control widget.
+For example, if a widget is defined that takes a ‘Channel’ object as an input, then the inputList should contain a list of ‘Channel’ objects.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Variables</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>name</strong> – Name of the widget</p></li>
+<li><p><strong>inputs</strong> – Dictionary containing the inputs to the widget. Keys are the names of the inputs. The values are the input objects. The input objects can be any object, but should stay consistent across a subclass of DisplayWidget. For example, if a subclass of ‘PlotWidget’ is defined and listens to a ‘Channel’ object as an input, then the input object should be a ‘Channel’ object.</p></li>
+<li><p><strong>outputs</strong> – Dictionary containing the outputs of the widget. Keys are the names of the outputs. These values get updated after the process method is called. The output objects can then be used as inputs to other widgets.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="MainUI.Displays.Display_Widget.DisplayWidget.addInput">
+<span class="sig-name descname"><span class="pre">addInput</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'input'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inputObject</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MainUI/Displays/Display_Widget.html#DisplayWidget.addInput"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MainUI.Displays.Display_Widget.DisplayWidget.addInput" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MainUI.Displays.Display_Widget.DisplayWidget.addOutput">
+<span class="sig-name descname"><span class="pre">addOutput</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'output'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MainUI/Displays/Display_Widget.html#DisplayWidget.addOutput"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MainUI.Displays.Display_Widget.DisplayWidget.addOutput" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MainUI.Displays.Display_Widget.DisplayWidget.closeEvent">
+<span class="sig-name descname"><span class="pre">closeEvent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">closeEvent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QCloseEvent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MainUI/Displays/Display_Widget.html#DisplayWidget.closeEvent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MainUI.Displays.Display_Widget.DisplayWidget.closeEvent" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MainUI.Displays.Display_Widget.DisplayWidget.ctrlWidget">
+<span class="sig-name descname"><span class="pre">ctrlWidget</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MainUI/Displays/Display_Widget.html#DisplayWidget.ctrlWidget"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MainUI.Displays.Display_Widget.DisplayWidget.ctrlWidget" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MainUI.Displays.Display_Widget.DisplayWidget.getOutputs">
+<span class="sig-name descname"><span class="pre">getOutputs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/MainUI/Displays/Display_Widget.html#DisplayWidget.getOutputs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MainUI.Displays.Display_Widget.DisplayWidget.getOutputs" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MainUI.Displays.Display_Widget.DisplayWidget.initialize">
+<span class="sig-name descname"><span class="pre">initialize</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/MainUI/Displays/Display_Widget.html#DisplayWidget.initialize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MainUI.Displays.Display_Widget.DisplayWidget.initialize" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MainUI.Displays.Display_Widget.DisplayWidget.process">
+<span class="sig-name descname"><span class="pre">process</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/MainUI/Displays/Display_Widget.html#DisplayWidget.process"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MainUI.Displays.Display_Widget.DisplayWidget.process" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MainUI.Displays.Display_Widget.DisplayWidget.restoreState">
+<span class="sig-name descname"><span class="pre">restoreState</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MainUI/Displays/Display_Widget.html#DisplayWidget.restoreState"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MainUI.Displays.Display_Widget.DisplayWidget.restoreState" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MainUI.Displays.Display_Widget.DisplayWidget.saveState">
+<span class="sig-name descname"><span class="pre">saveState</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/MainUI/Displays/Display_Widget.html#DisplayWidget.saveState"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MainUI.Displays.Display_Widget.DisplayWidget.saveState" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-MainUI.Displays.PlotWindow">
+<span id="mainui-displays-plotwindow-module"></span><h2>MainUI.Displays.PlotWindow module<a class="headerlink" href="#module-MainUI.Displays.PlotWindow" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="MainUI.Displays.PlotWindow.PlotDisplayWidget">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">MainUI.Displays.PlotWindow.</span></span><span class="sig-name descname"><span class="pre">PlotDisplayWidget</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">configDict</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chList</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MainUI/Displays/PlotWindow.html#PlotDisplayWidget"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MainUI.Displays.PlotWindow.PlotDisplayWidget" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#MainUI.Displays.Display_Widget.DisplayWidget" title="MainUI.Displays.Display_Widget.DisplayWidget"><code class="xref py py-class docutils literal notranslate"><span class="pre">MainUI.Displays.Display_Widget.DisplayWidget</span></code></a></p>
+<p>This widget is capable of displaying outputs of channels contained in the
+activeChannels model. Can display multiple channels.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> – Name of the widget</p></li>
+<li><p><strong>configDict</strong> – Dictionary containing the configuration of the widget. If present, the restoreState method is called</p></li>
+<li><p><strong>chList</strong> – List of channels that can be displayed in the widget. Will likely be the actChW</p></li>
+</ul>
+</dd>
+<dt class="field-even">Variables</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>myType</strong> – String containing the type of the widget. This is used to identify the widget when it is saved to a file.</p></li>
+<li><p><strong>channels</strong> – List of channels that can be displayed in the widget. Will likely be the actChW</p></li>
+<li><p><strong>colors</strong> – List of colors that can be used to plot the data. The colors will be cycled through as more channels are added.</p></li>
+<li><p><strong>count</strong> – Number of data points that have been plotted. Used to determine when to clear the plot.</p></li>
+<li><p><strong>range</strong> – Number of data points that will be displayed on the plot at any given time.</p></li>
+<li><p><strong>pointer</strong> – Index of the most recent data point that has been plotted.</p></li>
+<li><p><strong>timer</strong> – Timer that calls the process method at a regular interval.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="MainUI.Displays.PlotWindow.PlotDisplayWidget.addChannel">
+<span class="sig-name descname"><span class="pre">addChannel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ch</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MainUI/Displays/PlotWindow.html#PlotDisplayWidget.addChannel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MainUI.Displays.PlotWindow.PlotDisplayWidget.addChannel" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MainUI.Displays.PlotWindow.PlotDisplayWidget.changeColorDone">
+<span class="sig-name descname"><span class="pre">changeColorDone</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">btn</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MainUI/Displays/PlotWindow.html#PlotDisplayWidget.changeColorDone"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MainUI.Displays.PlotWindow.PlotDisplayWidget.changeColorDone" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MainUI.Displays.PlotWindow.PlotDisplayWidget.channelDropDownChanged">
+<span class="sig-name descname"><span class="pre">channelDropDownChanged</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MainUI/Displays/PlotWindow.html#PlotDisplayWidget.channelDropDownChanged"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MainUI.Displays.PlotWindow.PlotDisplayWidget.channelDropDownChanged" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MainUI.Displays.PlotWindow.PlotDisplayWidget.closeEvent">
+<span class="sig-name descname"><span class="pre">closeEvent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">closeEvent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QCloseEvent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MainUI/Displays/PlotWindow.html#PlotDisplayWidget.closeEvent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MainUI.Displays.PlotWindow.PlotDisplayWidget.closeEvent" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MainUI.Displays.PlotWindow.PlotDisplayWidget.newDataReceived">
+<span class="sig-name descname"><span class="pre">newDataReceived</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MainUI/Displays/PlotWindow.html#PlotDisplayWidget.newDataReceived"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MainUI.Displays.PlotWindow.PlotDisplayWidget.newDataReceived" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MainUI.Displays.PlotWindow.PlotDisplayWidget.process">
+<span class="sig-name descname"><span class="pre">process</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/MainUI/Displays/PlotWindow.html#PlotDisplayWidget.process"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MainUI.Displays.PlotWindow.PlotDisplayWidget.process" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MainUI.Displays.PlotWindow.PlotDisplayWidget.removeChannel">
+<span class="sig-name descname"><span class="pre">removeChannel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ch</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MainUI/Displays/PlotWindow.html#PlotDisplayWidget.removeChannel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MainUI.Displays.PlotWindow.PlotDisplayWidget.removeChannel" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MainUI.Displays.PlotWindow.PlotDisplayWidget.restoreState">
+<span class="sig-name descname"><span class="pre">restoreState</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MainUI/Displays/PlotWindow.html#PlotDisplayWidget.restoreState"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MainUI.Displays.PlotWindow.PlotDisplayWidget.restoreState" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MainUI.Displays.PlotWindow.PlotDisplayWidget.saveState">
+<span class="sig-name descname"><span class="pre">saveState</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/MainUI/Displays/PlotWindow.html#PlotDisplayWidget.saveState"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MainUI.Displays.PlotWindow.PlotDisplayWidget.saveState" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MainUI.Displays.PlotWindow.PlotDisplayWidget.updateChannelList">
+<span class="sig-name descname"><span class="pre">updateChannelList</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/MainUI/Displays/PlotWindow.html#PlotDisplayWidget.updateChannelList"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MainUI.Displays.PlotWindow.PlotDisplayWidget.updateChannelList" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-MainUI.Displays.data_options_widget">
+<span id="mainui-displays-data-options-widget-module"></span><h2>MainUI.Displays.data_options_widget module<a class="headerlink" href="#module-MainUI.Displays.data_options_widget" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="MainUI.Displays.data_options_widget.Data_Options_Window">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">MainUI.Displays.data_options_widget.</span></span><span class="sig-name descname"><span class="pre">Data_Options_Window</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MainUI/Displays/data_options_widget.html#Data_Options_Window"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MainUI.Displays.data_options_widget.Data_Options_Window" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PyQt6.QtWidgets.QMdiSubWindow</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="MainUI.Displays.data_options_widget.Data_Options_Window.applyChanges">
+<span class="sig-name descname"><span class="pre">applyChanges</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/MainUI/Displays/data_options_widget.html#Data_Options_Window.applyChanges"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MainUI.Displays.data_options_widget.Data_Options_Window.applyChanges" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MainUI.Displays.data_options_widget.Data_Options_Window.selectFile">
+<span class="sig-name descname"><span class="pre">selectFile</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/MainUI/Displays/data_options_widget.html#Data_Options_Window.selectFile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MainUI.Displays.data_options_widget.Data_Options_Window.selectFile" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-MainUI.Displays">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-MainUI.Displays" title="Permalink to this headline"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="MainUI.Data_Lib.html" class="btn btn-neutral float-left" title="MainUI.Data_Lib package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="MainUI.widgets.html" class="btn btn-neutral float-right" title="MainUI.widgets package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Jacob Nellis, Matt Francom, Mark Kimball.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

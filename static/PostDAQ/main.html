@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>main module &mdash; PostDAQ 1.1.1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="noteManager module" href="noteManager.html" />
+    <link rel="prev" title="loginWins module" href="loginWins.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> PostDAQ
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Installation.html">Installation Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="UserGuide.html">User Guide</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Program Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">PostDAQ</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="adrUtil.html">adrUtil module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="adr_lib.html">adr_lib module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dataTool.html">dataTool module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="editor.html">editor module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="loginWins.html">loginWins module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">main module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="noteManager.html">noteManager module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="old_code_refs.html">old_code_refs module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="publishViewer.html">publishViewer module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="solver.html">solver module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="styleSet.html">styleSet module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test.html">test module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="users.html">users module</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">PostDAQ</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">PostDAQ</a></li>
+      <li class="breadcrumb-item active">main module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/main.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-main">
+<span id="main-module"></span><h1>main module<a class="headerlink" href="#module-main" title="Permalink to this headline"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="main.CreateAccountWindow">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">CreateAccountWindow</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#main.CreateAccountWindow" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PyQt5.QtWidgets.QWidget</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">windows.CreateAccount.Ui_Form</span></code></p>
+<p>Window for creating a new user
+TODO: Display message when new user has sucessfully been created</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="main.CreateAccountWindow.back">
+<span class="sig-name descname"><span class="pre">back</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.CreateAccountWindow.back" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.CreateAccountWindow.generateAccount">
+<span class="sig-name descname"><span class="pre">generateAccount</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.CreateAccountWindow.generateAccount" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="main.Data_Analysis_Window">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">Data_Analysis_Window</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#main.Data_Analysis_Window" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PyQt5.QtWidgets.QMainWindow</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="main.Data_Analysis_Window.NewSinglePlot">
+<span class="sig-name descname"><span class="pre">NewSinglePlot</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.Data_Analysis_Window.NewSinglePlot" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.Data_Analysis_Window.NewStackedPlot">
+<span class="sig-name descname"><span class="pre">NewStackedPlot</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.Data_Analysis_Window.NewStackedPlot" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.Data_Analysis_Window.SaveWorkspace">
+<span class="sig-name descname"><span class="pre">SaveWorkspace</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.Data_Analysis_Window.SaveWorkspace" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.Data_Analysis_Window.loadWorkspace">
+<span class="sig-name descname"><span class="pre">loadWorkspace</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.Data_Analysis_Window.loadWorkspace" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.Data_Analysis_Window.makeCalculator">
+<span class="sig-name descname"><span class="pre">makeCalculator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.Data_Analysis_Window.makeCalculator" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="main.LoginWindow">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">LoginWindow</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#main.LoginWindow" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PyQt5.QtWidgets.QWidget</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">windows.login.Ui_Form</span></code></p>
+<p>First window to appear when starting the program.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="main.LoginWindow.authenticate">
+<span class="sig-name descname"><span class="pre">authenticate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.LoginWindow.authenticate" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.LoginWindow.create">
+<span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">PyQt5.sip.voidptr</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initializeWindow</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">destroyOldWindow</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#main.LoginWindow.create" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.LoginWindow.resetBtn">
+<span class="sig-name descname"><span class="pre">resetBtn</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.LoginWindow.resetBtn" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="main.NewNoteWindow">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">NewNoteWindow</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#main.NewNoteWindow" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PyQt5.QtWidgets.QWidget</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">windows.NewNoteWindow.Ui_NewNote</span></code></p>
+<p>TODO: Display message when user login is incorrect</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="main.NewNoteWindow.back">
+<span class="sig-name descname"><span class="pre">back</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.NewNoteWindow.back" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.NewNoteWindow.closeEvent">
+<span class="sig-name descname"><span class="pre">closeEvent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">QCloseEvent</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#main.NewNoteWindow.closeEvent" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.NewNoteWindow.create_new_note">
+<span class="sig-name descname"><span class="pre">create_new_note</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.NewNoteWindow.create_new_note" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="main.Note_Context_Window">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">Note_Context_Window</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fig</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#main.Note_Context_Window" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PyQt5.QtWidgets.QDockWidget</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="main.Note_Context_Window.refresh">
+<span class="sig-name descname"><span class="pre">refresh</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.Note_Context_Window.refresh" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.Note_Context_Window.setupEditor">
+<span class="sig-name descname"><span class="pre">setupEditor</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.Note_Context_Window.setupEditor" title="Permalink to this definition"></a></dt>
+<dd><p>This function defines what syntax will be highlighted and what colors they will have</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="main.Plot_Window_Object">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">Plot_Window_Object</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">figure</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#main.Plot_Window_Object" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PyQt5.QtWidgets.QDockWidget</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="main.Plot_Window_Object.ApplyLineChanges">
+<span class="sig-name descname"><span class="pre">ApplyLineChanges</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.Plot_Window_Object.ApplyLineChanges" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.Plot_Window_Object.AutoPlot">
+<span class="sig-name descname"><span class="pre">AutoPlot</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.Plot_Window_Object.AutoPlot" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.Plot_Window_Object.PullPropertyCalculator">
+<span class="sig-name descname"><span class="pre">PullPropertyCalculator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.Plot_Window_Object.PullPropertyCalculator" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.Plot_Window_Object.TabChange">
+<span class="sig-name descname"><span class="pre">TabChange</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.Plot_Window_Object.TabChange" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.Plot_Window_Object.closeEvent">
+<span class="sig-name descname"><span class="pre">closeEvent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">QCloseEvent</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#main.Plot_Window_Object.closeEvent" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.Plot_Window_Object.displayNote">
+<span class="sig-name descname"><span class="pre">displayNote</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.Plot_Window_Object.displayNote" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.Plot_Window_Object.duplicatePlot">
+<span class="sig-name descname"><span class="pre">duplicatePlot</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.Plot_Window_Object.duplicatePlot" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.Plot_Window_Object.fileSelect">
+<span class="sig-name descname"><span class="pre">fileSelect</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.Plot_Window_Object.fileSelect" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.Plot_Window_Object.lineListChange">
+<span class="sig-name descname"><span class="pre">lineListChange</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.Plot_Window_Object.lineListChange" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.Plot_Window_Object.line_picker">
+<span class="sig-name descname"><span class="pre">line_picker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">line</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mouseevent</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#main.Plot_Window_Object.line_picker" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.Plot_Window_Object.plotData">
+<span class="sig-name descname"><span class="pre">plotData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">index</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#main.Plot_Window_Object.plotData" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.Plot_Window_Object.resetLines">
+<span class="sig-name descname"><span class="pre">resetLines</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.Plot_Window_Object.resetLines" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.Plot_Window_Object.toggleGrid">
+<span class="sig-name descname"><span class="pre">toggleGrid</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.Plot_Window_Object.toggleGrid" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="main.Property_Calculator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">Property_Calculator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">figure</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plotWin</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#main.Property_Calculator" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PyQt5.QtWidgets.QDockWidget</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="main.Property_Calculator.EntropyCalc">
+<span class="sig-name descname"><span class="pre">EntropyCalc</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.Property_Calculator.EntropyCalc" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.Property_Calculator.calculateCapacities">
+<span class="sig-name descname"><span class="pre">calculateCapacities</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.Property_Calculator.calculateCapacities" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.Property_Calculator.calculateEntropies">
+<span class="sig-name descname"><span class="pre">calculateEntropies</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.Property_Calculator.calculateEntropies" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.Property_Calculator.userDefinedStage">
+<span class="sig-name descname"><span class="pre">userDefinedStage</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.Property_Calculator.userDefinedStage" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="main.SolverWin">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">SolverWin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fig</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#main.SolverWin" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PyQt5.QtWidgets.QDockWidget</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="main.SolverWin.calculate">
+<span class="sig-name descname"><span class="pre">calculate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.SolverWin.calculate" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.SolverWin.tabChange">
+<span class="sig-name descname"><span class="pre">tabChange</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.SolverWin.tabChange" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.SolverWin.updateCoords">
+<span class="sig-name descname"><span class="pre">updateCoords</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cords</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#main.SolverWin.updateCoords" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="main.homeWindow">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">homeWindow</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#main.homeWindow" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PyQt5.QtWidgets.QMainWindow</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">windows.home.Ui_MainWindow</span></code></p>
+<p>This is the main window the user will see when they log
+into the program.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="main.homeWindow.Create_FileTree_Context_Menu">
+<span class="sig-name descname"><span class="pre">Create_FileTree_Context_Menu</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.homeWindow.Create_FileTree_Context_Menu" title="Permalink to this definition"></a></dt>
+<dd><p>This is the context menu for right clicking in the file tree</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.homeWindow.Delete_Current_File">
+<span class="sig-name descname"><span class="pre">Delete_Current_File</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.homeWindow.Delete_Current_File" title="Permalink to this definition"></a></dt>
+<dd><p>TODO: Add the ability to delete note directories</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.homeWindow.Handle_New_Note_Request">
+<span class="sig-name descname"><span class="pre">Handle_New_Note_Request</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.homeWindow.Handle_New_Note_Request" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.homeWindow.Populate_FileTree">
+<span class="sig-name descname"><span class="pre">Populate_FileTree</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.homeWindow.Populate_FileTree" title="Permalink to this definition"></a></dt>
+<dd><p>Populating the tree view with the labdata directory</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.homeWindow.Show_Data_Editor">
+<span class="sig-name descname"><span class="pre">Show_Data_Editor</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.homeWindow.Show_Data_Editor" title="Permalink to this definition"></a></dt>
+<dd><p>FUNCTION ONLY FOR TESTING</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.homeWindow.Update_Tags_List">
+<span class="sig-name descname"><span class="pre">Update_Tags_List</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#main.homeWindow.Update_Tags_List" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.homeWindow.createFinal">
+<span class="sig-name descname"><span class="pre">createFinal</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.homeWindow.createFinal" title="Permalink to this definition"></a></dt>
+<dd><p>This function writes a final document in HTML</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.homeWindow.decreaseFont">
+<span class="sig-name descname"><span class="pre">decreaseFont</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.homeWindow.decreaseFont" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.homeWindow.defineStage">
+<span class="sig-name descname"><span class="pre">defineStage</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.homeWindow.defineStage" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.homeWindow.displayHelp">
+<span class="sig-name descname"><span class="pre">displayHelp</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.homeWindow.displayHelp" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.homeWindow.hideFiles">
+<span class="sig-name descname"><span class="pre">hideFiles</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.homeWindow.hideFiles" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.homeWindow.increaseFont">
+<span class="sig-name descname"><span class="pre">increaseFont</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.homeWindow.increaseFont" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.homeWindow.insertPNG">
+<span class="sig-name descname"><span class="pre">insertPNG</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.homeWindow.insertPNG" title="Permalink to this definition"></a></dt>
+<dd><p>This function takes a PNG specified by the user, and places it in a photos folder contained
+in the current notes directory. The note is then displayed on the noteEdit window.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.homeWindow.open_file">
+<span class="sig-name descname"><span class="pre">open_file</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.homeWindow.open_file" title="Permalink to this definition"></a></dt>
+<dd><p>Opening file from the dialog tree</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.homeWindow.open_from_menu">
+<span class="sig-name descname"><span class="pre">open_from_menu</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.homeWindow.open_from_menu" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.homeWindow.open_new_file">
+<span class="sig-name descname"><span class="pre">open_new_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#main.homeWindow.open_new_file" title="Permalink to this definition"></a></dt>
+<dd><p>This function is for initially opening a note that has just been created</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.homeWindow.resizeEvent">
+<span class="sig-name descname"><span class="pre">resizeEvent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">QResizeEvent</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#main.homeWindow.resizeEvent" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.homeWindow.runPlots">
+<span class="sig-name descname"><span class="pre">runPlots</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.homeWindow.runPlots" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.homeWindow.save_file">
+<span class="sig-name descname"><span class="pre">save_file</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.homeWindow.save_file" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.homeWindow.setPathFromLocal">
+<span class="sig-name descname"><span class="pre">setPathFromLocal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">curPath</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#main.homeWindow.setPathFromLocal" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.homeWindow.setupEditor">
+<span class="sig-name descname"><span class="pre">setupEditor</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.homeWindow.setupEditor" title="Permalink to this definition"></a></dt>
+<dd><p>This function defines what syntax will be highlighted and what colors they will have</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.homeWindow.test">
+<span class="sig-name descname"><span class="pre">test</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.homeWindow.test" title="Permalink to this definition"></a></dt>
+<dd><p>method only for testing purpose</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.homeWindow.time_stamp">
+<span class="sig-name descname"><span class="pre">time_stamp</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.homeWindow.time_stamp" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.homeWindow.togglePalette">
+<span class="sig-name descname"><span class="pre">togglePalette</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.homeWindow.togglePalette" title="Permalink to this definition"></a></dt>
+<dd><p>togglePalette toggles the color palette between dark and light mode</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.homeWindow.toggleViewState">
+<span class="sig-name descname"><span class="pre">toggleViewState</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.homeWindow.toggleViewState" title="Permalink to this definition"></a></dt>
+<dd><p>This function toggles the stacked widget and displays the publsihed markdown</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.homeWindow.uploadNote">
+<span class="sig-name descname"><span class="pre">uploadNote</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.homeWindow.uploadNote" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="main.publishViewer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">publishViewer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#main.publishViewer" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PyQt5.QtWidgets.QWidget</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">windows.publishViewer.Ui_Form</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="main.publishViewer.resizeEvent">
+<span class="sig-name descname"><span class="pre">resizeEvent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">QResizeEvent</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#main.publishViewer.resizeEvent" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="loginWins.html" class="btn btn-neutral float-left" title="loginWins module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="noteManager.html" class="btn btn-neutral float-right" title="noteManager module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Jacob Nellis.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

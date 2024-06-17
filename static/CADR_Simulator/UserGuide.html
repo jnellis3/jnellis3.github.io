@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>User Guide &mdash; CADR Simulator 1.1.1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Defining CADR components" href="CADRLibrary.html" />
+    <link rel="prev" title="Installation Overview" href="Installation.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> CADR Simulator
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Installation.html">Installation Overview</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">User Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#getting-started">Getting Started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#example-cadr-configuration">Example CADR Configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="CADRLibrary.html">Defining CADR components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CADRLibrary.html#defining-a-cadr-configuration">Defining a CADR Configuration</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">PyMacQ</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">CADR Simulator</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">User Guide</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/UserGuide.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="user-guide">
+<span id="id1"></span><h1>User Guide<a class="headerlink" href="#user-guide" title="Permalink to this headline"></a></h1>
+<section id="getting-started">
+<h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline"></a></h2>
+<p>When starting the program, you will be presented with the interface shown below. This interface is meant to mimic code 552’s Labquisition software.</p>
+<img alt="startup.png" class="align-center" id="user-interface" src="startup.png" />
+<hr class="docutils" />
+<p>The simulation timer automatically begins on program startup. The toolbar on the left will show a list of the active channels that are currently collecting data.</p>
+<p>The top toolbar will allow you to add plots, save, and open configurations. The bottom widget is used for controlling the stages during simulation.</p>
+</section>
+<section id="example-cadr-configuration">
+<h2>Example CADR Configuration<a class="headerlink" href="#example-cadr-configuration" title="Permalink to this headline"></a></h2>
+<p>The program will automatically open the default CADR example configuration. This is a 3-stage CADR with a heat sink at 0.9 K, specifically, this is the EXCLAIM mission CADR. By creating new plots, we can take a look at the
+temperatures and currents of these stages. Let’s run this simulation and compare it to actual laboratory data.</p>
+<img alt="plots_ini.png" class="align-center" id="initial-plots" src="plots_ini.png" />
+<hr class="docutils" />
+<p>As you can see, the stages are all sitting around 0.9K and have no current. We need to give temperature setpoints to the PID controllers to start magnetizing these
+stages. This can be done with the bottom widget.</p>
+<p>Each stage has a hot key associated with its controller (‘ctrl + &lt;stage number&gt;’). Let’s magnetize stages 2 and 3 to start the initial bootstrap process. We do this
+by imputing 1.8K in the text box, and then pressing ‘ctrl+2’ followed by ‘ctrl+3’ to give setpoints to stages 2 and 3 respectively.</p>
+<img alt="building_currents.png" class="align-center" id="building-currents" src="building_currents.png" />
+<hr class="docutils" />
+<p>Stages 2 and 3 will now charge at 1.8K until they reach max current, we need to let them cool down before starting our adiabatic demag.</p>
+<p>Once the stages are cool, we need to pull stage 4 down below its heat switch target temperature at around 0.9K. Let’s set stage 2 and 3’s setpoints to 0.4 and 0.3K respectively.</p>
+<img alt="chargingS2.png" class="align-center" id="chargings2" src="chargingS2.png" />
+<hr class="docutils" />
+<p>We are now charging stage 2 by using stage 3 as its heat sink. When we reach enough current in stage 2, we can pull the stage below its heat switch target temperature
+of around 0.3K. Let’s set stage 2’s target temperature to 0.09K so that we can charge stage 1.</p>
+<p>With stage 2 below 0.1K, stage 1 should be ready to start building current. To do this, we need to turn on the superconducting heat switches helmholtz coil.
+This can be done with the shortcut ‘ctrl+4’. Once stage 1 builds enough entropy capacity, we are ready to continuously cycle!</p>
+<img alt="s1charge.png" class="align-center" id="s1charge" src="s1charge.png" />
+<hr class="docutils" />
+<p>To operate continuously, we simply need to recycle stages 2 and 3 when necessary, while keeping stage 1’s target temperature at 0.1K.</p>
+<img alt="continuously.png" class="align-center" id="continuously" src="continuously.png" />
+<hr class="docutils" />
+<p><strong>CONGRATULATIONS!</strong> We have successfully run the CADR to operate at its design temperatures. We can now use this simulation to compare with our laboratory tests.</p>
+<p>The plot below shows the actual data collected from the EXCLAIM 3-stage CADR that we are attempting to simulate.</p>
+<img alt="compare.png" class="align-center" id="comparison" src="compare.png" />
+<hr class="docutils" />
+<p>Looking at data taken from the actual EXCLAIM 3-stage CADR, it appears that our simulation is performing well. Just be looking at the ramp rates, we can see that
+the heat transfer between stages 2 and 3 should theoretically be higher, we can now make changes to the simulator to see what could be causing this.</p>
+<p>If further information or guidance is needed while running this simulation, please email <a class="reference external" href="mailto:Jacob&#46;s&#46;nellis&#37;&#52;&#48;nasa&#46;gov">Jacob<span>&#46;</span>s<span>&#46;</span>nellis<span>&#64;</span>nasa<span>&#46;</span>gov</a></p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Installation.html" class="btn btn-neutral float-left" title="Installation Overview" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="CADRLibrary.html" class="btn btn-neutral float-right" title="Defining CADR components" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Jacob Nellis.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

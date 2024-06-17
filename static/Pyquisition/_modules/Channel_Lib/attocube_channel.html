@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Channel_Lib.attocube_channel &mdash; Pyquisition 1.1.1 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> Pyquisition
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Guide Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Installation.html">Installation Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user_guide.html">User Guide</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer Guide Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Pyquisition.html">Configuration Window</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../MainUI.html">MainUI package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Instrumentation.html">Instrumentation package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Instrumentation.html#module-Instrumentation.InstrumentModels">Instrument Models (Subclasses)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Instrumentation.html#instrument-model-manager">Instrument Model Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Channel_Lib.html">Channel_Lib package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Channel_Lib.widgets.html">Channel Widgets</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Pyquisition</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">Channel_Lib.attocube_channel</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for Channel_Lib.attocube_channel</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="s2">&quot;..&quot;</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">Channel_Lib.channel</span> <span class="kn">import</span> <span class="n">Channel</span><span class="p">,</span> <span class="n">ctrlWidget</span>
+<span class="kn">from</span> <span class="nn">PyQt6</span> <span class="kn">import</span> <span class="n">QtWidgets</span> <span class="k">as</span> <span class="n">qtw</span><span class="p">,</span> <span class="n">QtCore</span> <span class="k">as</span> <span class="n">qtc</span><span class="p">,</span> <span class="n">QtGui</span> <span class="k">as</span> <span class="n">qtg</span>
+<span class="kn">import</span> <span class="nn">utils_lib.global_vars</span> <span class="k">as</span> <span class="nn">global_vars</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">Instrumentation.attocube_lib.IDS</span> <span class="kn">import</span> <span class="n">Device</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<div class="viewcode-block" id="AttoCubeChannel"><a class="viewcode-back" href="../../Channel_Lib.html#Channel_Lib.attocube_channel.AttoCubeChannel">[docs]</a><span class="k">class</span> <span class="nc">AttoCubeChannel</span><span class="p">(</span><span class="n">Channel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    =============================================================================================================================</span>
+<span class="sd">    This is the channel used to control the attocube instrument.</span>
+
+<span class="sd">    It uses an internal thread to execute a loop taking values from the instrument at the rate specified in the control widget</span>
+
+<span class="sd">    :param freq:        Frequency of the loop in Hz</span>
+<span class="sd">    :param averageTime: Time to average over in seconds</span>
+<span class="sd">    :param averageN:    3dB low-pass filter constant</span>
+<span class="sd">    :param address:     Address of the instrument</span>
+<span class="sd">    :param myType:      Type of the channel</span>
+<span class="sd">    </span>
+<span class="sd">    =============================================================================================================================</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">channelName</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">parent</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">freq</span> <span class="o">=</span> <span class="mi">250</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">averageTime</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">averageN</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="s2">&quot;192.168.1.1&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">myType</span> <span class="o">=</span> <span class="s2">&quot;AttoCubeChannel&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">instrument</span> <span class="o">=</span> <span class="n">Device</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">address</span><span class="p">)</span>
+        <span class="n">connected</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">while</span> <span class="n">connected</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">instrument</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span>
+                <span class="n">connected</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="n">getAddressBox</span> <span class="o">=</span> <span class="n">qtw</span><span class="o">.</span><span class="n">QInputDialog</span><span class="p">()</span>
+                <span class="n">getAddressBox</span><span class="o">.</span><span class="n">setTextValue</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">address</span><span class="p">)</span>
+                <span class="n">getAddressBox</span><span class="o">.</span><span class="n">setLabelText</span><span class="p">(</span><span class="s2">&quot;Unable to connect, please enter Attocube IP Address, type (d) to delete channel&quot;</span><span class="p">)</span>
+                <span class="n">getAddressBox</span><span class="o">.</span><span class="n">exec</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">getAddressBox</span><span class="o">.</span><span class="n">textValue</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">instrument</span> <span class="o">=</span> <span class="n">Device</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">address</span><span class="p">)</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">address</span> <span class="o">==</span> <span class="s1">&#39;d&#39;</span><span class="p">:</span>
+                    <span class="n">connected</span> <span class="o">=</span> <span class="kc">True</span>
+                
+        <span class="bp">self</span><span class="o">.</span><span class="n">children</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s2">&quot;Attocube&quot;</span><span class="p">,</span> <span class="n">state</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">addInput</span><span class="p">(</span><span class="s1">&#39;Instrument&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">instrument</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">paused</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">threadPool</span> <span class="o">=</span> <span class="n">qtc</span><span class="o">.</span><span class="n">QThreadPool</span><span class="p">()</span><span class="o">.</span><span class="n">globalInstance</span><span class="p">()</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">rawSum</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">numPoints</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setBackground</span><span class="p">(</span><span class="n">qtg</span><span class="o">.</span><span class="n">QColor</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ax1</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ax2</span> <span class="o">=</span> <span class="p">[]</span>
+
+<div class="viewcode-block" id="AttoCubeChannel.initialize"><a class="viewcode-back" href="../../Channel_Lib.html#Channel_Lib.attocube_channel.AttoCubeChannel.initialize">[docs]</a>    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1">#This won&#39;t work if the instrument isn&#39;t connected</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">instrument</span><span class="o">.</span><span class="n">displacement</span><span class="o">.</span><span class="n">setAverageN</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">averageN</span><span class="p">))</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">pass</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">initialize</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="AttoCubeChannel.restoreState"><a class="viewcode-back" href="../../Channel_Lib.html#Channel_Lib.attocube_channel.AttoCubeChannel.restoreState">[docs]</a>    <span class="k">def</span> <span class="nf">restoreState</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">averageN</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">state</span><span class="p">[</span><span class="s1">&#39;AverageN&#39;</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">freq</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">state</span><span class="p">[</span><span class="s1">&#39;Freq&#39;</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">averageTime</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">state</span><span class="p">[</span><span class="s2">&quot;AverageTime&quot;</span><span class="p">])</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">pass</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">initialize</span><span class="p">()</span></div>
+    
+<div class="viewcode-block" id="AttoCubeChannel.saveState"><a class="viewcode-back" href="../../Channel_Lib.html#Channel_Lib.attocube_channel.AttoCubeChannel.saveState">[docs]</a>    <span class="k">def</span> <span class="nf">saveState</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">configDict</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">configDict</span><span class="p">[</span><span class="s2">&quot;Name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">address</span>
+        <span class="n">configDict</span><span class="p">[</span><span class="s2">&quot;Type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">myType</span>
+        <span class="n">configDict</span><span class="p">[</span><span class="s2">&quot;paused&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">paused</span><span class="p">)</span>
+        <span class="n">configDict</span><span class="p">[</span><span class="s2">&quot;AverageN&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">averageN</span><span class="p">)</span>
+        <span class="n">configDict</span><span class="p">[</span><span class="s2">&quot;Freq&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">freq</span><span class="p">)</span>
+        <span class="n">configDict</span><span class="p">[</span><span class="s2">&quot;AverageTime&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">averageTime</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">configDict</span></div>
+             
+<div class="viewcode-block" id="AttoCubeChannel.process"><a class="viewcode-back" href="../../Channel_Lib.html#Channel_Lib.attocube_channel.AttoCubeChannel.process">[docs]</a>    <span class="k">def</span> <span class="nf">process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">call</span><span class="p">):</span> 
+        <span class="c1"># Send the new value out for collection</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">process</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">copy</span><span class="p">()])</span></div>
+    
+    
+<div class="viewcode-block" id="AttoCubeChannel.loop"><a class="viewcode-back" href="../../Channel_Lib.html#Channel_Lib.attocube_channel.AttoCubeChannel.loop">[docs]</a>    <span class="k">def</span> <span class="nf">loop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">progress_callback</span><span class="p">):</span>
+        
+        <span class="n">theTime</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timeToAverage</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">+</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">averageTime</span><span class="p">)</span>
+        <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">paused</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="n">displacements</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">instrument</span><span class="o">.</span><span class="n">displacement</span><span class="o">.</span><span class="n">getAbsolutePositions</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ax1</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">displacements</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ax2</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">displacements</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">theTime</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">timeToAverage</span><span class="p">:</span>
+                <span class="n">ax1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ax1</span><span class="p">)</span>
+                <span class="n">ax2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ax2</span><span class="p">)</span>
+
+                <span class="n">total</span> <span class="o">=</span> <span class="n">ax1</span><span class="o">+</span><span class="n">ax2</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">outputs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">total</span><span class="p">),</span> <span class="s1">&#39;axis1&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">ax1</span><span class="p">),</span> <span class="s1">&#39;axis2&#39;</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">ax2</span><span class="p">),</span>
+                                <span class="s1">&#39;axis1STD&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">ax1</span><span class="p">),</span> <span class="s1">&#39;axis2STD&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">ax2</span><span class="p">),</span> <span class="s1">&#39;totalSTD&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">total</span><span class="p">),</span>
+                                <span class="s1">&#39;numPoints&#39;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">total</span><span class="p">),</span> <span class="s1">&#39;unit&#39;</span><span class="p">:</span> <span class="s1">&#39;pM&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;Ax1 Quality&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">instrument</span><span class="o">.</span><span class="n">displacement</span><span class="o">.</span><span class="n">getAxisSignalQuality</span><span class="p">(</span><span class="mi">0</span><span class="p">)[</span><span class="mi">1</span><span class="p">],</span>
+                                <span class="s1">&#39;Ax2 Quality&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">instrument</span><span class="o">.</span><span class="n">displacement</span><span class="o">.</span><span class="n">getAxisSignalQuality</span><span class="p">(</span><span class="mi">1</span><span class="p">)[</span><span class="mi">1</span><span class="p">],</span>
+                                <span class="s1">&#39;time&#39;</span><span class="p">:</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()}</span>
+                
+                <span class="n">progress_callback</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ax1</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ax2</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">timeToAverage</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">averageTime</span>
+            <span class="n">theTime</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="AttoCubeChannel.threadFinished"><a class="viewcode-back" href="../../Channel_Lib.html#Channel_Lib.attocube_channel.AttoCubeChannel.threadFinished">[docs]</a>    <span class="k">def</span> <span class="nf">threadFinished</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;THREAD FINISHED!&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">paused</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="n">worker</span>  <span class="o">=</span> <span class="n">global_vars</span><span class="o">.</span><span class="n">Worker</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">loop</span><span class="p">)</span>
+            <span class="n">worker</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">finished</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">threadFinished</span><span class="p">)</span>
+            <span class="n">worker</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">progress</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">process</span><span class="p">)</span>
+            <span class="n">worker</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">error</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">thread_error</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">threadPool</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="n">worker</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="AttoCubeChannel.thread_error"><a class="viewcode-back" href="../../Channel_Lib.html#Channel_Lib.attocube_channel.AttoCubeChannel.thread_error">[docs]</a>    <span class="k">def</span> <span class="nf">thread_error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">error</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="AttoCubeChannel.pause_unpause"><a class="viewcode-back" href="../../Channel_Lib.html#Channel_Lib.attocube_channel.AttoCubeChannel.pause_unpause">[docs]</a>    <span class="k">def</span> <span class="nf">pause_unpause</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">pause_unpause</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">paused</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="n">worker</span> <span class="o">=</span> <span class="n">global_vars</span><span class="o">.</span><span class="n">Worker</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">loop</span><span class="p">)</span>
+            <span class="n">worker</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">finished</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">threadFinished</span><span class="p">)</span>
+            <span class="n">worker</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">error</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">thread_error</span><span class="p">)</span>
+            <span class="n">worker</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">progress</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">process</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">threadPool</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="n">worker</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">threadPool</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">numPoints</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">rawSum</span> <span class="o">=</span> <span class="mi">0</span></div>
+        
+        
+            
+<div class="viewcode-block" id="AttoCubeChannel.ctrlWidget"><a class="viewcode-back" href="../../Channel_Lib.html#Channel_Lib.attocube_channel.AttoCubeChannel.ctrlWidget">[docs]</a>    <span class="k">def</span> <span class="nf">ctrlWidget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span> <span class="k">return</span> <span class="n">attoCubeCtrlWidget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span></div></div>
+            
+            
+<div class="viewcode-block" id="attoCubeCtrlWidget"><a class="viewcode-back" href="../../Channel_Lib.html#Channel_Lib.attocube_channel.attoCubeCtrlWidget">[docs]</a><span class="k">class</span> <span class="nc">attoCubeCtrlWidget</span><span class="p">(</span><span class="n">ctrlWidget</span><span class="p">):</span>
+    
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">channel</span><span class="p">:</span> <span class="n">AttoCubeChannel</span><span class="p">,</span> <span class="n">parent</span><span class="p">:</span> <span class="n">qtw</span><span class="o">.</span><span class="n">QMainWindow</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">channel</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mw</span> <span class="o">=</span> <span class="n">parent</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">optionsWidget</span> <span class="o">=</span> <span class="n">qtw</span><span class="o">.</span><span class="n">QWidget</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="n">channel</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s2">&quot; Settings&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mainLayout</span> <span class="o">=</span> <span class="n">qtw</span><span class="o">.</span><span class="n">QVBoxLayout</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">optionsWidget</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">formLayout</span> <span class="o">=</span> <span class="n">qtw</span><span class="o">.</span><span class="n">QFormLayout</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mainLayout</span><span class="o">.</span><span class="n">addLayout</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">formLayout</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">frequencyText</span> <span class="o">=</span> <span class="n">qtw</span><span class="o">.</span><span class="n">QLineEdit</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">averageTime</span> <span class="o">=</span> <span class="n">qtw</span><span class="o">.</span><span class="n">QLineEdit</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">averageN</span> <span class="o">=</span> <span class="n">qtw</span><span class="o">.</span><span class="n">QLineEdit</span><span class="p">()</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">frequencyText</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">channel</span><span class="o">.</span><span class="n">freq</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">averageTime</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">channel</span><span class="o">.</span><span class="n">averageTime</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">averageN</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">channel</span><span class="o">.</span><span class="n">averageN</span><span class="p">))</span>
+        
+        <span class="n">textEdits</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">frequencyText</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">averageTime</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">averageN</span><span class="p">]</span>
+        <span class="n">textFields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Samples per second&#39;</span><span class="p">,</span> <span class="s1">&#39;Averaging Time (s)&#39;</span><span class="p">,</span> <span class="s1">&#39;Average N&#39;</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">textEdits</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">formLayout</span><span class="o">.</span><span class="n">addRow</span><span class="p">(</span><span class="n">qtw</span><span class="o">.</span><span class="n">QLabel</span><span class="p">(</span><span class="n">textFields</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span> <span class="n">item</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">applyBtn</span> <span class="o">=</span> <span class="n">qtw</span><span class="o">.</span><span class="n">QPushButton</span><span class="p">(</span><span class="s1">&#39;Apply&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">applyBtn</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">apply</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mainLayout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">applyBtn</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">optionsWidget</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+        
+        
+<div class="viewcode-block" id="attoCubeCtrlWidget.apply"><a class="viewcode-back" href="../../Channel_Lib.html#Channel_Lib.attocube_channel.attoCubeCtrlWidget.apply">[docs]</a>    <span class="k">def</span> <span class="nf">apply</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">channel</span><span class="o">.</span><span class="n">averageN</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">averageN</span><span class="o">.</span><span class="n">text</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">channel</span><span class="o">.</span><span class="n">freq</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">frequencyText</span><span class="o">.</span><span class="n">text</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">channel</span><span class="o">.</span><span class="n">averageTime</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">averageTime</span><span class="o">.</span><span class="n">text</span><span class="p">())</span></div></div>
+        
+    
+        
+        
+            
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Jacob Nellis, Matt Francom, Mark Kimball.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

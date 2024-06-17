@@ -1,0 +1,7 @@
+styleSet module
+===============
+
+.. automodule:: styleSet
+   :members:
+   :undoc-members:
+   :show-inheritance:

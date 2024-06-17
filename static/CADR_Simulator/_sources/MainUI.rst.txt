@@ -1,0 +1,7 @@
+MainUI module
+=============
+
+.. automodule:: MainUI
+   :members:
+   :undoc-members:
+   :show-inheritance:

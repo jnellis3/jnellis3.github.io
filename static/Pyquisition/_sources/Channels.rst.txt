@@ -1,0 +1,24 @@
+.. _Channels:
+
+Instrument Channel
+===================
+
+The InstrumentRead channel is designed to request and receive readings from a selected instrument within the PyQuisition application. This user guide provides an overview of the available settings and functionalities for the InstrumentRead channel.
+InstrumentRead Channel Control Widget
+
+The control widget for the InstrumentRead channel allows you to configure and interact with the channel. The widget contains the following sections:
+
+    **Channel Name:** This field displays the current name of the channel. You can change the channel name by entering a new name in the text box and clicking the "apply" button.
+
+    **Instrument:** This drop-down menu allows you to select the instrument connected to the channel. To change the selected instrument, choose a new instrument from the drop-down menu and click the "apply" button.
+
+    **Timer [mS]:** This field sets the time interval (in milliseconds) at which the channel requests readings from the selected instrument. To change the timer setting, enter a new value in the text box and click the "apply" button.
+
+    **Instrument Settings:** This section displays the settings for the currently selected instrument. Depending on the instrument, you can configure various settings such as communication parameters or device-specific options.
+
+Interacting with the InstrumentRead Channel
+---------------------------------------------
+
+Once you have configured the InstrumentRead channel with the desired instrument and settings, the channel will periodically request readings from the selected instrument based on the specified timer interval. The received readings, along with the corresponding timestamps and units, will be displayed within the PyQuisition application.
+
+You can use the InstrumentRead channel to monitor the real-time values of various instruments, such as sensors or measurement devices, integrated into your system.

@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>User Guide &mdash; PostDAQ 1.1.1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="PostDAQ" href="modules.html" />
+    <link rel="prev" title="Installation Overview" href="Installation.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> PostDAQ
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Installation.html">Installation Overview</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">User Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#getting-started">Getting Started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#note-taking-syntax">Note Taking Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#plotting">Plotting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#analysis-features">Analysis Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#live-plotting">Live plotting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#syncing-notes-across-facilities">Syncing Notes across Facilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#further-information">Further information</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Program Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">PostDAQ</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">PostDAQ</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">User Guide</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/UserGuide.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="user-guide">
+<h1>User Guide<a class="headerlink" href="#user-guide" title="Permalink to this headline"></a></h1>
+<section id="getting-started">
+<span id="id1"></span><h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline"></a></h2>
+<p>When initially starting, it is recommended that each individual
+creates their own account. This is so that the program is able to
+keep track of users directories and organize notes for each user.</p>
+<p>When creating a password, the password will be encrypted with SHA256
+and saved in the ‘users.json’ file. When logging in, you will be presented with a screen like this:</p>
+<img alt="_images/homePage.png" class="align-center" src="_images/homePage.png" />
+<hr class="docutils" />
+<p>The workflow is set up so that when you are ready to begin a new ‘test’,
+you can define a new note using the ‘New Note’ button. This will allow you
+to define several tags for your note. This is what determines the directories
+that will be built for the project.</p>
+<img alt="_images/newNote.png" class="align-center" id="new-note-dialog-box" src="_images/newNote.png" />
+<hr class="docutils" />
+<img alt="_images/fileTree.png" class="align-center" src="_images/fileTree.png" />
+<p>rawdata, plots, and photos. The program will automatically save plots and photos
+to these directories when they are inserted into the note.</p>
+<p>The next step is to set up your data acquisition software (Labquisition in 552’s case)
+to save data files into the rawdata folder. This is so that the program knows
+what data to references when using the data analysis features. Saving raw data to this folder has an
+added benefit if you enable syncing across your testing facilities, as these files will also be carried over.</p>
+</section>
+<section id="note-taking-syntax">
+<h2>Note Taking Syntax<a class="headerlink" href="#note-taking-syntax" title="Permalink to this headline"></a></h2>
+<p>The note taking syntax follows a simplified version of the Markdown syntax. Please refer to the
+jekyll-commonmark documentation for more information on the syntax. Below is an example of some
+common uses of the syntax. The formatted text can be quickly toggled using the ‘Preview’ button.</p>
+<img alt="_images/syntaxInput.png" class="align-center" src="_images/syntaxInput.png" />
+<hr class="docutils" />
+<img alt="_images/syntaxOutput.png" class="align-center" src="_images/syntaxOutput.png" />
+</section>
+<hr class="docutils" />
+<section id="plotting">
+<h2>Plotting<a class="headerlink" href="#plotting" title="Permalink to this headline"></a></h2>
+<p>The data analysis features are designed to be used both in parallel with note taking, as well as
+post processing. The program is currently setup to take text files of raw data. When entering the
+data analysis section, the current notes ‘rawdata’ directory will be scanned for data files.</p>
+<p>A new plot can be created by clicking the New Plot –&gt; Stacked/Single Plot.</p>
+<img alt="_images/plotVars.png" class="align-center" src="_images/plotVars.png" />
+<hr class="docutils" />
+<p>When a data file is selected, the variables will be displayed and can be selected for plotting. The program will plot the entire array
+of selected data. A toolbar is displayed above the plot that allows the user to zoom, scroll, and save the plot. This is also where you can
+add a legend and label the x-y axis. The adjust points tab allows variable names, sizes, and colors to be adjusted.</p>
+<img alt="_images/plotExample.png" class="align-center" src="_images/plotExample.png" />
+<hr class="docutils" />
+<p>In the case of a stacked plot, the x-axis of both plots will be linked when scrolling. To compare data from different days, multiple plots can be
+created in the data analysis workspace. This workspace can be saved and loaded at any time. At the moment, each user can only save one workspace at a
+time, so if you want to save multiple plots from multiple workspaces, you will need to use the save plot feature to put the plot into your note.</p>
+</section>
+<section id="analysis-features">
+<h2>Analysis Features<a class="headerlink" href="#analysis-features" title="Permalink to this headline"></a></h2>
+<p>When zooming in on a plot, it can be helpful to look at the notes taken within the timeframe being plotted. The ‘refer to note’ button will open a
+box displaying all notes taken within the period of time being displayed on the plot.</p>
+<img alt="_images/refertonote.png" class="align-center" src="_images/refertonote.png" />
+<hr class="docutils" />
+<p>The ‘function call’ button allows you to access the builtin library of CADR functions. Stage parameters can be defined in the configuration file, and
+temperature and current data can be used to plot entropy, heat capacity, and thermal resistance based on the stage definitions. These values can be calculated
+for your selected range on the plot, and will be appended to the list of variables in the ‘add points’ tab.</p>
+<p><strong>NOTE</strong>
+The stages are defined in the conf.py file in PostDAQ’s main directory. Users can define any number of stages and will appear in the program underneath that title.
+If you would like the program to automatically populate the relevant raw data from the text file when selecting a stage, you will need to have the stage’s name be
+the same as the stage tags you are using in Labquisition.</p>
+<img alt="_images/analysis.png" class="align-center" src="_images/analysis.png" />
+<hr class="docutils" />
+<p>The ‘function call’ button will also allow you to utilize a rather simple equation solver. The nice feature of this calculator is that it can solve implicit calculations,
+and the equations don’t need to be set up in any specific order. This is a similar utility to the more developed ‘Engineering Equation Solver’ program.</p>
+<img alt="_images/calculator.png" class="align-center" src="_images/calculator.png" />
+<hr class="docutils" />
+<p><strong>IMPORTANT NOTE</strong>
+The data files must have the data (mm-dd-yyyy) in the file name. This is so that the program can determine the date of the data file.
+It will then use the timestamps created in the notes to determine which notes to display in the box.</p>
+</section>
+<section id="live-plotting">
+<h2>Live plotting<a class="headerlink" href="#live-plotting" title="Permalink to this headline"></a></h2>
+<p>One of the most useful features of PostDAQ is the ability to predefine relevant plots while taking notes.
+PostDAQ accomplishes this with variables called ‘TAGS’. When these are placed in the notes, the program will automatically generate and insert a
+plot into the note when using ‘file –&gt; compile’. The syntax for a tag is as follows:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">START_PLOT</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">plot</span> <span class="n">name</span><span class="o">&gt;</span> <span class="c1">#This tells the program that a plot is about to be defined, and the timestamps below will be used to determine the xlims</span>
+
+
+<span class="p">(</span><span class="n">timestamp</span> <span class="mi">1</span><span class="p">)</span> <span class="c1">#An example of a timestamp within the note</span>
+
+
+<span class="p">(</span><span class="n">timestamp</span> <span class="mi">2</span><span class="p">)</span> <span class="c1">#An example of a timestamp within the note</span>
+
+
+<span class="n">TAG</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">unit</span><span class="o">&gt;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">channel</span><span class="o">&gt;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">calibration</span><span class="o">&gt;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">name</span><span class="o">&gt;</span> <span class="c1">#This is the variable that should be included in the plot</span>
+<span class="n">TAG</span><span class="p">:</span> <span class="n">XLABEL</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">x</span><span class="o">-</span><span class="n">label</span><span class="o">&gt;</span>
+<span class="n">TAG</span><span class="p">:</span> <span class="n">INCLUDE</span> <span class="n">LEGEND</span>
+
+
+<span class="n">END_PLOT</span> <span class="c1">#This tells the program that the plot is finished being defined</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<p><strong>NOTE</strong> for code 552, the tag ‘QUICKPLOT’ can be used to automatically generate a plot with the current and temperature data. The program will automatically
+determine which data should be plotted based on the branches common naming conventions.</p>
+<p>When the ‘file –&gt; compile’ command is used, the program will convert the note into html format, running the command again will replace the previous html file.
+All of the relevant tags that can be applied to your note will appear in the bottom left hand window of the main window.</p>
+<p>The plots that are called with this syntax will be numbered and saved into the plots directory as well. Using this feature inserts a plot similar to the following…</p>
+<img alt="_images/plotInNote.png" class="align-center" src="_images/plotInNote.png" />
+</section>
+<hr class="docutils" />
+<section id="syncing-notes-across-facilities">
+<h2>Syncing Notes across Facilities<a class="headerlink" href="#syncing-notes-across-facilities" title="Permalink to this headline"></a></h2>
+<p>In the main.py file, there is a function in the homeWindow class called uploadNotes. This function can be setup to call
+the repository of your choice. The function is currently set up to call a repository on the local machine. Having a shared
+the repository allows for notes to be synced across multiple facilities. Using a github repository has the advantage of being able
+to see changes made to notes from different users.</p>
+</section>
+<section id="further-information">
+<h2>Further information<a class="headerlink" href="#further-information" title="Permalink to this headline"></a></h2>
+<p>This documentation is far from complete, but will hopefully allow you to get started using the program. If you have any questions,
+please email me at <a class="reference external" href="mailto:jnellis&#37;&#52;&#48;postdaq&#46;com">jnellis<span>&#64;</span>postdaq<span>&#46;</span>com</a> and I will be happy to help.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Installation.html" class="btn btn-neutral float-left" title="Installation Overview" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="modules.html" class="btn btn-neutral float-right" title="PostDAQ" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Jacob Nellis.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

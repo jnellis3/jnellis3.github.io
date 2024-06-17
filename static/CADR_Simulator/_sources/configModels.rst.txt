@@ -1,0 +1,7 @@
+configModels module
+===================
+
+.. automodule:: configModels
+   :members:
+   :undoc-members:
+   :show-inheritance:

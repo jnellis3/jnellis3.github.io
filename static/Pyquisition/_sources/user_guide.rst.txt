@@ -1,0 +1,16 @@
+.. _user_guide:
+
+User Guide
+===========
+
+Welcome to Pyquisition's user guide!
+
+.. toctree::
+    :maxdepth: 2
+    
+    configuration
+    MainWindow
+    Channels
+    Plotting
+    Examples
+    FAQ

@@ -1,0 +1,50 @@
+MainUI package
+==============
+
+The mainUI directory contains the main user interface for the program, along with 3 subpackages (Data_lib, display, and widget).
+The mainUI package is responsible for coordinating all the resources in the program and displaying them to the user.
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 1
+
+   MainUI.MainUI
+   MainUI.Data_Lib
+   MainUI.Displays
+   MainUI.widgets
+
+Submodules
+----------
+
+Main Window
+--------------------
+
+.. automodule:: MainUI.MainUI
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Channel Window's
+------------------------------
+
+There are two channel windows displayed in the main window (deactive and active).
+
+   **Active Channels Window:** Positioned on the left side of the main window, this dockable window displays a list of channels that are currently being processed. These channels will be recorded in the data file and can be paused or resumed using the main menu options.
+
+   **Deactive Channels Window:** Also located on the left side of the main window, below the Active Channels window, this dockable window shows a list of channels that are not currently being recorded. These channels can be activated by moving them to the Active Channels window.
+
+
+.. automodule:: MainUI.channel_windows
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: MainUI
+   :members:
+   :undoc-members:
+   :show-inheritance:

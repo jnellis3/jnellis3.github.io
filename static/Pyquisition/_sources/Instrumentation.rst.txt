@@ -1,0 +1,79 @@
+Instrumentation package
+=======================
+
+
+
+Instrument Models
+---------------------------------------
+
+The Instrument class represents a generic instrument in the PyQuisition application. 
+It serves as a base class for more specific instrument classes, 
+providing a standard interface for communication and defining functions that are expected to be implemented by the subclasses. 
+This class can be considered as an abstract class, where the functions provide a basic structure but may not return meaningful 
+results until they are overridden by more specific classes.
+
+Instrument Model Queueing System:
+---------------------------------------
+
+Because each instrumentModel is unique to a physical instrument, a queue in implemented to prevent multiple channels from making requests all at once.
+
+**General Process for how the InstrumentModel handles communication requests**
+
+   1. **Request Reading:** When a requestor (e.g., a channel or other component) needs a reading from an instrument, it calls the requestReading method of the instrument with the requestor object, the function to be executed, the arguments for the function, an optional request ID, and an optional priority flag. The priority flag can be set to True to prioritize the request at the front of the queue.
+
+   .. code-block:: python
+
+      instrument.requestReading(requestor, function, args, request_ID=None, priority=False)
+
+   2. **Add to Queue:** The requestReading method checks if the requestor is already in the queue when the priority flag is False. If not, it creates a QueueElement instance that wraps the request data and priority value. If the priority flag is True, the priority value is set to 0; otherwise, it's set to 1. The QueueElement instance is then added to the priority queue (self.readingQueue).
+
+   3. **Start Worker:** If there are no active threads in the thread pool, the requestReading method creates a new Worker instance and connects its progress signal to the reportStatus slot of the instrument. The worker is then started using the thread pool.
+
+   4. **Process Queue:** The handleQueue method of the instrument continuously processes the elements in the priority queue. It dequeues the next QueueElement instance from the queue with a timeout of 1 second, unwraps the request data, and calls the requested function with the provided arguments.
+
+   5. **Send Reading:** After processing the request, the handleQueue method directly calls the receiveReading method of the requestor with the reading data and the request ID as parameters.
+
+   .. code-block:: python
+
+      getattr(currentJob[0], "receiveReading")(reading=reading, request_ID=request_ID)
+
+   By using this queuing process, you can manage multiple reading requests from different components in a concurrent and efficient manner. The priority queue allows you to handle high-priority requests before other requests in the queue, and the thread pool prevents the overhead of constantly creating and destroying threads.
+
+   **Alternative Processes Discussed**
+
+   The following list describes some of the alternatives that were discuessed for handling instrument communication requests:
+
+      1. **Using a regular list instead of a priority queue:** In the initial version of the code, a regular list was used to store the reading requests. However, using a regular list doesn't support priority handling, making it difficult to prioritize specific requests. We decided to use a priority queue instead, as it allows for better control over the execution order of the requests based on their priority. It is also not thread safe.
+
+      2. **Using PyQt signals and slots:** Initially, we considered using PyQt signals and slots to send the reading data from the worker thread back to the requestor. However, this approach might lead to potential issues when multiple channels are connected to the same signal, as the signal would be emitted for all connected slots, not just for the requestor that is expecting the data. To avoid this issue, we decided to directly call the receiveReading method of the requestor from the worker thread.
+
+      3. **Constantly creating and destroying threads:** In one of our discussions, we explored the efficiency of constantly creating and destroying threads for handling reading requests. This approach would have a higher overhead, as creating and destroying threads can be computationally expensive. Instead, we decided to use a thread pool that manages a set of reusable threads, reducing the overhead and improving the efficiency of handling reading requests.
+
+      4. **Using a regular queue with unique sequence numbers:** At one point, we considered using a regular queue and assigning unique sequence numbers to the requests to maintain a strict FIFO order. This approach would work if all requests had the same priority. However, it would not provide a simple way to prioritize specific requests. Thus, we chose to use a priority queue that allows for easy prioritization of requests based on priority values.
+   
+
+Instrument Models (Subclasses)
+=================================================
+
+.. automodule:: Instrumentation.InstrumentModels
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Instrument Model Manager
+==========================
+
+The InstrumentModel_Manager class is responsible for managing instrument models in the application.
+
+.. automodule:: Instrumentation.Instrument_Model_Manager
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: Instrumentation
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,0 +1,45 @@
+MainUI.Displays package
+=======================
+
+Submodules
+----------
+
+MainUI.Displays.Converter\_widget module
+----------------------------------------
+
+.. automodule:: MainUI.Displays.Converter_widget
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+MainUI.Displays.Display\_Widget module
+--------------------------------------
+
+.. automodule:: MainUI.Displays.Display_Widget
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+MainUI.Displays.PlotWindow module
+---------------------------------
+
+.. automodule:: MainUI.Displays.PlotWindow
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+MainUI.Displays.data\_options\_widget module
+--------------------------------------------
+
+.. automodule:: MainUI.Displays.data_options_widget
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: MainUI.Displays
+   :members:
+   :undoc-members:
+   :show-inheritance:

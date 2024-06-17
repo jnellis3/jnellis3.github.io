@@ -1,0 +1,7 @@
+adr\_lib module
+===============
+
+.. automodule:: adr_lib
+   :members:
+   :undoc-members:
+   :show-inheritance:

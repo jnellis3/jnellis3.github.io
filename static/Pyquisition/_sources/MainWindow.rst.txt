@@ -1,0 +1,72 @@
+.. _MainWindow:
+
+Main User Interface
+------------
+
+PyQuisition is a graphical user interface (GUI) program designed to manage and control data acquisition tasks. This user guide covers the main features, functionalities, and layout of the PyQuisition program's main window.
+
+Main Window Layout
+-------------------
+
+    The main window of the PyQuisition program consists of the following components, organized to provide an intuitive and user-friendly experience:
+
+        **Main Menu:** Located at the top of the main window, the main menu provides access to essential functionalities, such as opening and saving configuration files and pausing or resuming active channels.
+
+        **Active Channels Window:** Positioned on the left side of the main window, this dockable window displays a list of channels that are currently being processed. These channels will be recorded in the data file and can be paused or resumed using the main menu options.
+
+        **Deactive Channels Window:** Also located on the left side of the main window, below the Active Channels window, this dockable window shows a list of channels that are not currently being recorded. These channels can be activated by moving them to the Active Channels window.
+
+        **Central Widget (QMdiArea):** Occupying the central area of the main window, this widget can contain multiple plot windows displaying various types of data visualizations based on the active channels' data. This area is designed to provide a flexible workspace for organizing and arranging plot windows as needed.
+
+Main Menu Options
+-----------------
+
+The PyQuisition program's main menu consists of several categories, each containing various actions and submenus to help you interact with the application effectively. Here's a breakdown of the main menu options for users:
+
+    **File:** This category provides options for managing configuration files.
+
+        **Open:** Loads a saved configuration file.
+
+        **Save:** Saves the current configuration to an existing file.
+
+        **Save As:** Saves the current configuration to a new file.
+
+    **Program:** This category offers actions to control the program's execution.
+
+        **Pause:** Pauses the program.
+
+        **Resume:** Resumes the program after it has been paused.
+
+    **Data:** This category handles data-related operations.
+
+        **DataFile Options:** Opens the Data Options Window where you can adjust settings related to data files.
+
+        **Data Converter:** Opens the Data Converter window for converting data between different formats.
+
+    **Plot:** This category provides options for managing plots.
+
+        **New Plot:** Creates a new plot window.
+
+        **Tile Plots:** Arranges all open plot windows in a tiled layout.
+
+    **Add Channel:** This category offers options to add various instrument and calculator channels. The channels are organized into two subcategories:
+
+        **Instrument Channels:** Provides options to add instrument channels, organized into two subcategories:
+
+            **Simple Read:** Offers options to add simple read instrument channels.
+
+                **Attocube Channel:** Adds an Attocube channel.
+
+                **Instrument Channel:** Adds a generic instrument channel.
+
+                **Instrument Channel Test:** Adds a test instrument channel.
+
+            **Controllers:** Provides options to add controller channels.
+
+                **Temperature Stepper Channel:** Adds a temperature stepper channel.
+
+        **Calculator Channels:** Contains options for adding calculator channels.
+        
+            **Math Channel:** Adds a math channel.
+
+    **Help:** This category is currently empty but can be used to provide help-related information and resources in the future.

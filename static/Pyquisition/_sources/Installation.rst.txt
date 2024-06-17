@@ -1,0 +1,78 @@
+Installation Overview
+=====================
+
+.. _installation:
+
+This installation overview will guide you through the process of installing Pyquisition from GitHub. The process involves cloning the repository, installing the required packages using pip, and starting the program.
+
+**Cloning the Repository**
+
+    1. Open a terminal (Command Prompt on Windows, Terminal on macOS).
+
+    2. Navigate to the directory where you want to clone the repository using the cd command.
+
+    3. Clone the repository by running the following command:
+
+    .. code-block:: bash
+        
+        git clone git@github.com:mfrancom/Pyquisition.git
+
+    If you need access to the respository, please contact one of the developers.
+
+    If you need to add ssh keys to your GitHub account, follow the instructions `here <https://help.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh>`_.
+    
+    4. Navigate to the repo's source directory using the cd command:
+
+    .. code-block:: bash
+
+        cd Pyquisition/src
+
+**Installing Required Packages**
+
+    1. It is recommended to create a virtual environment before installing the required packages. To do this, run the following command:
+
+    .. code-block:: bash
+
+        python3 -m venv venv
+
+    On Windows, use python instead of python3:
+
+    .. code-block:: bash
+
+        python -m venv venv
+
+    Activate the virtual environment:
+
+        On macOS:
+
+        .. code-block:: bash
+
+            source venv/bin/activate
+
+        On Windows:
+
+        .. code-block:: bash
+
+            .\venv\Scripts\activate
+
+    2. Install the required packages using pip. If the repository contains a requirements.txt file, run the following command:
+
+    .. code-block:: bash
+
+        pip install -r requirements.txt
+
+    If there is no requirements.txt file, refer to the repository's documentation to find the required packages and install them using pip install package-name.
+
+    3. Start the program from the command line:
+    
+        On macOS:
+
+        .. code-block:: bash
+
+            python3 Pyquisition.py
+
+        On Windows:
+
+        .. code-block:: bash
+
+            python Pyquisition.py

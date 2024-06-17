@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Instrument Channel &mdash; Pyquisition 1.1.1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="&lt;no title&gt;" href="modules.html" />
+    <link rel="prev" title="Main User Interface" href="MainWindow.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> Pyquisition
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Guide Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Installation.html">Installation Overview</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="user_guide.html">User Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="configuration.html">Configuration and Data Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="MainWindow.html">Main User Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="MainWindow.html#main-window-layout">Main Window Layout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="MainWindow.html#main-menu-options">Main Menu Options</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Instrument Channel</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#interacting-with-the-instrumentread-channel">Interacting with the InstrumentRead Channel</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer Guide Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Pyquisition.html">Configuration Window</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MainUI.html">MainUI package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Instrumentation.html">Instrumentation package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Instrumentation.html#module-Instrumentation.InstrumentModels">Instrument Models (Subclasses)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Instrumentation.html#instrument-model-manager">Instrument Model Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Channel_Lib.html">Channel_Lib package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Channel_Lib.widgets.html">Channel Widgets</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Pyquisition</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="user_guide.html">User Guide</a></li>
+      <li class="breadcrumb-item active">Instrument Channel</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/Channels.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="instrument-channel">
+<span id="channels"></span><h1>Instrument Channel<a class="headerlink" href="#instrument-channel" title="Permalink to this headline"></a></h1>
+<p>The InstrumentRead channel is designed to request and receive readings from a selected instrument within the PyQuisition application. This user guide provides an overview of the available settings and functionalities for the InstrumentRead channel.
+InstrumentRead Channel Control Widget</p>
+<p>The control widget for the InstrumentRead channel allows you to configure and interact with the channel. The widget contains the following sections:</p>
+<blockquote>
+<div><p><strong>Channel Name:</strong> This field displays the current name of the channel. You can change the channel name by entering a new name in the text box and clicking the “apply” button.</p>
+<p><strong>Instrument:</strong> This drop-down menu allows you to select the instrument connected to the channel. To change the selected instrument, choose a new instrument from the drop-down menu and click the “apply” button.</p>
+<p><strong>Timer [mS]:</strong> This field sets the time interval (in milliseconds) at which the channel requests readings from the selected instrument. To change the timer setting, enter a new value in the text box and click the “apply” button.</p>
+<p><strong>Instrument Settings:</strong> This section displays the settings for the currently selected instrument. Depending on the instrument, you can configure various settings such as communication parameters or device-specific options.</p>
+</div></blockquote>
+<section id="interacting-with-the-instrumentread-channel">
+<h2>Interacting with the InstrumentRead Channel<a class="headerlink" href="#interacting-with-the-instrumentread-channel" title="Permalink to this headline"></a></h2>
+<p>Once you have configured the InstrumentRead channel with the desired instrument and settings, the channel will periodically request readings from the selected instrument based on the specified timer interval. The received readings, along with the corresponding timestamps and units, will be displayed within the PyQuisition application.</p>
+<p>You can use the InstrumentRead channel to monitor the real-time values of various instruments, such as sensors or measurement devices, integrated into your system.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="MainWindow.html" class="btn btn-neutral float-left" title="Main User Interface" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="modules.html" class="btn btn-neutral float-right" title="&lt;no title&gt;" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Jacob Nellis, Matt Francom, Mark Kimball.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

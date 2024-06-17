@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Channel_Lib.channel &mdash; Pyquisition 1.1.1 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> Pyquisition
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Guide Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Installation.html">Installation Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user_guide.html">User Guide</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer Guide Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Pyquisition.html">Configuration Window</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../MainUI.html">MainUI package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Instrumentation.html">Instrumentation package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Instrumentation.html#module-Instrumentation.InstrumentModels">Instrument Models (Subclasses)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Instrumentation.html#instrument-model-manager">Instrument Model Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Channel_Lib.html">Channel_Lib package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Channel_Lib.widgets.html">Channel Widgets</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Pyquisition</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">Channel_Lib.channel</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for Channel_Lib.channel</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">PyQt6</span> <span class="kn">import</span> <span class="n">QtGui</span><span class="p">,</span> <span class="n">QtWidgets</span> <span class="k">as</span> <span class="n">qtw</span>
+<span class="kn">from</span> <span class="nn">PyQt6</span> <span class="kn">import</span> <span class="n">QtCore</span> <span class="k">as</span> <span class="n">qtc</span>
+<span class="kn">from</span> <span class="nn">PyQt6</span> <span class="kn">import</span> <span class="n">QtGui</span> <span class="k">as</span> <span class="n">qtg</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+
+
+<div class="viewcode-block" id="ChannelSignals"><a class="viewcode-back" href="../../Channel_Lib.html#Channel_Lib.channel.ChannelSignals">[docs]</a><span class="k">class</span> <span class="nc">ChannelSignals</span><span class="p">(</span><span class="n">qtc</span><span class="o">.</span><span class="n">QObject</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    These are the signals relevent to channels.</span>
+<span class="sd">    Channels should make sure to emit these signals when they have new data to be logged, plots to be updated, etc.</span>
+
+<span class="sd">    :ivar inputChanged:     This signal should be emitted when the inputs to the channel have changed. The emitted object</span>
+<span class="sd">                            should be in the form of an array: [channelName:str, inputs:dict].</span>
+
+<span class="sd">    :ivar outputChanged:    This signal should be emitted when the outputs of the channel have changed. The emitted object</span>
+<span class="sd">                            should be in the form of an array: [channelName:str, outputs:dict].</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">inputChanged</span> <span class="o">=</span> <span class="n">qtc</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="nb">object</span><span class="p">)</span>
+    <span class="n">outputChanged</span> <span class="o">=</span> <span class="n">qtc</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="nb">object</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Channel"><a class="viewcode-back" href="../../Channel_Lib.html#Channel_Lib.channel.Channel">[docs]</a><span class="k">class</span> <span class="nc">Channel</span><span class="p">(</span><span class="n">qtg</span><span class="o">.</span><span class="n">QStandardItem</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    =============================================================================================================================</span>
+<span class="sd">    This is an abstract class for any channel that will be placed in the channelWidgets.</span>
+<span class="sd">    The channel class is a subclass of QStandardItem, so it can be added to a QStandardItemModel.</span>
+
+
+<span class="sd">    :param name:           Name of the channel, this can be any string, but should be</span>
+<span class="sd">                        unique to the channel. This is used to identify the channel when it&#39;s outputs</span>
+<span class="sd">                        are used as inputs to other channels or display widgets.</span>
+<span class="sd">    </span>
+<span class="sd">    :param configDict:  Dictionary containing the configuration of the channel. If present, the restoreState</span>
+<span class="sd">                        method will be called to restore the channel to the state it was in when the dictionary.</span>
+
+<span class="sd">    :ivar name:         Name of the channel</span>
+
+<span class="sd">    :ivar inputs:        Dictionary containing the inputs to the channel. Keys are the names of the inputs. The values</span>
+<span class="sd">                        are the input objects. The input objects can be any object, but should stay consistent across</span>
+<span class="sd">                        a subclass of Channel. For example, if a subclass of &#39;InstrumentChannel&#39; is defined and listens</span>
+<span class="sd">                        to an &#39;Instrument&#39; object as an input, then the input object should be an &#39;Instrument&#39; object.</span>
+<span class="sd">    </span>
+<span class="sd">    :ivar outputs:       Dictionary containing the outputs of the channel. Keys are the names of the outputs. These values</span>
+<span class="sd">                        get updated after the process method is called. The output objects can then be used as inputs to </span>
+<span class="sd">                        other channels or display widgets.</span>
+
+<span class="sd">    :ivar children:      List of channels that are children of this channel. This is used to keep track of the channels. In </span>
+<span class="sd">                        the case of an instrument channel, it&#39;s children are going to be the output values of the instrument.</span>
+<span class="sd">                        If the channel is a mux channel however, it&#39;s children are going to be the channels that are connected </span>
+<span class="sd">                        to the mux.</span>
+
+<span class="sd">    :ivar signals:       This is a class that contains the signals that the channel can emit. Channels use these signals to inform</span>
+<span class="sd">                        the rest of the program when data should be logged, plots should be updated, etc.</span>
+
+<span class="sd">    =============================================================================================================================</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">channelName</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">configDict</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parent</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setBackground</span><span class="p">(</span><span class="n">qtg</span><span class="o">.</span><span class="n">QColor</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">myParent</span> <span class="o">=</span> <span class="n">parent</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">children</span> <span class="o">=</span> <span class="p">[]</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">channelName</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">outputs</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">paused</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">signals</span> <span class="o">=</span> <span class="n">ChannelSignals</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">ctrlWidget_active</span> <span class="o">=</span> <span class="kc">False</span>
+        
+        <span class="k">if</span> <span class="n">configDict</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">restoreState</span><span class="p">(</span><span class="n">configDict</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">initialize</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">setSelectable</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setEditable</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+
+
+        
+            
+<div class="viewcode-block" id="Channel.initialize"><a class="viewcode-back" href="../../Channel_Lib.html#Channel_Lib.channel.Channel.initialize">[docs]</a>    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method will be called if the channel is being initialized without a configDict. This function should setup the channel</span>
+<span class="sd">        with default values.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span></div>
+
+<div class="viewcode-block" id="Channel.addInput"><a class="viewcode-back" href="../../Channel_Lib.html#Channel_Lib.channel.Channel.addInput">[docs]</a>    <span class="k">def</span> <span class="nf">addInput</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;input&#39;</span><span class="p">,</span> <span class="n">inputObject</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        addInput When called, a dictionary key &#39;name&#39; will be set to the inputObject in self.inputs</span>
+
+<span class="sd">        :param name: The dictionary key value for the inputObject</span>
+<span class="sd">        :param inputObject: The input object to be attached</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">inputObject</span></div>
+
+<div class="viewcode-block" id="Channel.addOutput"><a class="viewcode-back" href="../../Channel_Lib.html#Channel_Lib.channel.Channel.addOutput">[docs]</a>    <span class="k">def</span> <span class="nf">addOutput</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;output&#39;</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        addOutput will add a dictionary key &#39;name&#39; and will set it&#39;s value to the outputObject &#39;output&#39;</span>
+<span class="sd">        </span>
+<span class="sd">        :param name: The dictionary key value for the output</span>
+<span class="sd">        :param output: The object being set as the output</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">output</span></div>
+
+<div class="viewcode-block" id="Channel.ctrlWidget"><a class="viewcode-back" href="../../Channel_Lib.html#Channel_Lib.channel.Channel.ctrlWidget">[docs]</a>    <span class="k">def</span> <span class="nf">ctrlWidget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        ctrlWidget will return an optional control widget for the channel that will display in the MDI area</span>
+<span class="sd">        for the user to interact with. The parent passed into this function will always be the MainWindow, so that</span>
+<span class="sd">        the control widget being implemented is able to access any variables in the program it might need.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
+    
+    <span class="k">def</span> <span class="nf">_clear_children</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">removeRows</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rowCount</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">children</span> <span class="o">=</span> <span class="p">[]</span>
+
+<div class="viewcode-block" id="Channel.process"><a class="viewcode-back" href="../../Channel_Lib.html#Channel_Lib.channel.Channel.process">[docs]</a>    <span class="k">def</span> <span class="nf">process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">outputs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        When this function is called, the channels outputs will be converted into child objects to be displayed on the tree view.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">outputs</span><span class="p">:</span><span class="nb">dict</span> <span class="o">=</span> <span class="n">outputs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">outputs</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">):</span>
+                <span class="n">tempItem</span> <span class="o">=</span> <span class="n">qtg</span><span class="o">.</span><span class="n">QStandardItem</span><span class="p">()</span>
+                <span class="n">tempItem</span><span class="o">.</span><span class="n">setEditable</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+                <span class="n">tempItem</span><span class="o">.</span><span class="n">setSelectable</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+                <span class="n">tempItem</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">outputs</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">item</span><span class="p">)]))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tempItem</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">setChild</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">tempItem</span><span class="p">)</span>      
+
+            <span class="k">if</span> <span class="n">item</span> <span class="o">==</span> <span class="s1">&#39;time&#39;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">fromtimestamp</span><span class="p">(</span><span class="n">outputs</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">item</span><span class="p">)])))</span>
+            <span class="k">elif</span> <span class="n">item</span> <span class="o">==</span> <span class="s1">&#39;value&#39;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%.4f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">outputs</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">item</span><span class="p">)]))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">outputs</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">item</span><span class="p">)]))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">outputs</span> <span class="o">=</span> <span class="n">outputs</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">outputChanged</span><span class="o">.</span><span class="n">emit</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">outputs</span><span class="p">])</span>
+            
+        <span class="k">return</span></div>
+    
+<div class="viewcode-block" id="Channel.saveState"><a class="viewcode-back" href="../../Channel_Lib.html#Channel_Lib.channel.Channel.saveState">[docs]</a>    <span class="k">def</span> <span class="nf">saveState</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Save state should return a dictionary containing the current state of the channel. The restoreState function should be able</span>
+<span class="sd">        to use this dictionary to restore the channel to the state it was in when the dictionary was created.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">configDict</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">configDict</span><span class="p">[</span><span class="s1">&#39;Name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+        <span class="n">configDict</span><span class="p">[</span><span class="s2">&quot;Type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+        <span class="n">configDict</span><span class="p">[</span><span class="s1">&#39;paused&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">paused</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ctrlWidget_active</span><span class="p">:</span>
+            <span class="n">configDict</span><span class="p">[</span><span class="s2">&quot;control_widget&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;True&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">configDict</span><span class="p">[</span><span class="s2">&quot;control_widget&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;False&quot;</span>
+        <span class="k">return</span> <span class="n">configDict</span></div>
+    
+<div class="viewcode-block" id="Channel.restoreState"><a class="viewcode-back" href="../../Channel_Lib.html#Channel_Lib.channel.Channel.restoreState">[docs]</a>    <span class="k">def</span> <span class="nf">restoreState</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The restoreState function takes a dictionary and uses it to restore the channel to the state it was in when the dictionary.</span>
+
+<span class="sd">        :param state: The dictionary containing the state of the channel</span>
+<span class="sd">        :param type: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="s1">&#39;Name&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ctrlWidget_active</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="s1">&#39;control_widget&#39;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">state</span><span class="p">[</span><span class="s2">&quot;paused&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;False&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pause_unpause</span><span class="p">()</span>
+
+        <span class="k">return</span></div>
+        
+<div class="viewcode-block" id="Channel.getOutputs"><a class="viewcode-back" href="../../Channel_Lib.html#Channel_Lib.channel.Channel.getOutputs">[docs]</a>    <span class="k">def</span> <span class="nf">getOutputs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> 
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;getOutputs will return the output dictionary currently assigned for the channel without modifying or processing them</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputs</span></div>
+
+<div class="viewcode-block" id="Channel.pause_unpause"><a class="viewcode-back" href="../../Channel_Lib.html#Channel_Lib.channel.Channel.pause_unpause">[docs]</a>    <span class="k">def</span> <span class="nf">pause_unpause</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        puase_unpause is used to stop or start a channel. A specific channel may want to override this function to implement additional</span>
+<span class="sd">        functionality for the channel. The specific channel can than call super().pause_unpause() to implement the default functionality of </span>
+<span class="sd">        changing the background color and toggling the paused variable.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">paused</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">paused</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setBackground</span><span class="p">(</span><span class="n">qtg</span><span class="o">.</span><span class="n">QColor</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">255</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">paused</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setBackground</span><span class="p">(</span><span class="n">qtg</span><span class="o">.</span><span class="n">QColor</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Channel.setName"><a class="viewcode-back" href="../../Channel_Lib.html#Channel_Lib.channel.Channel.setName">[docs]</a>    <span class="k">def</span> <span class="nf">setName</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets the name of the instrument and sets the channel text on the treeview to reflect that.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">return</span></div></div>
+
+<div class="viewcode-block" id="ctrlWidget"><a class="viewcode-back" href="../../Channel_Lib.html#Channel_Lib.channel.ctrlWidget">[docs]</a><span class="k">class</span> <span class="nc">ctrlWidget</span><span class="p">(</span><span class="n">qtw</span><span class="o">.</span><span class="n">QDockWidget</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Abstract control widget for the channel object</span>
+
+<span class="sd">    :param channel: The channel object that this widget is associated with</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">channel</span><span class="p">:</span><span class="n">Channel</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">channel</span> <span class="o">=</span> <span class="n">channel</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">channel</span><span class="o">.</span><span class="n">ctrlWidget_active</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setFeatures</span><span class="p">(</span><span class="n">qtw</span><span class="o">.</span><span class="n">QDockWidget</span><span class="o">.</span><span class="n">DockWidgetFeature</span><span class="o">.</span><span class="n">DockWidgetFloatable</span> <span class="o">|</span> <span class="n">qtw</span><span class="o">.</span><span class="n">QDockWidget</span><span class="o">.</span><span class="n">DockWidgetFeature</span><span class="o">.</span><span class="n">DockWidgetMovable</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setSizePolicy</span><span class="p">(</span><span class="n">qtw</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Policy</span><span class="o">.</span><span class="n">Expanding</span><span class="p">,</span> <span class="n">qtw</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Policy</span><span class="o">.</span><span class="n">Expanding</span><span class="p">)</span>
+    
+<div class="viewcode-block" id="ctrlWidget.closeEvent"><a class="viewcode-back" href="../../Channel_Lib.html#Channel_Lib.channel.ctrlWidget.closeEvent">[docs]</a>    <span class="k">def</span> <span class="nf">closeEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">channel</span><span class="o">.</span><span class="n">ctrlWidget_active</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;closing&#39;</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Jacob Nellis, Matt Francom, Mark Kimball.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

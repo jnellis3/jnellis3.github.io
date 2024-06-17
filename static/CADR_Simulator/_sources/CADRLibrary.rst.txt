@@ -1,0 +1,93 @@
+.. _Model Equations:
+
+Defining CADR components
+----------------------
+
+If we want to start a new simulation, we can define a CADR by placing a .ini file in the ConfigurationFile folder. In is file, we define a stage with the following format:
+
+.. code-block:: bash
+
+    [Stages]
+
+        [stage4]
+        name = stage1 #This is what the stage channel will be called
+        material = 'ggg' #Currently supports ggg, glf, and cpa
+        moles = 1./3.7 #moles of salt in stage
+        max_current = 4 #max current allowed before potential quench
+        i_to_b = 1.3 #A/T, ratio used to calculate field
+        parasitic = 0 #constant parasitic load, could also be a function of stage temp.
+        iso_mag_time = 1000 #time spent during adiabatic magnetization
+        iso_demag_time = 1000 #time spend during isothermal demagnetization
+
+        [stage3]
+        name = stage3
+        material = 'cpa'
+        moles = 1./6.07
+        max_current = 4
+        i_to_b = 0.3
+        parasitic = 0
+        iso_mag_time = 1000
+        iso_demag_time = 1000
+
+        [stage2]
+        name = stage2
+        material = 'cpa'
+        moles = 1./6.07
+        max_current = 4
+        i_to_b = 0.3
+        parasitic = 0
+        iso_mag_time = 1000
+        iso_demag_time = 1000
+
+        [stage1]
+        name = stage1
+        material = 'cpa'
+        moles = 1./19.
+        max_current = 0.8
+        i_to_b = 0.2
+        parasitic = 0
+        iso_mag_time = 1000
+        iso_demag_time = 1000
+
+This is the example configuration file for the 3-stage CADR.
+
+
+Defining a CADR Configuration
+------------------------------
+In order to for the simulation to run this configuration on startup, we need to define 
+the thermal links between stages and switches. This is done in the update() function in the mainUI.py file.
+
+First we need to define which stages are linked together, we do this with the takeStep funciton:
+
+.. code-block:: python
+
+    '''
+    takeStep function defines ordering of CADR, an array of components is 
+    passed from warmest to coldest. Here we are saying that the baseplate is 
+    connected to stage3, which is connected to stage2, followed by stage1 and the 
+    focal plane array.
+    '''
+    cadr.takeStep([bp, stage3, stage2, stage1, FPA])
+
+    '''
+    We now define the thermal path from each component to the next.
+
+    For each stage we pass an array telling the simulation what type of 
+    switch is on the warm and cold side of the stage.
+    '''
+
+    #Stage 3 has an active gas-gap heat switch on the warm end an a passive gas-gap HS on the cold end.
+    stage3.resistances = [AGGHS, PGGHS]
+
+    #Stage 2 connects to stage 3 with a PGGHS and stage 1 with a superconducting HS
+    stage2.resistances = [PGGHS, SCHS]
+
+    #stage 1 connects to stage 2 with a SCHS and to the FPA with a copper strap
+    stage1.resistances = [SCHS, cu110(A_c, L)]
+
+Several heat switches with differing target temperatures are included in the cadr_analysis library.
+New heat switches can easily be added into this library and used in the simulation. A function would need 
+to be defined that takes two temperatures, and returns the conductance of the switch.
+
+
+

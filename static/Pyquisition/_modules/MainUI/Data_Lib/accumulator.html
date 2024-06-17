@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MainUI.Data_Lib.accumulator &mdash; Pyquisition 1.1.1 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html" class="icon icon-home"> Pyquisition
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Guide Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Installation.html">Installation Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user_guide.html">User Guide</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer Guide Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Pyquisition.html">Configuration Window</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../MainUI.html">MainUI package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Instrumentation.html">Instrumentation package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Instrumentation.html#module-Instrumentation.InstrumentModels">Instrument Models (Subclasses)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Instrumentation.html#instrument-model-manager">Instrument Model Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Channel_Lib.html">Channel_Lib package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Channel_Lib.widgets.html">Channel Widgets</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Pyquisition</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">MainUI.Data_Lib.accumulator</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for MainUI.Data_Lib.accumulator</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;../..&#39;</span><span class="p">)</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">from</span> <span class="nn">utils_lib.global_vars</span> <span class="kn">import</span> <span class="n">recordError</span>
+<span class="kn">from</span> <span class="nn">PyQt6.QtCore</span> <span class="kn">import</span> <span class="n">pyqtSlot</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+
+
+
+<div class="viewcode-block" id="Accumulator"><a class="viewcode-back" href="../../../MainUI.Data_Lib.html#MainUI.Data_Lib.accumulator.Accumulator">[docs]</a><span class="k">class</span> <span class="nc">Accumulator</span><span class="p">:</span>
+
+
+
+
+
+
+<span class="w">    </span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    =================================================================================================</span>
+<span class="sd">    Object responsible for recording all outputs of channels displayed in the actChW.</span>
+<span class="sd">    For the time being, this will only record in the long format. This means the file will need to be</span>
+<span class="sd">    converted during post processing in order go to wide format.</span>
+
+<span class="sd">    :param file_location:     Location of the file to record to</span>
+<span class="sd">    :type file_location:      str</span>
+
+<span class="sd">    :param config:          Dictionary containing the configuration of the channel. If present, the restoreState </span>
+<span class="sd">                            method will be called to restore the channel to the state it was in when config was created.</span>
+<span class="sd">    :type config:           dict</span>
+
+<span class="sd">    :param parent:          The parent channel window (will likely always be actChW). This is used to get the channels displayed in the actChW.</span>
+
+<span class="sd">    :param autoUpdate:      If true, the file name will change at midnight with the new date appended on</span>
+
+<span class="sd">    :param appendDate:      If true, the date will be appended to the file name</span>
+
+<span class="sd">    :param timer:           Timer used to call the process method</span>
+
+<span class="sd">    =================================================================================================</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_location</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span><span class="nb">dict</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">fileLocation</span> <span class="o">=</span> <span class="n">file_location</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">format</span> <span class="o">=</span> <span class="s2">&quot;wide&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">autoUpdate</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">appendDate</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">(</span><span class="n">date</span><span class="o">.</span><span class="n">year</span><span class="p">,</span> <span class="n">date</span><span class="o">.</span><span class="n">month</span><span class="p">,</span> <span class="n">date</span><span class="o">.</span><span class="n">day</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">activeChannels</span> <span class="o">=</span> <span class="n">parent</span>
+
+        <span class="k">if</span> <span class="n">config</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">restoreState</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">openFile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fileLocation</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">time_since_flush</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+
+
+
+
+
+
+
+
+
+
+
+    <span class="c1">################################</span>
+    <span class="c1">#   Configuration Functions    #</span>
+    <span class="c1">################################</span>
+
+
+
+
+<div class="viewcode-block" id="Accumulator.initialize"><a class="viewcode-back" href="../../../MainUI.Data_Lib.html#MainUI.Data_Lib.accumulator.Accumulator.initialize">[docs]</a>    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Default settings</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fileLocation</span> <span class="o">=</span> <span class="s2">&quot;Configurations/tmp.txt&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">format</span> <span class="o">=</span> <span class="s1">&#39;long&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">autoUpdate</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">appendDate</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="Accumulator.restoreState"><a class="viewcode-back" href="../../../MainUI.Data_Lib.html#MainUI.Data_Lib.accumulator.Accumulator.restoreState">[docs]</a>    <span class="k">def</span> <span class="nf">restoreState</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">fileLocation</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="s2">&quot;Location&quot;</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">state</span><span class="p">[</span><span class="s2">&quot;AutoUpdate&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;True&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">autoUpdate</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="k">if</span> <span class="n">state</span><span class="p">[</span><span class="s2">&quot;AppendDate&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;True&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">appendDate</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="k">return</span></div>
+
+<div class="viewcode-block" id="Accumulator.saveState"><a class="viewcode-back" href="../../../MainUI.Data_Lib.html#MainUI.Data_Lib.accumulator.Accumulator.saveState">[docs]</a>    <span class="k">def</span> <span class="nf">saveState</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="n">fileName</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">openFile</span><span class="o">.</span><span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">openFile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">openFile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">fileName</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">)</span>
+
+        <span class="n">configDict</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="n">configDict</span><span class="p">[</span><span class="s2">&quot;Location&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fileLocation</span>
+
+        <span class="n">configDict</span><span class="p">[</span><span class="s2">&quot;Format&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;long&quot;</span> <span class="c1">#Should/could/might have more options in the future</span>
+
+        <span class="n">configDict</span><span class="p">[</span><span class="s2">&quot;AppendDate&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">appendDate</span><span class="p">)</span>
+        <span class="n">configDict</span><span class="p">[</span><span class="s2">&quot;AutoUpdate&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">autoUpdate</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">configDict</span></div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <span class="c1">################################</span>
+    <span class="c1">#       Data Functions         #</span>
+    <span class="c1">################################</span>
+
+
+
+
+
+<div class="viewcode-block" id="Accumulator.get_filename"><a class="viewcode-back" href="../../../MainUI.Data_Lib.html#MainUI.Data_Lib.accumulator.Accumulator.get_filename">[docs]</a>    <span class="k">def</span> <span class="nf">get_filename</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function will append a new data to the filename if autoUpdate is true and appendDate is true.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Check if we should flush the file into memory</span>
+        <span class="k">if</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_since_flush</span> <span class="o">+</span> <span class="mi">60</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">openFile</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">time_since_flush</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+        <span class="n">fileLoc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fileLocation</span>
+
+        <span class="c1"># If we are appending the date, we need to add it to the file name</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">appendDate</span><span class="p">:</span>
+            <span class="n">currentDate</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+            <span class="n">currentDate</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">(</span><span class="n">currentDate</span><span class="o">.</span><span class="n">year</span><span class="p">,</span> <span class="n">currentDate</span><span class="o">.</span><span class="n">month</span><span class="p">,</span> <span class="n">currentDate</span><span class="o">.</span><span class="n">day</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">autoUpdate</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">date</span> <span class="o">=</span> <span class="n">currentDate</span>
+            <span class="n">file_location</span> <span class="o">=</span> <span class="n">fileLoc</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">,</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="s1">&#39;_&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">date</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;.txt&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">file_location</span> <span class="o">=</span> <span class="n">fileLoc</span>
+        
+
+        <span class="k">if</span> <span class="n">file_location</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">openFile</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">openFile</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">openFile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">openFile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_location</span><span class="p">,</span><span class="s2">&quot;a&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">openFile</span></div>
+
+    
+
+    
+    
+<div class="viewcode-block" id="Accumulator.convert_long_to_wide"><a class="viewcode-back" href="../../../MainUI.Data_Lib.html#MainUI.Data_Lib.accumulator.Accumulator.convert_long_to_wide">[docs]</a>    <span class="k">def</span> <span class="nf">convert_long_to_wide</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fromFile</span><span class="p">,</span> <span class="n">toFile</span><span class="p">,</span> <span class="n">delim</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">time_format</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">progress_callback</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Converts the long formatted data contained in &quot;fromFile&quot;, convert it to wide format and save it to &quot;toFile&quot;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Read in the data</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">fromFile</span><span class="p">,</span> <span class="n">header</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Time&quot;</span><span class="p">,</span><span class="s2">&quot;Variable&quot;</span><span class="p">,</span><span class="s2">&quot;Value&quot;</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">progress_callback</span><span class="p">:</span> <span class="n">progress_callback</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="mi">45</span><span class="p">)</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">()</span>
+    
+        <span class="n">df_wide</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">pivot</span><span class="p">(</span><span class="n">index</span> <span class="o">=</span> <span class="s2">&quot;Time&quot;</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="s2">&quot;Variable&quot;</span><span class="p">,</span> <span class="n">values</span> <span class="o">=</span> <span class="s2">&quot;Value&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">progress_callback</span><span class="p">:</span> <span class="n">progress_callback</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="mi">70</span><span class="p">)</span>
+
+        <span class="n">df_wide</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">time_format</span><span class="p">:</span>
+            <span class="n">df_wide</span><span class="p">[</span><span class="s1">&#39;Datetime&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df_wide</span><span class="p">[</span><span class="s1">&#39;Time&#39;</span><span class="p">])</span>
+            <span class="n">dateTime</span> <span class="o">=</span> <span class="n">df_wide</span><span class="p">[</span><span class="s1">&#39;Datetime&#39;</span><span class="p">]</span>
+            <span class="n">df_wide</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Datetime&quot;</span><span class="p">],</span> <span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+            <span class="n">df_wide</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="s2">&quot;DateTime&quot;</span><span class="p">,</span><span class="n">dateTime</span><span class="p">)</span>
+
+        <span class="n">df_wide</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">toFile</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">sep</span> <span class="o">=</span> <span class="n">delim</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">progress_callback</span><span class="p">:</span> <span class="n">progress_callback</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+
+
+        <span class="k">return</span></div>
+
+   
+<div class="viewcode-block" id="Accumulator.record_output"><a class="viewcode-back" href="../../../MainUI.Data_Lib.html#MainUI.Data_Lib.accumulator.Accumulator.record_output">[docs]</a>    <span class="k">def</span> <span class="nf">record_output</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">fileName</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        --------------------------------------------------------------------------------------------</span>
+
+<span class="sd">        This is the signal slot for when channels want to record their outputs.</span>
+<span class="sd">        A channel will pass along &quot;data&quot;; which is a list containing the channel name, and a dictionary of outputs.</span>
+<span class="sd">        They can also specify a filename if they are saving their outputs to a different file than the large datafile.</span>
+
+<span class="sd">        NOTE: The outputs in the dictionary could be a string, float, or int. The key of the dictionary is the name of the output.</span>
+
+<span class="sd">        NOTE: There will always be a key called &quot;time&quot; in the dictionary. This value is the timestamp generated by calling time.time()</span>
+
+<span class="sd">        Example of a channel passing along their packaged data:</span>
+
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            data = [&quot;Channel 1&quot;, {&quot;Imag&quot;: 1, &quot;Output 2&quot;: &quot;Kelvin&quot;, &quot;Output 3&quot;: 3.1415, &quot;time&quot;: 123456789}]</span>
+
+<span class="sd">        Long format would convert this to something like:</span>
+
+<span class="sd">        .. code-block:: text</span>
+
+<span class="sd">            Time: 342342354, Channel_name_Variable: 234234</span>
+
+<span class="sd">            </span>
+<span class="sd">        --------------------------------------------------------------------------------------------</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        
+        <span class="c1"># Make sure function was called correctly by the emittor</span>
+
+        <span class="k">try</span><span class="p">:</span> <span class="k">assert</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">list</span><span class="p">))</span>
+        <span class="k">except</span> <span class="ne">AssertionError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+
+            <span class="n">recordError</span><span class="p">(</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;Accumulator.record_output assertion error:</span>
+<span class="sd">            Data must be a list containing the channel name </span>
+<span class="sd">            and a dictionary of outputs. Recieved: \n\n&quot;&quot;&quot;</span> 
+            <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+
+            <span class="k">raise</span> <span class="n">e</span>
+        
+        <span class="c1"># Get the filename</span>
+
+        <span class="k">if</span> <span class="n">fileName</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">f</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_filename</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">fileName</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">)</span>
+
+
+        <span class="c1"># Seperate data into the</span>
+        <span class="c1"># 3 columns of the long format</span>
+
+        <span class="n">channel_name</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">outputs</span><span class="p">:</span><span class="nb">dict</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span> <span class="n">recorded_time</span> <span class="o">=</span> <span class="n">outputs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;time&quot;</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span> <span class="n">recorded_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+
+        <span class="c1"># Write data into text file in the long format</span>
+        <span class="k">for</span> <span class="n">output</span> <span class="ow">in</span> <span class="n">outputs</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">recorded_time</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">channel_name</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">output</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">outputs</span><span class="p">[</span><span class="n">output</span><span class="p">]</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>            
+
+
+        <span class="k">return</span></div></div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+
+    <span class="kn">import</span> <span class="nn">random</span>
+    <span class="kn">import</span> <span class="nn">time</span>
+    <span class="kn">import</span> <span class="nn">os</span>
+
+
+
+    <span class="n">NUM_READINGS</span> <span class="o">=</span> <span class="mi">1000</span>
+
+
+    <span class="n">channels</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">):</span>
+        <span class="n">channels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;Channel_&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+
+    <span class="n">testFile</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&quot;/test_long_format.txt&quot;</span>
+
+    <span class="nb">open</span><span class="p">(</span><span class="n">testFile</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="n">acc</span> <span class="o">=</span> <span class="n">Accumulator</span><span class="p">(</span><span class="n">testFile</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">NUM_READINGS</span><span class="p">):</span>
+
+        <span class="n">channel</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">channels</span><span class="p">)</span>
+
+        <span class="n">output</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">numOutputs</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">numOutputs</span><span class="p">):</span>
+            <span class="n">output</span><span class="p">[</span><span class="s2">&quot;Output_&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">j</span><span class="p">)]</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">*</span> <span class="mi">1000</span>
+        <span class="n">output</span><span class="p">[</span><span class="s2">&quot;time&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="n">channel</span><span class="p">,</span> <span class="n">output</span><span class="p">]</span>
+
+
+
+        <span class="n">acc</span><span class="o">.</span><span class="n">record_output</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+        <span class="n">acc</span><span class="o">.</span><span class="n">convert_long_to_wide</span><span class="p">(</span><span class="n">testFile</span><span class="p">,</span> <span class="n">testFile</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">,</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;_wide.txt&quot;</span><span class="p">,</span> <span class="n">time_format</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+
+
+    
+
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Jacob Nellis, Matt Francom, Mark Kimball.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,7 @@
+publishViewer module
+====================
+
+.. automodule:: publishViewer
+   :members:
+   :undoc-members:
+   :show-inheritance:

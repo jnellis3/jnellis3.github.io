@@ -1,0 +1,7 @@
+PyQuisition module
+==================
+
+.. automodule:: PyQuisition
+   :members:
+   :undoc-members:
+   :show-inheritance:

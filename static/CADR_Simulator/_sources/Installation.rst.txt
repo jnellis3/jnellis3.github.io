@@ -1,0 +1,28 @@
+.. _Installation Overview:
+
+Installation Overview
+=====================
+
+
+This program can be installed by cloning the github repository. Access must be requested by emailing Jacob.s.nellis@nasa.gov
+
+**NOTE** To comply with NASA's IT rules, your github account **must** be affiliated with a NASA email address to gain access to the codebase.
+
+.. code-block:: bash
+
+    git clone git@github.com:jnellis01/PyMacQ.git
+
+The program runs entirely from Python, and the required packages can be installed from the requirements.txt file.
+
+.. code-block:: bash
+
+    $ python -m venv .venv
+    $ source .venv/bin/activate
+    (.venv) $ python -m pip install -r requirements.txt
+
+The program can then be started by running the MainUI.py file.
+
+.. code-block:: bash
+    
+    python MainUI.py
+

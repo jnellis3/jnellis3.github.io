@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Configuration and Data Files &mdash; Pyquisition 1.1.1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Main User Interface" href="MainWindow.html" />
+    <link rel="prev" title="User Guide" href="user_guide.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> Pyquisition
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Guide Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Installation.html">Installation Overview</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="user_guide.html">User Guide</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Configuration and Data Files</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#configuration-window">Configuration Window</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#config-files">Config Files</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="MainWindow.html">Main User Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="MainWindow.html#main-window-layout">Main Window Layout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="MainWindow.html#main-menu-options">Main Menu Options</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Channels.html">Instrument Channel</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer Guide Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Pyquisition.html">Configuration Window</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MainUI.html">MainUI package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Instrumentation.html">Instrumentation package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Instrumentation.html#module-Instrumentation.InstrumentModels">Instrument Models (Subclasses)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Instrumentation.html#instrument-model-manager">Instrument Model Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Channel_Lib.html">Channel_Lib package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Channel_Lib.widgets.html">Channel Widgets</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Pyquisition</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="user_guide.html">User Guide</a></li>
+      <li class="breadcrumb-item active">Configuration and Data Files</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/configuration.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="configuration-and-data-files">
+<span id="configuration"></span><h1>Configuration and Data Files<a class="headerlink" href="#configuration-and-data-files" title="Permalink to this headline"></a></h1>
+<section id="configuration-window">
+<h2>Configuration Window<a class="headerlink" href="#configuration-window" title="Permalink to this headline"></a></h2>
+<blockquote>
+<div><p>When the program is first started, a configuration window will appear. This window allows you to define the setting of the program before starting.</p>
+<a class="reference internal image-reference" href="_images/config_window.png"><img alt="_images/config_window.png" class="align-center" src="_images/config_window.png" style="width: 600px;" /></a>
+<dl class="simple">
+<dt>Here you can select the following:</dt><dd><ol class="arabic simple">
+<li><p>The name of the project. (This is for your own reference and will not be used by the program, it will be stored in the config file)</p></li>
+<li><dl class="simple">
+<dt>The config file to load.</dt><dd><ul class="simple">
+<li><p>If you have a config file that you would like to load, select it here. The program will ask if you are okay overwriting the file. This is because if you make changes in the program, this file will be updated.</p></li>
+<li><p>If you would like to create a new config file, you can type a new name in the file-select window and a new config file will be created.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>The data file to load.</dt><dd><ul class="simple">
+<li><p><strong>NOTE:</strong> Only select the data file <strong>after</strong> you have selected the config file and you would like to change it. The program will automatically populate this field when you select a config file.</p></li>
+<li><p><strong>Auto Update:</strong> If this is checked, the program will automatically append the current date to the data file name. This results in a new data file being created for every day the program is running.</p></li>
+<li><p><strong>Append Date:</strong> If this is checked, the program will automatically append the current date to the file. If ‘auto-update’ is not checked, the data-file will only be created when the program starts.</p></li>
+<li><p><strong>NOTE:</strong> The program always appends new data to the end of datafiles, so you don’t need to worry about a data file being overwritten with new data.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ol>
+</dd>
+</dl>
+</div></blockquote>
+</section>
+<section id="config-files">
+<h2>Config Files<a class="headerlink" href="#config-files" title="Permalink to this headline"></a></h2>
+<blockquote>
+<div><p>Configuration files are json dictionaries containing the relevent information for the program to restore previous sessions.
+A config file will save the following information:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>Project Name</p></li>
+<li><p>Channels in the active and deactive channel list along with any instruments associated with them.</p></li>
+<li><p>Plots that were open in the MDI subwindow.</p></li>
+<li><p>Data file location and settings.</p></li>
+</ol>
+</div></blockquote>
+<p><strong>An example of a config file looks like the following:</strong></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;Title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Default Configuration&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;ActiveChannels&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;Name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Channel 1&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;Type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;InstrumentChannel&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;paused&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;True&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;timerSetting&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1000</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;Instrument&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nt">&quot;address&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;GPIB0::1::INSTR&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;parameters&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">&quot;Measurement Type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;4 Wire Resistance&quot;</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">&quot;Sample Count&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">&quot;TC Type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;K&quot;</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;DeactiveChannels&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
+<span class="w">    </span><span class="nt">&quot;Plots&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;Name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;TestPlot&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;Type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;PlotDisplayWidget&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;Inputs&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="s2">&quot;Channel 1&quot;</span>
+<span class="w">            </span><span class="p">]</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;DataLog&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;Location&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Configurations/data.txt&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;Format&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;wide&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;AppendDate&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;True&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;AutoUpdate&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;True&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Ideally, you should never need to alter these files as the program will save the state in this format for you. However, when the program
+has trouble starting, the config file is the first place to look for errors.</p>
+</div></blockquote>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="user_guide.html" class="btn btn-neutral float-left" title="User Guide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="MainWindow.html" class="btn btn-neutral float-right" title="Main User Interface" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Jacob Nellis, Matt Francom, Mark Kimball.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

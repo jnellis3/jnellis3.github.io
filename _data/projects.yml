@@ -15,13 +15,17 @@
   # url: "#"
   description: SCOG is a local monthly meetup in Springfield where we share opportunities to volunteer in the community and organize support for families and neighborhoods in need of assistance that the community can provide.
 
-- project: Pyquisition
+- project: <a href="/static/PostDAQ">PostDAQ</a>
+  role: Founder and Primary Developer
+  duration: 2024 &mdash; Present
+
+- project: <a href="/static/Pyquisition">Pyquisition</a>
   role: Founder and Primary Developer
   duration: 2024 &mdash; Present
   # url: "#"
   description: SCOG is a local monthly meetup in Springfield where we share opportunities to volunteer in the community and organize support for families and neighborhoods in need of assistance that the community can provide.
 
-- project: Continuous Adiabatic Demagnetization Refridgerator Simulator
+- project: <a href="/Static/CADR_Simulator">Continuous Adiabatic Demagnetization Refridgerator Simulator</a>
   role: Founder and Developer
   duration: 2024 &mdash; Present
   # url: "#"

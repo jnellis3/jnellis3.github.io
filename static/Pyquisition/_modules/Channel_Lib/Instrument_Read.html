@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Channel_Lib.Instrument_Read &mdash; Pyquisition 1.1.1 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> Pyquisition
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Guide Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Installation.html">Installation Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user_guide.html">User Guide</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer Guide Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Pyquisition.html">Configuration Window</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../MainUI.html">MainUI package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Instrumentation.html">Instrumentation package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Instrumentation.html#module-Instrumentation.InstrumentModels">Instrument Models (Subclasses)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Instrumentation.html#instrument-model-manager">Instrument Model Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Channel_Lib.html">Channel_Lib package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Channel_Lib.widgets.html">Channel Widgets</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Pyquisition</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">Channel_Lib.Instrument_Read</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for Channel_Lib.Instrument_Read</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="s2">&quot;..&quot;</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">Channel_Lib.channel</span> <span class="kn">import</span> <span class="n">Channel</span><span class="p">,</span> <span class="n">ctrlWidget</span>
+<span class="kn">from</span> <span class="nn">PyQt6</span> <span class="kn">import</span> <span class="n">QtWidgets</span> <span class="k">as</span> <span class="n">qtw</span><span class="p">,</span> <span class="n">QtCore</span> <span class="k">as</span> <span class="n">qtc</span><span class="p">,</span> <span class="n">QtGui</span> <span class="k">as</span> <span class="n">qtg</span>
+<span class="kn">from</span> <span class="nn">Instrumentation</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">utils_lib.global_vars</span> <span class="kn">import</span> <span class="n">Worker</span>
+<span class="kn">import</span> <span class="nn">utils_lib.global_vars</span> <span class="k">as</span> <span class="nn">global_vars</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">from</span> <span class="nn">Channel_Lib.widgets</span> <span class="kn">import</span> <span class="n">channelWidgets</span> <span class="k">as</span> <span class="n">chW</span>
+<span class="kn">import</span> <span class="nn">uuid</span>
+<span class="kn">import</span> <span class="nn">inspect</span>
+
+<span class="kn">from</span> <span class="nn">Channel_Lib.widgets</span> <span class="kn">import</span> <span class="n">Channel_Settings</span>
+<span class="kn">from</span> <span class="nn">utils_lib.global_vars</span> <span class="kn">import</span> <span class="n">Worker</span>
+<span class="kn">from</span> <span class="nn">PyQt6.QtCore</span> <span class="kn">import</span> <span class="n">QThreadPool</span><span class="p">,</span> <span class="n">QMutex</span><span class="p">,</span> <span class="n">QMutexLocker</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">import</span> <span class="nn">json</span>
+<div class="viewcode-block" id="Instrument_Channel_Worker_Signals"><a class="viewcode-back" href="../../Channel_Lib.html#Channel_Lib.Instrument_Read.Instrument_Channel_Worker_Signals">[docs]</a><span class="k">class</span> <span class="nc">Instrument_Channel_Worker_Signals</span><span class="p">(</span><span class="n">qtc</span><span class="o">.</span><span class="n">QObject</span><span class="p">):</span>
+
+    <span class="n">finished</span> <span class="o">=</span> <span class="n">qtc</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">()</span>
+    <span class="n">error</span> <span class="o">=</span> <span class="n">qtc</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">qtc</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="nb">object</span><span class="p">)</span>
+    <span class="n">progress</span> <span class="o">=</span> <span class="n">qtc</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="nb">object</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Instrument_Channel_Worker"><a class="viewcode-back" href="../../Channel_Lib.html#Channel_Lib.Instrument_Read.Instrument_Channel_Worker">[docs]</a><span class="k">class</span> <span class="nc">Instrument_Channel_Worker</span><span class="p">(</span><span class="n">qtc</span><span class="o">.</span><span class="n">QRunnable</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">function</span><span class="p">,</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Instrument_Channel_Worker</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fn</span> <span class="o">=</span> <span class="n">function</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">args</span> <span class="o">=</span> <span class="n">args</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span> <span class="o">=</span> <span class="n">kwargs</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">signals</span> <span class="o">=</span> <span class="n">Instrument_Channel_Worker_Signals</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;progress_callback&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">progress</span>
+
+<div class="viewcode-block" id="Instrument_Channel_Worker.run"><a class="viewcode-back" href="../../Channel_Lib.html#Channel_Lib.Instrument_Read.Instrument_Channel_Worker.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fn</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">error</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">finished</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span></div></div>
+
+
+
+
+
+<div class="viewcode-block" id="InstrumentRead"><a class="viewcode-back" href="../../Channel_Lib.html#Channel_Lib.Instrument_Read.InstrumentRead">[docs]</a><span class="k">class</span> <span class="nc">InstrumentRead</span><span class="p">(</span><span class="n">Channel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    =============================================================================================================================</span>
+<span class="sd">    The channel is the first implementation of the instrument queue.</span>
+
+<span class="sd">    This channel works similar to the older version the &quot;instrument channel&quot;, but instead of directly sending commands to the instrument, it requests that</span>
+<span class="sd">    the reading be added to the instruments queue. This allows the instrument to be used by multiple channels without having to worry</span>
+<span class="sd">    about the instrument sending conflicting responses.</span>
+
+<span class="sd">    :param channelName: The name of the channel</span>
+<span class="sd">    :type channelName: str</span>
+
+<span class="sd">    :param state: The state of the channel, if it is being restored from a saved state</span>
+<span class="sd">    :type state: dict</span>
+
+<span class="sd">    :param parent: The the program window that the channel is a part of. The channel needs to have reference to this because it needs to be able to access the instrument model manager</span>
+<span class="sd">    :type parent: MainWindow</span>
+<span class="sd">    =============================================================================================================================</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">channelName</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">parent</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">timerSetting</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1000</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">get_value_arg</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Instrument_Model</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">readCommands</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">inst_settings</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setting_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">points_to_average</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_total_points</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">buffer</span> <span class="o">=</span> <span class="p">{}</span>
+
+
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">channelName</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">mutex</span> <span class="o">=</span> <span class="n">QMutex</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">threadPool</span> <span class="o">=</span> <span class="n">QThreadPool</span><span class="p">()</span>
+
+
+
+
+
+    <span class="c1">################################</span>
+    <span class="c1"># Instrument Reading Functions #</span>
+    <span class="c1">################################</span>
+
+
+<div class="viewcode-block" id="InstrumentRead.set_instrument"><a class="viewcode-back" href="../../Channel_Lib.html#Channel_Lib.Instrument_Read.InstrumentRead.set_instrument">[docs]</a>    <span class="k">def</span> <span class="nf">set_instrument</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">newInstrument</span><span class="p">:</span> <span class="n">Instrument_Model</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the &#39;intrument&#39; input of the channel. This is the instrument that the channel will read from.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="s2">&quot;Instrument&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">newInstrument</span></div>
+        
+    <span class="k">def</span> <span class="nf">_start_thread</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        If the channel is active and there are no other threads running</span>
+<span class="sd">        in the channels thread pool, this function will activate.</span>
+
+<span class="sd">        Creates a Instrument_Channel_Worker thread</span>
+<span class="sd">        with the run_procedure function as the target.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">paused</span><span class="p">:</span> <span class="k">return</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">threadPool</span><span class="o">.</span><span class="n">activeThreadCount</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span> <span class="k">return</span>
+
+        <span class="n">worker</span> <span class="o">=</span> <span class="n">Instrument_Channel_Worker</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">run_procedure</span><span class="p">)</span>
+        <span class="n">worker</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">progress</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">process</span><span class="p">)</span>
+        <span class="n">worker</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">finished</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">procedure_finished</span><span class="p">)</span>
+        <span class="n">worker</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">error</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">procedure_error</span><span class="p">)</span>
+        
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">threadPool</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="n">worker</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_take_sample</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">commands</span><span class="p">:</span><span class="nb">dict</span><span class="p">,</span> <span class="n">num_readings</span><span class="p">:</span><span class="nb">int</span><span class="p">,</span> <span class="n">instrument</span><span class="p">:</span><span class="n">Instrument_Model</span><span class="p">,</span> <span class="n">deltaT</span><span class="p">:</span><span class="nb">float</span><span class="p">)</span><span class="o">-&gt;</span><span class="nb">dict</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Will take num_readings using the supplied commands dictionary, will</span>
+<span class="sd">        return the outputs as a dictionary</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">points_taken</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">outputs</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="k">for</span> <span class="n">command</span> <span class="ow">in</span> <span class="n">commands</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">command</span> <span class="o">!=</span> <span class="s2">&quot;param_name&quot;</span><span class="p">:</span>
+                <span class="n">outputs</span><span class="p">[</span><span class="n">command</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        
+        <span class="n">outputs</span><span class="p">[</span><span class="s2">&quot;time&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">while</span> <span class="n">points_taken</span> <span class="o">&lt;</span> <span class="n">num_readings</span><span class="p">:</span>
+                
+                <span class="n">outputs</span><span class="p">[</span><span class="s2">&quot;time&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())</span>
+
+                <span class="k">for</span> <span class="n">command</span> <span class="ow">in</span> <span class="n">commands</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+    
+                    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">commands</span><span class="p">[</span><span class="n">command</span><span class="p">],</span> <span class="nb">property</span><span class="p">):</span>
+    
+                        <span class="n">reading</span> <span class="o">=</span> <span class="n">commands</span><span class="p">[</span><span class="n">command</span><span class="p">]</span><span class="o">.</span><span class="n">fget</span><span class="p">()</span>
+                        
+                        <span class="n">outputs</span><span class="p">[</span><span class="n">command</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">reading</span><span class="p">)</span>
+    
+                <span class="n">points_taken</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">deltaT</span><span class="p">)</span>
+        
+        <span class="k">for</span> <span class="n">output</span> <span class="ow">in</span> <span class="n">outputs</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="k">try</span><span class="p">:</span> <span class="n">outputs</span><span class="p">[</span><span class="n">output</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">outputs</span><span class="p">[</span><span class="n">output</span><span class="p">])</span>
+            <span class="k">except</span><span class="p">:</span> 
+                <span class="k">try</span><span class="p">:</span> <span class="n">outputs</span><span class="p">[</span><span class="n">output</span><span class="p">]</span> <span class="o">=</span> <span class="n">outputs</span><span class="p">[</span><span class="n">output</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span> 
+                    <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+                    <span class="k">raise</span> <span class="n">e</span>
+        <span class="k">return</span> <span class="n">outputs</span>
+
+            
+
+
+<div class="viewcode-block" id="InstrumentRead.run_procedure"><a class="viewcode-back" href="../../Channel_Lib.html#Channel_Lib.Instrument_Read.InstrumentRead.run_procedure">[docs]</a>    <span class="k">def</span> <span class="nf">run_procedure</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">progress_callback</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Used by the thread pool, this function continuously runs until the channel is paused or stopped.</span>
+<span class="sd">        It will take a sample using the commands dictionary, and then emit the outputs to the main thread.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">paused</span><span class="p">:</span> <span class="k">return</span>
+
+            <span class="k">if</span> <span class="s2">&quot;Instrument&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span> <span class="k">return</span>
+            <span class="k">else</span><span class="p">:</span> <span class="n">instrument</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="s2">&quot;Instrument&quot;</span><span class="p">]</span>
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">readCommands</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="k">return</span>
+            <span class="k">else</span><span class="p">:</span> <span class="n">commands</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">readCommands</span>
+
+            <span class="n">num_points</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">points_to_average</span><span class="p">)</span>
+            <span class="n">deltaT</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">timerSetting</span><span class="p">)</span><span class="o">/</span><span class="mi">1000</span>
+            
+            <span class="n">outputs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_take_sample</span><span class="p">(</span><span class="n">commands</span><span class="p">,</span> <span class="n">num_points</span><span class="p">,</span> <span class="n">instrument</span><span class="p">,</span> <span class="n">deltaT</span><span class="p">)</span>
+            <span class="n">progress_callback</span><span class="o">.</span><span class="n">emit</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">outputs</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="InstrumentRead.procedure_finished"><a class="viewcode-back" href="../../Channel_Lib.html#Channel_Lib.Instrument_Read.InstrumentRead.procedure_finished">[docs]</a>    <span class="k">def</span> <span class="nf">procedure_finished</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Finished&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">paused</span><span class="p">:</span> <span class="k">return</span>
+        <span class="k">else</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">pause_unpause</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="InstrumentRead.procedure_error"><a class="viewcode-back" href="../../Channel_Lib.html#Channel_Lib.Instrument_Read.InstrumentRead.procedure_error">[docs]</a>    <span class="k">def</span> <span class="nf">procedure_error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">error</span><span class="p">:</span><span class="nb">str</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+        <span class="k">return</span></div>
+    
+<div class="viewcode-block" id="InstrumentRead.get_instrument_address"><a class="viewcode-back" href="../../Channel_Lib.html#Channel_Lib.Instrument_Read.InstrumentRead.get_instrument_address">[docs]</a>    <span class="k">def</span> <span class="nf">get_instrument_address</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="s2">&quot;Instrument&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="s2">&quot;Instrument&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get_address</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span> <span class="k">return</span> <span class="s2">&quot;No Instrument&quot;</span></div>
+
+
+
+    <span class="c1">#####################</span>
+    <span class="c1"># Public Functions #</span>
+    <span class="c1">#####################</span>
+
+<div class="viewcode-block" id="InstrumentRead.pause_unpause"><a class="viewcode-back" href="../../Channel_Lib.html#Channel_Lib.Instrument_Read.InstrumentRead.pause_unpause">[docs]</a>    <span class="k">def</span> <span class="nf">pause_unpause</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">pause_unpause</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">paused</span><span class="p">:</span><span class="k">return</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_clear_children</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_start_thread</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="InstrumentRead.setAveragePoints"><a class="viewcode-back" href="../../Channel_Lib.html#Channel_Lib.Instrument_Read.InstrumentRead.setAveragePoints">[docs]</a>    <span class="k">def</span> <span class="nf">setAveragePoints</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">points</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">points_to_average</span> <span class="o">=</span> <span class="n">points</span></div>
+
+<div class="viewcode-block" id="InstrumentRead.ctrlWidget"><a class="viewcode-back" href="../../Channel_Lib.html#Channel_Lib.Instrument_Read.InstrumentRead.ctrlWidget">[docs]</a>    <span class="k">def</span> <span class="nf">ctrlWidget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">instrumentReadCtrlWidget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span></div>
+    
+    
+<div class="viewcode-block" id="InstrumentRead.initialize"><a class="viewcode-back" href="../../Channel_Lib.html#Channel_Lib.Instrument_Read.InstrumentRead.initialize">[docs]</a>    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># If the channel is being initialized without</span>
+        <span class="c1"># a configDict, then it should default to the global cycle time</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timerSetting</span> <span class="o">=</span> <span class="n">global_vars</span><span class="o">.</span><span class="n">CYCLE_TIME</span></div>
+
+<div class="viewcode-block" id="InstrumentRead.restoreState"><a class="viewcode-back" href="../../Channel_Lib.html#Channel_Lib.Instrument_Read.InstrumentRead.restoreState">[docs]</a>    <span class="k">def</span> <span class="nf">restoreState</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+
+        <span class="c1"># First restore the generic channel settings</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">restoreState</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>   
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">timerSetting</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">state</span><span class="p">[</span><span class="s2">&quot;timerSetting&quot;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">points_to_average</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">state</span><span class="p">[</span><span class="s2">&quot;average_points&quot;</span><span class="p">])</span>
+
+        <span class="c1"># Check if an instrument was connected</span>
+        <span class="k">if</span> <span class="s2">&quot;Instrument&quot;</span> <span class="ow">in</span> <span class="n">state</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            
+            <span class="c1"># Get the instrument from the instModelManager</span>
+            <span class="n">inst_ID</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="s2">&quot;Instrument&quot;</span><span class="p">][</span><span class="s2">&quot;address&quot;</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="s2">&quot;Instrument&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">myParent</span><span class="o">.</span><span class="n">instManager</span><span class="o">.</span><span class="n">get_instrument</span><span class="p">(</span><span class="n">inst_ID</span><span class="p">)</span>
+            
+            <span class="c1">#Restore the settings of the instrument if the instManager was able to find it</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="s2">&quot;Instrument&quot;</span><span class="p">]:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="s2">&quot;Instrument&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">restoreState</span><span class="p">(</span><span class="n">state</span><span class="p">[</span><span class="s2">&quot;Instrument&quot;</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">global_vars</span><span class="o">.</span><span class="n">DisplayMessage</span><span class="p">(</span><span class="s2">&quot;Error restoring: &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> 
+                                           <span class="o">+</span> <span class="s2">&quot;Could not find instrument with address: &quot;</span> <span class="o">+</span> <span class="n">inst_ID</span> 
+                                           <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;Please reconnect the instrment manually&quot;</span><span class="p">)</span>
+            
+            <span class="bp">self</span><span class="o">.</span><span class="n">setting_name</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="s2">&quot;setting_name&quot;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="s2">&quot;Instrument&quot;</span><span class="p">],</span> <span class="n">Instrument_Model</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">inst_settings</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="s2">&quot;Instrument&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">_settingDicts</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">setting_name</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">readCommands</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inst_settings</span><span class="p">[</span><span class="s2">&quot;value&quot;</span><span class="p">]</span>
+
+        <span class="k">return</span></div>
+        
+<div class="viewcode-block" id="InstrumentRead.saveState"><a class="viewcode-back" href="../../Channel_Lib.html#Channel_Lib.Instrument_Read.InstrumentRead.saveState">[docs]</a>    <span class="k">def</span> <span class="nf">saveState</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="c1"># First collect the generic channel settings</span>
+        <span class="n">config</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">saveState</span><span class="p">()</span>
+
+        <span class="n">config</span><span class="p">[</span><span class="s2">&quot;timerSetting&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">timerSetting</span>
+        <span class="n">config</span><span class="p">[</span><span class="s2">&quot;average_points&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">points_to_average</span>
+        <span class="k">try</span><span class="p">:</span> 
+            <span class="n">config</span><span class="p">[</span><span class="s2">&quot;setting_name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">setting_name</span>
+            <span class="c1">#self.inst_settings.pop(&quot;settings_name&quot;)</span>
+        <span class="k">except</span><span class="p">:</span> <span class="k">pass</span>
+        <span class="c1"># Try restoring the instrument, else skip</span>
+        <span class="k">if</span> <span class="s2">&quot;Instrument&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="s2">&quot;Instrument&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">config</span><span class="p">[</span><span class="s2">&quot;Instrument&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="s2">&quot;Instrument&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">saveState</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inst_settings</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">config</span></div></div>
+
+<div class="viewcode-block" id="instrumentReadCtrlWidget"><a class="viewcode-back" href="../../Channel_Lib.html#Channel_Lib.Instrument_Read.instrumentReadCtrlWidget">[docs]</a><span class="k">class</span> <span class="nc">instrumentReadCtrlWidget</span><span class="p">(</span><span class="n">ctrlWidget</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">channel</span><span class="p">:</span> <span class="n">InstrumentRead</span><span class="p">,</span> <span class="n">parent</span><span class="p">:</span> <span class="n">qtw</span><span class="o">.</span><span class="n">QMainWindow</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        =============================================================================================================================</span>
+<span class="sd">        This is the control widget for the instrumentRead channel. It is a child of the ctrlWidget class.</span>
+<span class="sd">        It&#39;s a single widget consisting of a form widget for setting the channel name, timer, and instrument, and a groupbox widget</span>
+<span class="sd">        for setting the parameters of the channel.</span>
+
+<span class="sd">        :param channel: The channel that this control widget is associated with</span>
+<span class="sd">        :type channel: InstrumentRead</span>
+
+<span class="sd">        :param parent: The MainWindow, this is so that we have references to the instManager</span>
+<span class="sd">        :type parent: qtw.QMainWindow</span>
+
+<span class="sd">        :ivar mainWidget: The main widget of this control widget</span>
+<span class="sd">        :vartype mainWidget: qtw.QWidget</span>
+
+<span class="sd">        :ivar mainLayout: The main layout of this control widget</span>
+<span class="sd">        :vartype mainLayout: qtw.QVBoxLayout</span>
+
+<span class="sd">        :ivar formLayout: The form layout for the channel settings</span>
+<span class="sd">        :vartype formLayout: qtw.QFormLayout</span>
+
+<span class="sd">        :ivar InstrumentSettingsWidget: The groupbox widget for the instrument settings</span>
+<span class="sd">        :vartype InstrumentSettingsWidget: qtw.QGroupBox</span>
+
+<span class="sd">        =============================================================================================================================</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">channel</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">channel</span><span class="p">:</span> <span class="n">InstrumentRead</span> <span class="o">=</span> <span class="n">channel</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">myParent</span> <span class="o">=</span> <span class="n">parent</span>
+
+        <span class="c1">#create the main widget</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mainWidget</span> <span class="o">=</span> <span class="n">qtw</span><span class="o">.</span><span class="n">QWidget</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mainLayout</span> <span class="o">=</span> <span class="n">qtw</span><span class="o">.</span><span class="n">QVBoxLayout</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mainWidget</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mainLayout</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mainWidget</span><span class="p">)</span>
+
+        <span class="c1">#create a form widget for general channel settings (name, instrument, timer, etc.)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">formLayout</span> <span class="o">=</span> <span class="n">qtw</span><span class="o">.</span><span class="n">QFormLayout</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">formWidget</span> <span class="o">=</span> <span class="n">qtw</span><span class="o">.</span><span class="n">QWidget</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">formWidget</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">formLayout</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mainLayout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">formWidget</span><span class="p">)</span>
+
+        <span class="c1">#Creating the name field</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nameField</span> <span class="o">=</span> <span class="n">qtw</span><span class="o">.</span><span class="n">QLineEdit</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nameField</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">channel</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">name_btn</span> <span class="o">=</span> <span class="n">qtw</span><span class="o">.</span><span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;apply&quot;</span><span class="p">)</span>
+        <span class="n">name_btn</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">channel</span><span class="o">.</span><span class="n">setName</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nameField</span><span class="o">.</span><span class="n">text</span><span class="p">()))</span>
+        <span class="n">nameL</span> <span class="o">=</span> <span class="n">qtw</span><span class="o">.</span><span class="n">QHBoxLayout</span><span class="p">()</span>
+        <span class="n">nameL</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nameField</span><span class="p">)</span>
+        <span class="n">nameL</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">name_btn</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">formLayout</span><span class="o">.</span><span class="n">addRow</span><span class="p">(</span><span class="s2">&quot;Channel Name&quot;</span><span class="p">,</span> <span class="n">nameL</span><span class="p">)</span>
+
+        <span class="c1">#Creating the instrument selection field</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">instrField</span> <span class="o">=</span> <span class="n">chW</span><span class="o">.</span><span class="n">InstrumentModelComboBox</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">myParent</span><span class="o">.</span><span class="n">instManager</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">instrField</span><span class="o">.</span><span class="n">setCurrentText</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">channel</span><span class="o">.</span><span class="n">get_instrument_address</span><span class="p">())</span>
+        <span class="n">setInstr_btn</span> <span class="o">=</span> <span class="n">qtw</span><span class="o">.</span><span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;apply&quot;</span><span class="p">)</span>
+        <span class="n">setInstr_btn</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">setInstrument</span><span class="p">)</span>
+        <span class="n">instrNameL</span> <span class="o">=</span> <span class="n">qtw</span><span class="o">.</span><span class="n">QHBoxLayout</span><span class="p">()</span>
+        <span class="n">instrNameL</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">instrField</span><span class="p">)</span>
+        <span class="n">instrNameL</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">setInstr_btn</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">formLayout</span><span class="o">.</span><span class="n">addRow</span><span class="p">(</span><span class="s2">&quot;Instrument&quot;</span><span class="p">,</span> <span class="n">instrNameL</span><span class="p">)</span>
+
+        <span class="c1">#Creating the timer selection field</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timerField</span> <span class="o">=</span> <span class="n">qtw</span><span class="o">.</span><span class="n">QLineEdit</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timerField</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">channel</span><span class="o">.</span><span class="n">timerSetting</span><span class="p">))</span>
+        <span class="n">setTimer_btn</span> <span class="o">=</span> <span class="n">qtw</span><span class="o">.</span><span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;apply&quot;</span><span class="p">)</span>
+        <span class="n">setTimer_btn</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">setTimer</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">timerField</span><span class="o">.</span><span class="n">text</span><span class="p">())))</span>
+        <span class="n">timerL</span> <span class="o">=</span> <span class="n">qtw</span><span class="o">.</span><span class="n">QHBoxLayout</span><span class="p">()</span>
+        <span class="n">timerL</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">timerField</span><span class="p">)</span>
+        <span class="n">timerL</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">setTimer_btn</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">formLayout</span><span class="o">.</span><span class="n">addRow</span><span class="p">(</span><span class="s2">&quot;Timer [mS]&quot;</span><span class="p">,</span> <span class="n">timerL</span><span class="p">)</span>
+
+        <span class="c1">#Creating the average points option</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">avgPointsField</span> <span class="o">=</span> <span class="n">qtw</span><span class="o">.</span><span class="n">QLineEdit</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">avgPointsField</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">channel</span><span class="o">.</span><span class="n">points_to_average</span><span class="p">))</span>
+        <span class="n">setAvgPoints_btn</span> <span class="o">=</span> <span class="n">qtw</span><span class="o">.</span><span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;apply&quot;</span><span class="p">)</span>
+        <span class="n">setAvgPoints_btn</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">channel</span><span class="o">.</span><span class="n">setAveragePoints</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">avgPointsField</span><span class="o">.</span><span class="n">text</span><span class="p">())))</span>
+        <span class="n">avgPointsL</span> <span class="o">=</span> <span class="n">qtw</span><span class="o">.</span><span class="n">QHBoxLayout</span><span class="p">()</span>
+        <span class="n">avgPointsL</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">avgPointsField</span><span class="p">)</span>
+        <span class="n">avgPointsL</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">setAvgPoints_btn</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">formLayout</span><span class="o">.</span><span class="n">addRow</span><span class="p">(</span><span class="s2">&quot;Average Points&quot;</span><span class="p">,</span> <span class="n">avgPointsL</span><span class="p">)</span>
+
+        <span class="c1"># Creating the intrument settings options form</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">settings_layout_combo</span> <span class="o">=</span> <span class="n">qtw</span><span class="o">.</span><span class="n">QComboBox</span><span class="p">()</span>
+        <span class="n">settings_layout_apply_button</span> <span class="o">=</span> <span class="n">qtw</span><span class="o">.</span><span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;apply&quot;</span><span class="p">)</span>
+        <span class="n">settings_layout_apply_button</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_set_settings</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">settings_layout_combo</span><span class="o">.</span><span class="n">addItems</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_available_layouts</span><span class="p">())</span>
+        <span class="k">try</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">settings_layout_combo</span><span class="o">.</span><span class="n">setCurrentText</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">channel</span><span class="o">.</span><span class="n">setting_name</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span><span class="k">pass</span>
+
+        <span class="n">set_lo</span> <span class="o">=</span> <span class="n">qtw</span><span class="o">.</span><span class="n">QHBoxLayout</span><span class="p">()</span>
+        <span class="n">set_lo</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settings_layout_combo</span><span class="p">)</span>
+        <span class="n">set_lo</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">settings_layout_apply_button</span><span class="p">)</span>
+        
+        
+        <span class="c1">#self.settings_layout_combo.currentTextChanged.connect(self._set_settings)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">formLayout</span><span class="o">.</span><span class="n">addRow</span><span class="p">(</span><span class="s2">&quot;Settings Layout&quot;</span><span class="p">,</span> <span class="n">set_lo</span><span class="p">)</span>
+        
+        
+        <span class="c1"># Creating the instrument settings box</span>
+        <span class="k">try</span><span class="p">:</span> 
+            <span class="bp">self</span><span class="o">.</span><span class="n">InstrumentSettingsWidget</span> <span class="o">=</span> <span class="n">Channel_Settings</span><span class="o">.</span><span class="n">Instrument_Settings_Group_Box</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">InstrumentSettingsWidget</span><span class="o">.</span><span class="n">set_instrument</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">channel</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="s2">&quot;Instrument&quot;</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">InstrumentSettingsWidget</span><span class="o">.</span><span class="n">generate_layout</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">channel</span><span class="o">.</span><span class="n">inst_settings</span><span class="p">)</span>
+
+        <span class="k">except</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">InstrumentSettingsWidget</span> <span class="o">=</span> <span class="n">Channel_Settings</span><span class="o">.</span><span class="n">Instrument_Settings_Group_Box</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mainLayout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">InstrumentSettingsWidget</span><span class="p">)</span>
+        <span class="c1">#self.setInstrument(initializing=True)</span>
+
+
+        <span class="n">instrBtn_layout</span> <span class="o">=</span> <span class="n">qtw</span><span class="o">.</span><span class="n">QHBoxLayout</span><span class="p">()</span>
+        <span class="n">apply_btn</span> <span class="o">=</span> <span class="n">qtw</span><span class="o">.</span><span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;Apply&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">mainLayout</span><span class="o">.</span><span class="n">addLayout</span><span class="p">(</span><span class="n">instrBtn_layout</span><span class="p">)</span>
+
+
+        <span class="n">hideShortcut</span> <span class="o">=</span> <span class="n">qtg</span><span class="o">.</span><span class="n">QShortcut</span><span class="p">(</span><span class="n">qtg</span><span class="o">.</span><span class="n">QKeySequence</span><span class="p">(</span><span class="s2">&quot;Ctrl+H&quot;</span><span class="p">),</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="n">hideShortcut</span><span class="o">.</span><span class="n">activated</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_hide_channel_settings</span><span class="p">)</span>
+        
+        <span class="n">showShortcut</span> <span class="o">=</span> <span class="n">qtg</span><span class="o">.</span><span class="n">QShortcut</span><span class="p">(</span><span class="n">qtg</span><span class="o">.</span><span class="n">QKeySequence</span><span class="p">(</span><span class="s2">&quot;Ctrl+Shift+H&quot;</span><span class="p">),</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="n">showShortcut</span><span class="o">.</span><span class="n">activated</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_show_channel_settings</span><span class="p">)</span>
+
+        <span class="n">hide_instrument_sc</span> <span class="o">=</span> <span class="n">qtg</span><span class="o">.</span><span class="n">QShortcut</span><span class="p">(</span><span class="n">qtg</span><span class="o">.</span><span class="n">QKeySequence</span><span class="p">(</span><span class="s2">&quot;Ctrl+I&quot;</span><span class="p">),</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="n">hide_instrument_sc</span><span class="o">.</span><span class="n">activated</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_hide_inst_settings</span><span class="p">)</span>
+
+        <span class="n">show_instrument_sc</span> <span class="o">=</span> <span class="n">qtg</span><span class="o">.</span><span class="n">QShortcut</span><span class="p">(</span><span class="n">qtg</span><span class="o">.</span><span class="n">QKeySequence</span><span class="p">(</span><span class="s2">&quot;Ctrl+Shift+I&quot;</span><span class="p">),</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="n">show_instrument_sc</span><span class="o">.</span><span class="n">activated</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_show_inst_settings</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">_resize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">showMaximized</span><span class="p">()</span>
+        <span class="n">qtw</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">processEvents</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">showNormal</span><span class="p">()</span>
+        
+    <span class="k">def</span> <span class="nf">_set_settings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">settings</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">channel</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="s2">&quot;Instrument&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">_settingDicts</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">settings_layout_combo</span><span class="o">.</span><span class="n">currentText</span><span class="p">()]</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">InstrumentSettingsWidget</span><span class="o">.</span><span class="n">generate_layout</span><span class="p">(</span><span class="n">settings</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">channel</span><span class="o">.</span><span class="n">inst_settings</span> <span class="o">=</span> <span class="n">settings</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">channel</span><span class="o">.</span><span class="n">setting_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings_layout_combo</span><span class="o">.</span><span class="n">currentText</span><span class="p">()</span>
+        
+        <span class="k">try</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">channel</span><span class="o">.</span><span class="n">readCommands</span> <span class="o">=</span> <span class="n">settings</span><span class="p">[</span><span class="s2">&quot;value&quot;</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_resize</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_get_available_layouts</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> 
+        
+        <span class="k">try</span><span class="p">:</span><span class="n">settingOpts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">channel</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="s2">&quot;Instrument&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">_settingDicts</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+        <span class="k">except</span><span class="p">:</span> <span class="k">return</span> <span class="p">[]</span>
+        <span class="k">return</span> <span class="n">settingOpts</span>
+    
+<div class="viewcode-block" id="instrumentReadCtrlWidget.setInstrument"><a class="viewcode-back" href="../../Channel_Lib.html#Channel_Lib.Instrument_Read.instrumentReadCtrlWidget.setInstrument">[docs]</a>    <span class="k">def</span> <span class="nf">setInstrument</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">initializing</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This will set the instrument on the channel, and will update the instrument settings widget</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="s2">&quot;Instrument&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">channel</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">initializing</span><span class="p">:</span>
+                <span class="k">return</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">channel</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="s2">&quot;Instrument&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">instrField</span><span class="o">.</span><span class="n">currentInstrumentSelected</span><span class="p">()</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">channel</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="s2">&quot;Instrument&quot;</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">channel</span><span class="o">.</span><span class="n">set_instrument</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">instrField</span><span class="o">.</span><span class="n">currentInstrumentSelected</span><span class="p">())</span>
+            <span class="k">try</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">InstrumentSettingsWidget</span><span class="o">.</span><span class="n">set_instrument</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">channel</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="s2">&quot;Instrument&quot;</span><span class="p">])</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+
+            
+            
+        
+            <span class="c1"># Get the settings layouts for the instrument</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">settings_layout_combo</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">settings_layout_combo</span><span class="o">.</span><span class="n">addItems</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_available_layouts</span><span class="p">())</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_resize</span><span class="p">()</span>
+
+        <span class="k">return</span></div>
+
+<div class="viewcode-block" id="instrumentReadCtrlWidget.setTimer"><a class="viewcode-back" href="../../Channel_Lib.html#Channel_Lib.Instrument_Read.instrumentReadCtrlWidget.setTimer">[docs]</a>    <span class="k">def</span> <span class="nf">setTimer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">newTimer</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Will stop the current timer and start again with the new timer setting</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">channel</span><span class="o">.</span><span class="n">timerSetting</span> <span class="o">=</span> <span class="n">newTimer</span>
+        <span class="k">return</span></div>
+    
+    <span class="k">def</span> <span class="nf">_hide_channel_settings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="s2">&quot;hides the settings group box&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">formWidget</span><span class="o">.</span><span class="n">isVisible</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">formWidget</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">formWidget</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_resize</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_show_channel_settings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">formLayout</span><span class="o">.</span><span class="n">count</span><span class="p">()):</span>
+            <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">formLayout</span><span class="o">.</span><span class="n">itemAt</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">widget</span><span class="p">()</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">item</span><span class="o">.</span><span class="n">widget</span><span class="p">()</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_resize</span><span class="p">()</span>
+
+
+    <span class="k">def</span> <span class="nf">_hide_inst_settings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">InstrumentSettingsWidget</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_resize</span><span class="p">()</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">_show_inst_settings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">InstrumentSettingsWidget</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_resize</span><span class="p">()</span>
+        <span class="k">pass</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Jacob Nellis, Matt Francom, Mark Kimball.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

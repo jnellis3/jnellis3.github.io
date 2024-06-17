@@ -1,0 +1,60 @@
+Channel\_Lib package
+====================
+
+Abstract Channel and Display Widget
+----------
+
+   The Active Channel and Deactive Channel windows display channels that are based on the abstract Channel class. This class is designed to support the addition of arbitrary channel types to the system.
+
+   **Functionality**
+
+      The Channel class essentially serves as a node in a flowchart, containing internal inputs and outputs. During program execution, the process method is called for each channel. This method takes the current inputs, processes them, and updates the channel's outputs. Channels can be interconnected by setting the outputs of one channel as the inputs of another channel.
+
+   **Optional Control Widget**
+
+      Channel types can optionally implement a control widget. When requested by the user, this widget is displayed in the MDI area, providing an interface for adjusting the channel's settings.
+
+
+(Abstract) Channel Class
+---------------------------
+
+.. automodule:: Channel_Lib.channel
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Specific Channels
+------------------
+
+Instrument Read Channel
+------------------------------------
+
+.. automodule:: Channel_Lib.Instrument_Read
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Attocube Channel
+-------------------------------------
+
+.. automodule:: Channel_Lib.attocube_channel
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Temperature Controller Channel
+---------------------------------------
+
+.. automodule:: Channel_Lib.controller_channel
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: Channel_Lib
+   :members:
+   :undoc-members:
+   :show-inheritance:

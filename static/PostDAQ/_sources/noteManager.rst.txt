@@ -1,0 +1,7 @@
+noteManager module
+==================
+
+.. automodule:: noteManager
+   :members:
+   :undoc-members:
+   :show-inheritance:

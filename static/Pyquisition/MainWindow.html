@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Main User Interface &mdash; Pyquisition 1.1.1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Instrument Channel" href="Channels.html" />
+    <link rel="prev" title="Configuration and Data Files" href="configuration.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> Pyquisition
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Guide Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Installation.html">Installation Overview</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="user_guide.html">User Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="configuration.html">Configuration and Data Files</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Main User Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#main-window-layout">Main Window Layout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#main-menu-options">Main Menu Options</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Channels.html">Instrument Channel</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer Guide Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Pyquisition.html">Configuration Window</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MainUI.html">MainUI package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Instrumentation.html">Instrumentation package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Instrumentation.html#module-Instrumentation.InstrumentModels">Instrument Models (Subclasses)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Instrumentation.html#instrument-model-manager">Instrument Model Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Channel_Lib.html">Channel_Lib package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Channel_Lib.widgets.html">Channel Widgets</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Pyquisition</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="user_guide.html">User Guide</a></li>
+      <li class="breadcrumb-item active">Main User Interface</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/MainWindow.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="main-user-interface">
+<span id="mainwindow"></span><h1>Main User Interface<a class="headerlink" href="#main-user-interface" title="Permalink to this headline"></a></h1>
+<p>PyQuisition is a graphical user interface (GUI) program designed to manage and control data acquisition tasks. This user guide covers the main features, functionalities, and layout of the PyQuisition program’s main window.</p>
+</section>
+<section id="main-window-layout">
+<h1>Main Window Layout<a class="headerlink" href="#main-window-layout" title="Permalink to this headline"></a></h1>
+<blockquote>
+<div><p>The main window of the PyQuisition program consists of the following components, organized to provide an intuitive and user-friendly experience:</p>
+<blockquote>
+<div><p><strong>Main Menu:</strong> Located at the top of the main window, the main menu provides access to essential functionalities, such as opening and saving configuration files and pausing or resuming active channels.</p>
+<p><strong>Active Channels Window:</strong> Positioned on the left side of the main window, this dockable window displays a list of channels that are currently being processed. These channels will be recorded in the data file and can be paused or resumed using the main menu options.</p>
+<p><strong>Deactive Channels Window:</strong> Also located on the left side of the main window, below the Active Channels window, this dockable window shows a list of channels that are not currently being recorded. These channels can be activated by moving them to the Active Channels window.</p>
+<p><strong>Central Widget (QMdiArea):</strong> Occupying the central area of the main window, this widget can contain multiple plot windows displaying various types of data visualizations based on the active channels’ data. This area is designed to provide a flexible workspace for organizing and arranging plot windows as needed.</p>
+</div></blockquote>
+</div></blockquote>
+</section>
+<section id="main-menu-options">
+<h1>Main Menu Options<a class="headerlink" href="#main-menu-options" title="Permalink to this headline"></a></h1>
+<p>The PyQuisition program’s main menu consists of several categories, each containing various actions and submenus to help you interact with the application effectively. Here’s a breakdown of the main menu options for users:</p>
+<blockquote>
+<div><p><strong>File:</strong> This category provides options for managing configuration files.</p>
+<blockquote>
+<div><p><strong>Open:</strong> Loads a saved configuration file.</p>
+<p><strong>Save:</strong> Saves the current configuration to an existing file.</p>
+<p><strong>Save As:</strong> Saves the current configuration to a new file.</p>
+</div></blockquote>
+<p><strong>Program:</strong> This category offers actions to control the program’s execution.</p>
+<blockquote>
+<div><p><strong>Pause:</strong> Pauses the program.</p>
+<p><strong>Resume:</strong> Resumes the program after it has been paused.</p>
+</div></blockquote>
+<p><strong>Data:</strong> This category handles data-related operations.</p>
+<blockquote>
+<div><p><strong>DataFile Options:</strong> Opens the Data Options Window where you can adjust settings related to data files.</p>
+<p><strong>Data Converter:</strong> Opens the Data Converter window for converting data between different formats.</p>
+</div></blockquote>
+<p><strong>Plot:</strong> This category provides options for managing plots.</p>
+<blockquote>
+<div><p><strong>New Plot:</strong> Creates a new plot window.</p>
+<p><strong>Tile Plots:</strong> Arranges all open plot windows in a tiled layout.</p>
+</div></blockquote>
+<p><strong>Add Channel:</strong> This category offers options to add various instrument and calculator channels. The channels are organized into two subcategories:</p>
+<blockquote>
+<div><p><strong>Instrument Channels:</strong> Provides options to add instrument channels, organized into two subcategories:</p>
+<blockquote>
+<div><p><strong>Simple Read:</strong> Offers options to add simple read instrument channels.</p>
+<blockquote>
+<div><p><strong>Attocube Channel:</strong> Adds an Attocube channel.</p>
+<p><strong>Instrument Channel:</strong> Adds a generic instrument channel.</p>
+<p><strong>Instrument Channel Test:</strong> Adds a test instrument channel.</p>
+</div></blockquote>
+<p><strong>Controllers:</strong> Provides options to add controller channels.</p>
+<blockquote>
+<div><p><strong>Temperature Stepper Channel:</strong> Adds a temperature stepper channel.</p>
+</div></blockquote>
+</div></blockquote>
+<p><strong>Calculator Channels:</strong> Contains options for adding calculator channels.</p>
+<blockquote>
+<div><p><strong>Math Channel:</strong> Adds a math channel.</p>
+</div></blockquote>
+</div></blockquote>
+<p><strong>Help:</strong> This category is currently empty but can be used to provide help-related information and resources in the future.</p>
+</div></blockquote>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="configuration.html" class="btn btn-neutral float-left" title="Configuration and Data Files" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Channels.html" class="btn btn-neutral float-right" title="Instrument Channel" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Jacob Nellis, Matt Francom, Mark Kimball.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

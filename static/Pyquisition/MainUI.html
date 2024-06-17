@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MainUI package &mdash; Pyquisition 1.1.1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="MainUI.Data_Lib package" href="MainUI.Data_Lib.html" />
+    <link rel="prev" title="Configuration Window" href="Pyquisition.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> Pyquisition
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Guide Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Installation.html">Installation Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user_guide.html">User Guide</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer Guide Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Pyquisition.html">Configuration Window</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">MainUI package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="MainUI.Data_Lib.html">MainUI.Data_Lib package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="MainUI.Displays.html">MainUI.Displays package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="MainUI.widgets.html">MainUI.widgets package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-MainUI.MainUI">Main Window</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#channel-window-s">Channel Window’s</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-MainUI">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Instrumentation.html">Instrumentation package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Instrumentation.html#module-Instrumentation.InstrumentModels">Instrument Models (Subclasses)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Instrumentation.html#instrument-model-manager">Instrument Model Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Channel_Lib.html">Channel_Lib package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Channel_Lib.widgets.html">Channel Widgets</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Pyquisition</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">&lt;no title&gt;</a></li>
+      <li class="breadcrumb-item active">MainUI package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/MainUI.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="mainui-package">
+<h1>MainUI package<a class="headerlink" href="#mainui-package" title="Permalink to this headline"></a></h1>
+<p>The mainUI directory contains the main user interface for the program, along with 3 subpackages (Data_lib, display, and widget).
+The mainUI package is responsible for coordinating all the resources in the program and displaying them to the user.</p>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="MainUI.Data_Lib.html">MainUI.Data_Lib package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MainUI.Displays.html">MainUI.Displays package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MainUI.widgets.html">MainUI.widgets package</a></li>
+</ul>
+</div>
+</section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline"></a></h2>
+</section>
+<section id="module-MainUI.MainUI">
+<span id="main-window"></span><h2>Main Window<a class="headerlink" href="#module-MainUI.MainUI" title="Permalink to this headline"></a></h2>
+<p>GUI file for the PyQuisition program.</p>
+<p>Installations
+pip install -U pyvisa
+pip install -U pyvisa-sim</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="MainUI.MainUI.MainWindow">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">MainUI.MainUI.</span></span><span class="sig-name descname"><span class="pre">MainWindow</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{'ActiveChannels':</span> <span class="pre">[],</span> <span class="pre">'DataLog':</span> <span class="pre">{'AppendDate':</span> <span class="pre">'True',</span> <span class="pre">'AutoUpdate':</span> <span class="pre">'True',</span> <span class="pre">'Format':</span> <span class="pre">'wide',</span> <span class="pre">'Location':</span> <span class="pre">'./.temp/data_log.txt'},</span> <span class="pre">'DeactiveChannels':</span> <span class="pre">[],</span> <span class="pre">'Plots':</span> <span class="pre">[],</span> <span class="pre">'Title':</span> <span class="pre">'Blank</span> <span class="pre">Config'}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config_file_location</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'./.temp/last_session_config.json'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MainUI/MainUI.html#MainWindow"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MainUI.MainUI.MainWindow" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PyQt6.QtWidgets.QMainWindow</span></code></p>
+<p>This is the main window for the GUI
+It contains the main menu, the channel windows, and the plot windows
+It holds plots and channels in lists to keep track of them</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>qtw</strong> (<em>QMainWindow</em>) – Parent item</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="MainUI.MainUI.MainWindow.Edit_Pause_triggered">
+<span class="sig-name descname"><span class="pre">Edit_Pause_triggered</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/MainUI/MainUI.html#MainWindow.Edit_Pause_triggered"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MainUI.MainUI.MainWindow.Edit_Pause_triggered" title="Permalink to this definition"></a></dt>
+<dd><p>Pauses all channels in the active channel widget</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MainUI.MainUI.MainWindow.Edit_Resume_triggered">
+<span class="sig-name descname"><span class="pre">Edit_Resume_triggered</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/MainUI/MainUI.html#MainWindow.Edit_Resume_triggered"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MainUI.MainUI.MainWindow.Edit_Resume_triggered" title="Permalink to this definition"></a></dt>
+<dd><p>Resumes all channels in the active channel widget</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MainUI.MainUI.MainWindow.File_Open_triggered">
+<span class="sig-name descname"><span class="pre">File_Open_triggered</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/MainUI/MainUI.html#MainWindow.File_Open_triggered"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MainUI.MainUI.MainWindow.File_Open_triggered" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MainUI.MainUI.MainWindow.File_Save_as_triggered">
+<span class="sig-name descname"><span class="pre">File_Save_as_triggered</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/MainUI/MainUI.html#MainWindow.File_Save_as_triggered"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MainUI.MainUI.MainWindow.File_Save_as_triggered" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MainUI.MainUI.MainWindow.File_Save_triggered">
+<span class="sig-name descname"><span class="pre">File_Save_triggered</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/MainUI/MainUI.html#MainWindow.File_Save_triggered"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MainUI.MainUI.MainWindow.File_Save_triggered" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MainUI.MainUI.MainWindow.check_config_diffs">
+<span class="sig-name descname"><span class="pre">check_config_diffs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/MainUI/MainUI.html#MainWindow.check_config_diffs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MainUI.MainUI.MainWindow.check_config_diffs" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MainUI.MainUI.MainWindow.closeEvent">
+<span class="sig-name descname"><span class="pre">closeEvent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QCloseEvent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MainUI/MainUI.html#MainWindow.closeEvent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MainUI.MainUI.MainWindow.closeEvent" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MainUI.MainUI.MainWindow.initialize">
+<span class="sig-name descname"><span class="pre">initialize</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/MainUI/MainUI.html#MainWindow.initialize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MainUI.MainUI.MainWindow.initialize" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MainUI.MainUI.MainWindow.not_implemented">
+<span class="sig-name descname"><span class="pre">not_implemented</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/MainUI/MainUI.html#MainWindow.not_implemented"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MainUI.MainUI.MainWindow.not_implemented" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MainUI.MainUI.MainWindow.restoreState">
+<span class="sig-name descname"><span class="pre">restoreState</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QByteArray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/MainUI/MainUI.html#MainWindow.restoreState"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MainUI.MainUI.MainWindow.restoreState" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MainUI.MainUI.MainWindow.saveState">
+<span class="sig-name descname"><span class="pre">saveState</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">QByteArray</span></span></span><a class="reference internal" href="_modules/MainUI/MainUI.html#MainWindow.saveState"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MainUI.MainUI.MainWindow.saveState" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="channel-window-s">
+<h2>Channel Window’s<a class="headerlink" href="#channel-window-s" title="Permalink to this headline"></a></h2>
+<p>There are two channel windows displayed in the main window (deactive and active).</p>
+<blockquote>
+<div><p><strong>Active Channels Window:</strong> Positioned on the left side of the main window, this dockable window displays a list of channels that are currently being processed. These channels will be recorded in the data file and can be paused or resumed using the main menu options.</p>
+<p><strong>Deactive Channels Window:</strong> Also located on the left side of the main window, below the Active Channels window, this dockable window shows a list of channels that are not currently being recorded. These channels can be activated by moving them to the Active Channels window.</p>
+</div></blockquote>
+<span class="target" id="module-MainUI.channel_windows"></span><dl class="py class">
+<dt class="sig sig-object py" id="MainUI.channel_windows.ChannelWindow">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">MainUI.channel_windows.</span></span><span class="sig-name descname"><span class="pre">ChannelWindow</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modelName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'unnamed'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resource_manager</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MainUI/channel_windows.html#ChannelWindow"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MainUI.channel_windows.ChannelWindow" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PyQt6.QtWidgets.QDockWidget</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="MainUI.channel_windows.ChannelWindow.Record_Current_Channel_Values">
+<span class="sig-name descname"><span class="pre">Record_Current_Channel_Values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fileName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MainUI/channel_windows.html#ChannelWindow.Record_Current_Channel_Values"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MainUI.channel_windows.ChannelWindow.Record_Current_Channel_Values" title="Permalink to this definition"></a></dt>
+<dd><p>Takes a snapshot of all the channels outputs</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MainUI.channel_windows.ChannelWindow.addChannel">
+<span class="sig-name descname"><span class="pre">addChannel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">channel</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="Channel_Lib.html#Channel_Lib.channel.Channel" title="Channel_Lib.channel.Channel"><span class="pre">Channel_Lib.channel.Channel</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MainUI/channel_windows.html#ChannelWindow.addChannel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MainUI.channel_windows.ChannelWindow.addChannel" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MainUI.channel_windows.ChannelWindow.add_channel_properties">
+<span class="sig-name descname"><span class="pre">add_channel_properties</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/MainUI/channel_windows.html#ChannelWindow.add_channel_properties"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MainUI.channel_windows.ChannelWindow.add_channel_properties" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MainUI.channel_windows.ChannelWindow.deleteChannel">
+<span class="sig-name descname"><span class="pre">deleteChannel</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/MainUI/channel_windows.html#ChannelWindow.deleteChannel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MainUI.channel_windows.ChannelWindow.deleteChannel" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MainUI.channel_windows.ChannelWindow.getChannelFromName">
+<span class="sig-name descname"><span class="pre">getChannelFromName</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">channelName</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MainUI/channel_windows.html#ChannelWindow.getChannelFromName"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MainUI.channel_windows.ChannelWindow.getChannelFromName" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MainUI.channel_windows.ChannelWindow.getChannelNames">
+<span class="sig-name descname"><span class="pre">getChannelNames</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/MainUI/channel_windows.html#ChannelWindow.getChannelNames"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MainUI.channel_windows.ChannelWindow.getChannelNames" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MainUI.channel_windows.ChannelWindow.getChannels">
+<span class="sig-name descname"><span class="pre">getChannels</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/MainUI/channel_windows.html#ChannelWindow.getChannels"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MainUI.channel_windows.ChannelWindow.getChannels" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MainUI.channel_windows.ChannelWindow.getRowFromName">
+<span class="sig-name descname"><span class="pre">getRowFromName</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">channelName</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MainUI/channel_windows.html#ChannelWindow.getRowFromName"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MainUI.channel_windows.ChannelWindow.getRowFromName" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MainUI.channel_windows.ChannelWindow.menuContext">
+<span class="sig-name descname"><span class="pre">menuContext</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/MainUI/channel_windows.html#ChannelWindow.menuContext"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MainUI.channel_windows.ChannelWindow.menuContext" title="Permalink to this definition"></a></dt>
+<dd><p>This method is used to create a context menu for the channel window
+It has options to add a channel, remove a channel, and save the data</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MainUI.channel_windows.ChannelWindow.move_channel">
+<span class="sig-name descname"><span class="pre">move_channel</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/MainUI/channel_windows.html#ChannelWindow.move_channel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MainUI.channel_windows.ChannelWindow.move_channel" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MainUI.channel_windows.ChannelWindow.pauseChannel">
+<span class="sig-name descname"><span class="pre">pauseChannel</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/MainUI/channel_windows.html#ChannelWindow.pauseChannel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MainUI.channel_windows.ChannelWindow.pauseChannel" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MainUI.channel_windows.ChannelWindow.restoreState">
+<span class="sig-name descname"><span class="pre">restoreState</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">configDict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MainUI/channel_windows.html#ChannelWindow.restoreState"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MainUI.channel_windows.ChannelWindow.restoreState" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MainUI.channel_windows.ChannelWindow.saveState">
+<span class="sig-name descname"><span class="pre">saveState</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/MainUI/channel_windows.html#ChannelWindow.saveState"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MainUI.channel_windows.ChannelWindow.saveState" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="MainUI.channel_windows.ChannelWindow.treeViewChanged">
+<span class="sig-name descname"><span class="pre">treeViewChanged</span></span><a class="headerlink" href="#MainUI.channel_windows.ChannelWindow.treeViewChanged" title="Permalink to this definition"></a></dt>
+<dd><p>Class for keeping track of all the channels in the specified state (active/inactive)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parent</strong> – The main window that the channel window will be docked to.</p></li>
+<li><p><strong>modelName</strong> – The name of the model that the channel window will be associated with.
+Either: ‘ActiveChannelList’ or ‘DeactiveChannelList’</p></li>
+<li><p><strong>resource_manager</strong> – The resource manager that will be used to create instruments.
+This is likely going to be a global variable.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Variables</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>name</strong> – The name of the model.</p></li>
+<li><p><strong>model</strong> – The model that the channel window will be associated with.</p></li>
+<li><p><strong>view</strong> – The view that will be used to display the model.</p></li>
+<li><p><strong>selected_items</strong> – A list of the selected items in the channel window.</p></li>
+<li><p><strong>rm</strong> – The resource manager that will be used to create instruments.</p></li>
+<li><p><strong>mw</strong> – The main window that the channel window will be docked to.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-MainUI">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-MainUI" title="Permalink to this headline"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Pyquisition.html" class="btn btn-neutral float-left" title="Configuration Window" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="MainUI.Data_Lib.html" class="btn btn-neutral float-right" title="MainUI.Data_Lib package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Jacob Nellis, Matt Francom, Mark Kimball.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Instrumentation.Instrument_Model_Manager &mdash; Pyquisition 1.1.1 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> Pyquisition
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Guide Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Installation.html">Installation Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user_guide.html">User Guide</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer Guide Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Pyquisition.html">Configuration Window</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../MainUI.html">MainUI package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Instrumentation.html">Instrumentation package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Instrumentation.html#module-Instrumentation.InstrumentModels">Instrument Models (Subclasses)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Instrumentation.html#instrument-model-manager">Instrument Model Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Channel_Lib.html">Channel_Lib package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Channel_Lib.widgets.html">Channel Widgets</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Pyquisition</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">Instrumentation.Instrument_Model_Manager</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for Instrumentation.Instrument_Model_Manager</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="s2">&quot;..&quot;</span><span class="p">)</span>
+<span class="kn">import</span> <span class="nn">pyvisa</span>
+<span class="kn">from</span> <span class="nn">Instrumentation</span> <span class="kn">import</span> <span class="n">Instrument_Model</span>
+<span class="kn">from</span> <span class="nn">Instrumentation.Create_Instrument</span> <span class="kn">import</span> <span class="n">create_instrument</span>
+<span class="kn">from</span> <span class="nn">PyQt6</span> <span class="kn">import</span> <span class="n">QtWidgets</span> <span class="k">as</span> <span class="n">qtw</span><span class="p">,</span> <span class="n">QtCore</span> <span class="k">as</span> <span class="n">qtc</span><span class="p">,</span> <span class="n">QtGui</span> <span class="k">as</span> <span class="n">qtg</span>
+
+
+<div class="viewcode-block" id="InstrumentModel_Manager"><a class="viewcode-back" href="../../Instrumentation.html#Instrumentation.Instrument_Model_Manager.InstrumentModel_Manager">[docs]</a><span class="k">class</span> <span class="nc">InstrumentModel_Manager</span><span class="p">(</span><span class="n">qtc</span><span class="o">.</span><span class="n">QObject</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The InstrumentModel_Manager class is responsible for managing instrument models in the application.</span>
+
+<span class="sd">    This class is initialized when the main program window starts. It scans the GPIB bus for instruments and</span>
+<span class="sd">    creates the necessary instrument models for each instrument. This ensures that each instrument is only</span>
+<span class="sd">    created once, and that the instrument models are available to all channels.</span>
+
+<span class="sd">    The class emits a signal called InstrumentListChanged when the list of available instruments has changed.</span>
+
+<span class="sd">    Constructor:</span>
+<span class="sd">        __init__(self, Resource_Manager: pyvisa.ResourceManager)</span>
+
+<span class="sd">        The constructor takes a pyvisa.ResourceManager as an argument.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        * resourceManager: The pyvisa.ResourceManager that is used to scan the GPIB bus.</span>
+<span class="sd">        * InstrumentModels: A dictionary of all the instrument models that have been created. The key is the</span>
+<span class="sd">          instrument address, and the value is the instrument model.</span>
+
+<span class="sd">    Signals:</span>
+<span class="sd">        * InstrumentListChanged: This signal is emitted when the list of available instruments has changed.</span>
+<span class="sd">          The signal contains a list of instrument IDs as a parameter.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">InstrumentListChanged</span> <span class="o">=</span> <span class="n">qtc</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Resource_Manager</span><span class="p">:</span> <span class="n">pyvisa</span><span class="o">.</span><span class="n">ResourceManager</span><span class="p">,</span> <span class="n">simulation_library</span><span class="p">:</span><span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">):</span>
+        
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">resourceManager</span> <span class="o">=</span> <span class="n">Resource_Manager</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">InstrumentModels</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sim_lib</span> <span class="o">=</span> <span class="n">simulation_library</span>
+        <span class="c1">#Create the list of available instrumentModels</span>
+        <span class="k">for</span> <span class="n">resource</span> <span class="ow">in</span> <span class="n">Resource_Manager</span><span class="o">.</span><span class="n">list_resources</span><span class="p">():</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">newInstrument</span><span class="p">:</span><span class="n">Instrument_Model</span> <span class="o">=</span> <span class="n">create_instrument</span><span class="p">(</span><span class="n">resource</span><span class="p">,</span> <span class="n">simulation_library</span><span class="p">)</span>
+                <span class="n">newInstrument_ID</span> <span class="o">=</span> <span class="n">newInstrument</span><span class="o">.</span><span class="n">get_address</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">InstrumentModels</span><span class="p">[</span><span class="n">newInstrument_ID</span><span class="p">]</span> <span class="o">=</span> <span class="n">newInstrument</span>
+            
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+
+<div class="viewcode-block" id="InstrumentModel_Manager.rescan_GPIB_Bus"><a class="viewcode-back" href="../../Instrumentation.html#Instrumentation.Instrument_Model_Manager.InstrumentModel_Manager.rescan_GPIB_Bus">[docs]</a>    <span class="k">def</span> <span class="nf">rescan_GPIB_Bus</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1">#Create the list of available instrumentModels</span>
+        <span class="n">changeOccured</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">for</span> <span class="n">resource</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">resourceManager</span><span class="o">.</span><span class="n">list_resources</span><span class="p">():</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">newInstrument</span><span class="p">:</span><span class="n">Instrument_Model</span> <span class="o">=</span> <span class="n">create_instrument</span><span class="p">(</span><span class="n">resource</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sim_lib</span><span class="p">)</span>
+                <span class="n">newInstrument_ID</span> <span class="o">=</span> <span class="n">newInstrument</span><span class="o">.</span><span class="n">get_address</span><span class="p">()</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">newInstrument_ID</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">InstrumentModels</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span> 
+                    <span class="n">changeOccured</span> <span class="o">=</span> <span class="kc">True</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">InstrumentModels</span><span class="p">[</span><span class="n">newInstrument_ID</span><span class="p">]</span> <span class="o">=</span> <span class="n">newInstrument</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">__traceback__</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">changeOccured</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">InstrumentListChanged</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">InstrumentModels</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+        
+        <span class="k">return</span></div>
+    
+<div class="viewcode-block" id="InstrumentModel_Manager.get_instrument"><a class="viewcode-back" href="../../Instrumentation.html#Instrumentation.Instrument_Model_Manager.InstrumentModel_Manager.get_instrument">[docs]</a>    <span class="k">def</span> <span class="nf">get_instrument</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instrument_ID</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span> <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">InstrumentModels</span><span class="p">[</span><span class="n">instrument_ID</span><span class="p">]</span>
+        <span class="k">except</span><span class="p">:</span> <span class="k">return</span> <span class="kc">None</span> <span class="c1"># No instrument found with that ID</span></div></div>
+        
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Jacob Nellis, Matt Francom, Mark Kimball.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

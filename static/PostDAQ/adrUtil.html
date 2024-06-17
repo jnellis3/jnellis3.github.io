@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>adrUtil module &mdash; PostDAQ 1.1.1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="adr_lib module" href="adr_lib.html" />
+    <link rel="prev" title="PostDAQ" href="modules.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> PostDAQ
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Installation.html">Installation Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="UserGuide.html">User Guide</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Program Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">PostDAQ</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">adrUtil module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="adr_lib.html">adr_lib module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dataTool.html">dataTool module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="editor.html">editor module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="loginWins.html">loginWins module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="main.html">main module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="noteManager.html">noteManager module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="old_code_refs.html">old_code_refs module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="publishViewer.html">publishViewer module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="solver.html">solver module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="styleSet.html">styleSet module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test.html">test module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="users.html">users module</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">PostDAQ</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">PostDAQ</a></li>
+      <li class="breadcrumb-item active">adrUtil module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/adrUtil.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-adrUtil">
+<span id="adrutil-module"></span><h1>adrUtil module<a class="headerlink" href="#module-adrUtil" title="Permalink to this headline"></a></h1>
+<p>ADR calculation helpers
+Eric Switzer</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="adrUtil.adr_entropy">
+<span class="sig-prename descclassname"><span class="pre">adrUtil.</span></span><span class="sig-name descname"><span class="pre">adr_entropy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">spin_J</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b_eff</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">temperature</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lande_g</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#adrUtil.adr_entropy" title="Permalink to this definition"></a></dt>
+<dd><p>Return S/R per mole</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="adrUtil.applied_power">
+<span class="sig-prename descclassname"><span class="pre">adrUtil.</span></span><span class="sig-name descname"><span class="pre">applied_power</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">iua</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tmux</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r_heat</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#adrUtil.applied_power" title="Permalink to this definition"></a></dt>
+<dd><p>The heater is in series with a 3.74 kOhm load resistor
+Then the current in the heater is [iua] /(1. + R_heat / 3.74kOhm)
+The heater resistance is in kOhm</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="adrUtil.cpa_entropy">
+<span class="sig-prename descclassname"><span class="pre">adrUtil.</span></span><span class="sig-name descname"><span class="pre">cpa_entropy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">b_applied</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">temperature</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#adrUtil.cpa_entropy" title="Permalink to this definition"></a></dt>
+<dd><p>Shirron Cryogenics 62 (2014) 130-139</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="adrUtil.dmagnetization_dt">
+<span class="sig-prename descclassname"><span class="pre">adrUtil.</span></span><span class="sig-name descname"><span class="pre">dmagnetization_dt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">field</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">temperature</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#adrUtil.dmagnetization_dt" title="Permalink to this definition"></a></dt>
+<dd><p>Find nu partial M / partial T <a href="#id1"><span class="problematic" id="id2">|</span></a>H</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="adrUtil.f">
+<span class="sig-prename descclassname"><span class="pre">adrUtil.</span></span><span class="sig-name descname"><span class="pre">f</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">slope</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#adrUtil.f" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="adrUtil.faa_entropy">
+<span class="sig-prename descclassname"><span class="pre">adrUtil.</span></span><span class="sig-name descname"><span class="pre">faa_entropy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">b_applied</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">temperature</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#adrUtil.faa_entropy" title="Permalink to this definition"></a></dt>
+<dd><p>Shirron Cryogenics 62 (2014) 130-139</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="adrUtil.get_segment">
+<span class="sig-prename descclassname"><span class="pre">adrUtil.</span></span><span class="sig-name descname"><span class="pre">get_segment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">segment</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_channel</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#adrUtil.get_segment" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="adrUtil.ggg_entropy">
+<span class="sig-prename descclassname"><span class="pre">adrUtil.</span></span><span class="sig-name descname"><span class="pre">ggg_entropy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">b_applied</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">temperature</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#adrUtil.ggg_entropy" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="adrUtil.ggg_gallagher_single">
+<span class="sig-prename descclassname"><span class="pre">adrUtil.</span></span><span class="sig-name descname"><span class="pre">ggg_gallagher_single</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">field</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">temperature</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#adrUtil.ggg_gallagher_single" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="adrUtil.heat_cap">
+<span class="sig-prename descclassname"><span class="pre">adrUtil.</span></span><span class="sig-name descname"><span class="pre">heat_cap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">temperature</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#adrUtil.heat_cap" title="Permalink to this definition"></a></dt>
+<dd><p>return c_p
+units are J/g/K</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="adrUtil.heat_cap_int">
+<span class="sig-prename descclassname"><span class="pre">adrUtil.</span></span><span class="sig-name descname"><span class="pre">heat_cap_int</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">temperature</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">init</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#adrUtil.heat_cap_int" title="Permalink to this definition"></a></dt>
+<dd><p>return the entropy from integrated c_p
+units are J/g/K</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="adrUtil.magnetization">
+<span class="sig-prename descclassname"><span class="pre">adrUtil.</span></span><span class="sig-name descname"><span class="pre">magnetization</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">field</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">temperature</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#adrUtil.magnetization" title="Permalink to this definition"></a></dt>
+<dd><p>Find nu partial M / partial T <a href="#id3"><span class="problematic" id="id4">|</span></a>H
+field H has units A/m
+mu0 = permeability of free space in H/m = T m /A</p>
+<blockquote>
+<div><p>= 4. * np.pi * 1.e-7</p>
+</div></blockquote>
+<p>mu_0 H = T m /A A/m = T</p>
+<p>Bohr magneton in J/T
+beta = 5.050783699e-27</p>
+<p>Magnetization is number density * Bohr magneton
+M has units (1/m^3) J/T (energy density per Telsa)
+Tesla T = J / A / m^2
+Alternately: M ~ (1/m^3) J / T = A m^-1
+nu is the specific volume, m^3 / g
+nu M has units A m^2 / g = J/T/g</p>
+<p>mu dM/dt * mu0 H has units J/g/K, or entropy per gram</p>
+<p>c0 has units T A^-1 m^-2 g
+Note: this is a typo in Gallagher, who gives:
+c0_gallagher ~ T A^-1 m^-1 g</p>
+<p>J T^-1 m^-3 = J (A m^2 / J) m^-3 = A m^-1, A = J T^-1 m^-2
+units are 1/units of c0, or T^-1 A m g = T^-1 J/T m^-2 m g</p>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="modules.html" class="btn btn-neutral float-left" title="PostDAQ" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="adr_lib.html" class="btn btn-neutral float-right" title="adr_lib module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Jacob Nellis.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

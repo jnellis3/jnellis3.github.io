@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MainUI.Displays.PlotWindow &mdash; Pyquisition 1.1.1 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html" class="icon icon-home"> Pyquisition
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Guide Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Installation.html">Installation Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user_guide.html">User Guide</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer Guide Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Pyquisition.html">Configuration Window</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../MainUI.html">MainUI package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Instrumentation.html">Instrumentation package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Instrumentation.html#module-Instrumentation.InstrumentModels">Instrument Models (Subclasses)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Instrumentation.html#instrument-model-manager">Instrument Model Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Channel_Lib.html">Channel_Lib package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Channel_Lib.widgets.html">Channel Widgets</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Pyquisition</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">MainUI.Displays.PlotWindow</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for MainUI.Displays.PlotWindow</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">PyQt6</span> <span class="kn">import</span> <span class="n">QtWidgets</span> <span class="k">as</span> <span class="n">qtw</span>
+<span class="kn">from</span> <span class="nn">PyQt6</span> <span class="kn">import</span> <span class="n">QtCore</span> <span class="k">as</span> <span class="n">qtc</span>
+<span class="kn">from</span> <span class="nn">PyQt6</span> <span class="kn">import</span> <span class="n">QtGui</span> <span class="k">as</span> <span class="n">qtg</span>
+<span class="kn">import</span> <span class="nn">pyqtgraph</span> <span class="k">as</span> <span class="nn">pg</span>
+<span class="kn">import</span> <span class="nn">utils_lib.global_vars</span> <span class="k">as</span> <span class="nn">global_vars</span>
+<span class="kn">from</span> <span class="nn">Channel_Lib.channel</span> <span class="kn">import</span> <span class="n">ctrlWidget</span>
+<span class="kn">from</span> <span class="nn">MainUI.Displays.Display_Widget</span> <span class="kn">import</span> <span class="n">DisplayWidget</span>
+<span class="kn">from</span> <span class="nn">MainUI.channel_windows</span> <span class="kn">import</span> <span class="n">ChannelWindow</span>
+<span class="kn">from</span> <span class="nn">Channel_Lib.widgets</span> <span class="kn">import</span> <span class="o">*</span>
+<div class="viewcode-block" id="PlotDisplayWidget"><a class="viewcode-back" href="../../../MainUI.Displays.html#MainUI.Displays.PlotWindow.PlotDisplayWidget">[docs]</a><span class="k">class</span> <span class="nc">PlotDisplayWidget</span><span class="p">(</span><span class="n">DisplayWidget</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This widget is capable of displaying outputs of channels contained in the </span>
+<span class="sd">    activeChannels model. Can display multiple channels.</span>
+
+<span class="sd">    :param name:        Name of the widget</span>
+
+<span class="sd">    :param configDict:  Dictionary containing the configuration of the widget. If present, the restoreState method is called</span>
+
+<span class="sd">    :param chList:      List of channels that can be displayed in the widget. Will likely be the actChW</span>
+
+<span class="sd">    :ivar myType:       String containing the type of the widget. This is used to identify the widget when it is saved to a file.</span>
+
+<span class="sd">    :ivar channels:     List of channels that can be displayed in the widget. Will likely be the actChW</span>
+
+<span class="sd">    :ivar colors:       List of colors that can be used to plot the data. The colors will be cycled through as more channels are added.</span>
+
+<span class="sd">    :ivar count:        Number of data points that have been plotted. Used to determine when to clear the plot.</span>
+
+<span class="sd">    :ivar range:        Number of data points that will be displayed on the plot at any given time.</span>
+
+<span class="sd">    :ivar pointer:      Index of the most recent data point that has been plotted.</span>
+
+<span class="sd">    :ivar timer:        Timer that calls the process method at a regular interval.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span> <span class="n">configDict</span><span class="p">:</span><span class="nb">dict</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">chList</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">configDict</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">myType</span> <span class="o">=</span> <span class="s2">&quot;PlotDisplayWidget&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">channels</span><span class="p">:</span><span class="n">ChannelWindow</span><span class="o">=</span> <span class="n">chList</span>
+        <span class="n">plotWindow</span> <span class="o">=</span> <span class="n">qtw</span><span class="o">.</span><span class="n">QWidget</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">,</span><span class="s1">&#39;g&#39;</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;m&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">]</span>
+
+        <span class="n">vLayout</span> <span class="o">=</span> <span class="n">qtw</span><span class="o">.</span><span class="n">QVBoxLayout</span><span class="p">(</span><span class="n">plotWindow</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">topOpts</span> <span class="o">=</span> <span class="n">qtw</span><span class="o">.</span><span class="n">QHBoxLayout</span><span class="p">(</span><span class="n">plotWindow</span><span class="p">)</span>
+
+        <span class="n">graphWidget</span> <span class="o">=</span> <span class="n">pg</span><span class="o">.</span><span class="n">GraphicsLayoutWidget</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plot</span> <span class="o">=</span> <span class="n">graphWidget</span><span class="o">.</span><span class="n">ci</span><span class="o">.</span><span class="n">addPlot</span><span class="p">(</span><span class="n">axisItems</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;bottom&#39;</span><span class="p">:</span><span class="n">pg</span><span class="o">.</span><span class="n">DateAxisItem</span><span class="p">()})</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">addLegend</span><span class="p">()</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">channelDropDown</span> <span class="o">=</span> <span class="n">qtw</span><span class="o">.</span><span class="n">QComboBox</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">channelDropDown</span><span class="o">.</span><span class="n">addItems</span><span class="p">(</span><span class="n">chList</span><span class="o">.</span><span class="n">getChannelNames</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">topOpts</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">channelDropDown</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_btn</span> <span class="o">=</span> <span class="n">qtw</span><span class="o">.</span><span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;Add Channel&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_btn</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">addChannel</span><span class="p">(</span><span class="kc">None</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">removeChannel_btn</span> <span class="o">=</span> <span class="n">qtw</span><span class="o">.</span><span class="n">QPushButton</span><span class="p">(</span><span class="s1">&#39;Remove Channel&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">color_btn</span> <span class="o">=</span> <span class="n">pg</span><span class="o">.</span><span class="n">ColorButton</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">color_btn</span><span class="o">.</span><span class="n">sigColorChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">changeColorDone</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">removeChannel_btn</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">removeChannel</span><span class="p">(</span><span class="kc">None</span><span class="p">))</span>
+        
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">selectoutput_combo</span> <span class="o">=</span> <span class="n">qtw</span><span class="o">.</span><span class="n">QComboBox</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">selectoutput_combo</span><span class="o">.</span><span class="n">setPlaceholderText</span><span class="p">(</span><span class="s2">&quot;Select Channel Output&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">topOpts</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">selectoutput_combo</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">topOpts</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">add_btn</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">topOpts</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">removeChannel_btn</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">topOpts</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">color_btn</span><span class="p">)</span>
+
+        <span class="n">vLayout</span><span class="o">.</span><span class="n">addLayout</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">topOpts</span><span class="p">)</span>
+        <span class="n">vLayout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">graphWidget</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">range</span> <span class="o">=</span> <span class="mi">300</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pointer</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">timer</span> <span class="o">=</span> <span class="n">qtc</span><span class="o">.</span><span class="n">QTimer</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timer</span><span class="o">.</span><span class="n">timeout</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">process</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timer</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setWidget</span><span class="p">(</span><span class="n">plotWindow</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">channels</span><span class="o">.</span><span class="n">treeViewChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">updateChannelList</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">currentSelection</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">channelDropDown</span><span class="o">.</span><span class="n">currentText</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">configDict</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">restoreState</span><span class="p">(</span><span class="n">configDict</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_btn</span><span class="o">.</span><span class="n">setToolTip</span><span class="p">(</span><span class="s2">&quot;Add &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">channelDropDown</span><span class="o">.</span><span class="n">currentText</span><span class="p">())</span> <span class="o">+</span> <span class="s2">&quot; to the plot&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">removeChannel_btn</span><span class="o">.</span><span class="n">setToolTip</span><span class="p">(</span><span class="s2">&quot;Remove &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">channelDropDown</span><span class="o">.</span><span class="n">currentText</span><span class="p">())</span> <span class="o">+</span> <span class="s2">&quot; from the plot&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">channelDropDownChanged</span><span class="p">()</span>
+
+<div class="viewcode-block" id="PlotDisplayWidget.channelDropDownChanged"><a class="viewcode-back" href="../../../MainUI.Displays.html#MainUI.Displays.PlotWindow.PlotDisplayWidget.channelDropDownChanged">[docs]</a>    <span class="k">def</span> <span class="nf">channelDropDownChanged</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_btn</span><span class="o">.</span><span class="n">setToolTip</span><span class="p">(</span><span class="s2">&quot;Add &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">channelDropDown</span><span class="o">.</span><span class="n">currentText</span><span class="p">())</span> <span class="o">+</span> <span class="s2">&quot; to the plot&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">removeChannel_btn</span><span class="o">.</span><span class="n">setToolTip</span><span class="p">(</span><span class="s2">&quot;Remove &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">channelDropDown</span><span class="o">.</span><span class="n">currentText</span><span class="p">())</span> <span class="o">+</span> <span class="s2">&quot; from the plot&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">listDataItems</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">name</span><span class="p">()</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">channelDropDown</span><span class="o">.</span><span class="n">currentText</span><span class="p">():</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">color_btn</span><span class="o">.</span><span class="n">setColor</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">opts</span><span class="p">[</span><span class="s1">&#39;pen&#39;</span><span class="p">])</span>
+                <span class="k">except</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">color_btn</span><span class="o">.</span><span class="n">setColor</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">opts</span><span class="p">[</span><span class="s1">&#39;pen&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">color</span><span class="p">())</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">selectoutput_combo</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">selectoutput_combo</span><span class="o">.</span><span class="n">addItems</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">channels</span><span class="o">.</span><span class="n">getChannelFromName</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">channelDropDown</span><span class="o">.</span><span class="n">currentText</span><span class="p">())</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="k">except</span><span class="p">:</span><span class="k">pass</span></div>
+                
+
+<div class="viewcode-block" id="PlotDisplayWidget.changeColorDone"><a class="viewcode-back" href="../../../MainUI.Displays.html#MainUI.Displays.PlotWindow.PlotDisplayWidget.changeColorDone">[docs]</a>    <span class="k">def</span> <span class="nf">changeColorDone</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">btn</span><span class="p">):</span>
+        <span class="n">color</span> <span class="o">=</span> <span class="n">btn</span><span class="o">.</span><span class="n">color</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">listDataItems</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">name</span><span class="p">()</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">channelDropDown</span><span class="o">.</span><span class="n">currentText</span><span class="p">():</span>
+                <span class="n">item</span><span class="o">.</span><span class="n">setPen</span><span class="p">(</span><span class="n">color</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="PlotDisplayWidget.restoreState"><a class="viewcode-back" href="../../../MainUI.Displays.html#MainUI.Displays.PlotWindow.PlotDisplayWidget.restoreState">[docs]</a>    <span class="k">def</span> <span class="nf">restoreState</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span> 
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">state</span><span class="p">[</span><span class="s2">&quot;Inputs&quot;</span><span class="p">]:</span> 
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">addChannel</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">global_vars</span><span class="o">.</span><span class="n">recordError</span><span class="p">(</span><span class="s1">&#39;Error below: &#39;</span> <span class="o">+</span> <span class="n">c</span> <span class="o">+</span> <span class="s1">&#39; channel was not found in config file, but was listed as an input for the plot widget.&#39;</span><span class="p">)</span>
+                <span class="n">global_vars</span><span class="o">.</span><span class="n">recordError</span><span class="p">(</span><span class="n">e</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="PlotDisplayWidget.removeChannel"><a class="viewcode-back" href="../../../MainUI.Displays.html#MainUI.Displays.PlotWindow.PlotDisplayWidget.removeChannel">[docs]</a>    <span class="k">def</span> <span class="nf">removeChannel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ch</span><span class="p">:</span><span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span> 
+        <span class="n">channelName</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">channelDropDown</span><span class="o">.</span><span class="n">currentText</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">ch</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">channelName</span> <span class="o">=</span> <span class="n">ch</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">channels</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">rowCount</span><span class="p">()):</span>
+            <span class="k">if</span> <span class="n">channelName</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">channels</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">item</span><span class="p">(</span><span class="n">row</span><span class="p">)</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+                <span class="n">channel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">channels</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">item</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+                <span class="n">channel</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">outputChanged</span><span class="o">.</span><span class="n">disconnect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">newDataReceived</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">listDataItems</span><span class="p">():</span>
+                    <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">name</span><span class="p">()</span> <span class="o">==</span> <span class="n">channelName</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">removeItem</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+        <span class="k">return</span></div>
+
+<div class="viewcode-block" id="PlotDisplayWidget.addChannel"><a class="viewcode-back" href="../../../MainUI.Displays.html#MainUI.Displays.PlotWindow.PlotDisplayWidget.addChannel">[docs]</a>    <span class="k">def</span> <span class="nf">addChannel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ch</span><span class="p">:</span><span class="nb">str</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">channelName</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">channelDropDown</span><span class="o">.</span><span class="n">currentText</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">channelName</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">ch</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span> 
+            <span class="n">channelName</span> <span class="o">=</span> <span class="n">ch</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">channels</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">rowCount</span><span class="p">()):</span>
+            <span class="k">if</span> <span class="n">channelName</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">channels</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">item</span><span class="p">(</span><span class="n">row</span><span class="p">)</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+                <span class="n">channel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">channels</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">item</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+        <span class="n">newLine</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="n">channelName</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">selectoutput_combo</span><span class="o">.</span><span class="n">currentText</span><span class="p">(),</span> <span class="n">pen</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">colors</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">keys</span><span class="p">())])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">addInput</span><span class="p">(</span><span class="n">channelName</span><span class="p">,</span> <span class="n">channel</span><span class="p">)</span>
+        
+        <span class="c1">#connect signal from channel to flow into the plot</span>
+        <span class="n">channel</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">outputChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">newDataReceived</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">addOutput</span><span class="p">(</span><span class="n">channelName</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;line&quot;</span><span class="p">:</span> <span class="n">newLine</span><span class="p">,</span> <span class="s2">&quot;values&quot;</span><span class="p">:[],</span><span class="s2">&quot;times&quot;</span><span class="p">:[],</span> <span class="s2">&quot;var&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">selectoutput_combo</span><span class="o">.</span><span class="n">currentText</span><span class="p">()})</span></div>
+
+<div class="viewcode-block" id="PlotDisplayWidget.updateChannelList"><a class="viewcode-back" href="../../../MainUI.Displays.html#MainUI.Displays.PlotWindow.PlotDisplayWidget.updateChannelList">[docs]</a>    <span class="k">def</span> <span class="nf">updateChannelList</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="n">currentPost</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">channelDropDown</span><span class="o">.</span><span class="n">currentIndex</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">channelDropDown</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">channelDropDown</span><span class="o">.</span><span class="n">addItems</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">channels</span><span class="o">.</span><span class="n">getChannelNames</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">channelDropDown</span><span class="o">.</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="n">currentPost</span><span class="p">)</span></div>
+   
+    
+<div class="viewcode-block" id="PlotDisplayWidget.newDataReceived"><a class="viewcode-back" href="../../../MainUI.Displays.html#MainUI.Displays.PlotWindow.PlotDisplayWidget.newDataReceived">[docs]</a>    <span class="k">def</span> <span class="nf">newDataReceived</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+
+
+        <span class="n">channel_name</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">outputs</span><span class="p">:</span><span class="nb">dict</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="c1">#self.outputs[channel_name][&#39;times&#39;].append(outputs.pop(&#39;time&#39;))</span>
+
+        <span class="k">for</span> <span class="n">output</span> <span class="ow">in</span> <span class="n">outputs</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span> 
+                <span class="n">value</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">outputs</span><span class="p">[</span><span class="n">output</span><span class="p">])</span>
+                <span class="k">if</span> <span class="n">output</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="n">channel_name</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="n">channel_name</span><span class="p">][</span><span class="n">output</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="n">channel_name</span><span class="p">][</span><span class="n">output</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">value</span><span class="p">]</span>
+            <span class="k">except</span><span class="p">:</span> <span class="k">pass</span> <span class="c1"># only want to collect outputs that are numbers</span>
+
+
+        <span class="k">if</span> <span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pointer</span><span class="o">+=</span><span class="mi">1</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="s1">&#39;values&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="s1">&#39;var&#39;</span><span class="p">]])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="s1">&#39;times&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;time&#39;</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="s1">&#39;line&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="s1">&#39;times&#39;</span><span class="p">],</span><span class="bp">self</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="s2">&quot;values&quot;</span><span class="p">])</span></div>
+
+
+
+<div class="viewcode-block" id="PlotDisplayWidget.process"><a class="viewcode-back" href="../../../MainUI.Displays.html#MainUI.Displays.PlotWindow.PlotDisplayWidget.process">[docs]</a>    <span class="k">def</span> <span class="nf">process</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">channelDropDown</span><span class="o">.</span><span class="n">currentText</span><span class="p">())</span> <span class="o">!=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">currentSelection</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">currentSelection</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">channelDropDown</span><span class="o">.</span><span class="n">currentText</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">channelDropDownChanged</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">with_traceback</span><span class="p">())</span>
+            <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="PlotDisplayWidget.saveState"><a class="viewcode-back" href="../../../MainUI.Displays.html#MainUI.Displays.PlotWindow.PlotDisplayWidget.saveState">[docs]</a>    <span class="k">def</span> <span class="nf">saveState</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">configDict</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">configDict</span><span class="p">[</span><span class="s2">&quot;Name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+        <span class="n">configDict</span><span class="p">[</span><span class="s2">&quot;Type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">myType</span>
+        <span class="n">configDict</span><span class="p">[</span><span class="s2">&quot;Inputs&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">chName</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="n">configDict</span><span class="p">[</span><span class="s2">&quot;Inputs&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">chName</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">configDict</span></div>
+        
+<div class="viewcode-block" id="PlotDisplayWidget.closeEvent"><a class="viewcode-back" href="../../../MainUI.Displays.html#MainUI.Displays.PlotWindow.PlotDisplayWidget.closeEvent">[docs]</a>    <span class="k">def</span> <span class="nf">closeEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">channels</span><span class="o">.</span><span class="n">mw</span><span class="o">.</span><span class="n">cw</span><span class="o">.</span><span class="n">closeActiveSubWindow</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">channels</span><span class="o">.</span><span class="n">mw</span><span class="o">.</span><span class="n">cw</span><span class="o">.</span><span class="n">removeSubWindow</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">closeEvent</span><span class="p">(</span><span class="n">event</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Jacob Nellis, Matt Francom, Mark Kimball.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
