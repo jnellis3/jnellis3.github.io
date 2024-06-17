@@ -3,16 +3,22 @@
 - company: goVirtualOffice
   position: Software Engineering Consultant
   duration: Aug, 2023 &mdash; Present
-  summary: Write about your core competencies in one or two sentences describing your position. If you held the position for a long time, it could be a longer section, including a couple bullet points	<ul class="resume-item-list"><li>A project you are proud of</li><li>Another awesome project</li><li>or a team or department you worked with</li></ul>
+  summary: |
+    <ul>
+      <li>Design, develop, and implement ERP system solutions to streamline business processes and enhance productivity.</li>
+      <li>Collaborate with cross-functional teams to gather requirements and deliver customized ERP modules tailored to specific business needs.</li>
+      <li>Maintain and upgrade existing ERP systems, ensuring seamless integration with other enterprise applications.</li>
+      <li>Provide technical support and training to end-users, addressing system issues and improving user experience.</li>
+      <li>Conduct system testing and quality assurance to ensure reliable performance and data accuracy.</li>
+    </ul>
+
 
 # Director of Digital Stratgy
 - company: National Aeronautics and Space Administration
   position: Aerospace Engineer
-  duration:  May, 2021 &mdash; May, 2023
-  summary: If your stint was shorter, feel free to be brief and just call out the most meaningful points of your role. Be concise, and be meaninful. The person reading just needs enough to want to talk to you more about your experience.
-
-# Communications Coordinator
-- company: Springfield Women & Children's Center
-  position: Communications Coordinator
-  duration:   Jun, 2008  &mdash; May, 2010
-  summary: Led communication efforts across digital and traditional media channels for marketing and public relations, internal communication strategies, and coordinated support programs for the recipients of the center's services.
+  duration: May, 2021 &mdash; May, 2023
+  summary: |
+    <ul>
+      <li>Led the design, fabrication, and testing of the Sub-Kelvin Cooling System of the Experiment for Cryogenic Large Aperture Intensity Mapping (EXCLAIM) Mission.</li>
+      <li>Developed the "Pyquisition Program to improve our branches lab testing capabilities."</li>
+    </ul>
