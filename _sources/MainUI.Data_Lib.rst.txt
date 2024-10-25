@@ -1,0 +1,29 @@
+MainUI.Data\_Lib package
+========================
+
+Submodules
+----------
+
+MainUI.Data\_Lib.accumulator module
+-----------------------------------
+
+.. automodule:: MainUI.Data_Lib.accumulator
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+MainUI.Data\_Lib.config\_tracker module
+---------------------------------------
+
+.. automodule:: MainUI.Data_Lib.config_tracker
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: MainUI.Data_Lib
+   :members:
+   :undoc-members:
+   :show-inheritance:

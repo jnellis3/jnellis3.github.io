@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Instrumentation.keithley.keithley2000 &mdash; Pyquisition 1.1.1 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html" class="icon icon-home"> Pyquisition
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Guide Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Installation.html">Installation Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user_guide.html">User Guide</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer Guide Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Pyquisition.html">Configuration Window</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../MainUI.html">MainUI package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Instrumentation.html">Instrumentation package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Instrumentation.html#module-Instrumentation.InstrumentModels">Instrument Models (Subclasses)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Instrumentation.html#instrument-model-manager">Instrument Model Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Channel_Lib.html">Channel_Lib package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Channel_Lib.widgets.html">Channel Widgets</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Pyquisition</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">Instrumentation.keithley.keithley2000</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for Instrumentation.keithley.keithley2000</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">pymeasure.instruments.keithley</span> <span class="kn">import</span> <span class="n">Keithley2000</span> <span class="k">as</span> <span class="n">pyKeithley2000</span>
+<span class="kn">from</span> <span class="nn">pymeasure.instruments</span> <span class="kn">import</span> <span class="n">Instrument</span> <span class="k">as</span> <span class="n">pyInstrument</span>
+<span class="kn">from</span> <span class="nn">Instrumentation.InstrumentModels</span> <span class="kn">import</span> <span class="n">Instrument_Model</span>
+<span class="kn">import</span> <span class="nn">inspect</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="k">def</span> <span class="nf">_get_mode_settings</span><span class="p">(</span><span class="n">mode</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="n">measurement</span> <span class="o">=</span> <span class="n">mode</span> <span class="o">+</span> <span class="s2">&quot;_value&quot;</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;value&quot;</span><span class="p">:{</span>
+        <span class="n">measurement</span><span class="p">:</span> <span class="n">pyKeithley2000</span><span class="o">.</span><span class="n">current</span>    
+    <span class="p">}}</span>
+    <span class="n">paramDict</span> <span class="o">=</span> <span class="n">pyKeithley2000</span><span class="o">.</span><span class="vm">__dict__</span>
+    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">paramDict</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">paramDict</span><span class="p">[</span><span class="n">item</span><span class="p">],</span> <span class="nb">property</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">mode</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">mode</span><span class="p">):</span>
+                    <span class="n">params</span><span class="p">[</span><span class="n">item</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+                    <span class="n">params</span><span class="p">[</span><span class="n">item</span><span class="p">][</span><span class="s2">&quot;param&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">paramDict</span><span class="p">[</span><span class="n">item</span><span class="p">]</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">params</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span> <span class="k">return</span> <span class="n">params</span>
+    <span class="k">else</span><span class="p">:</span> <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;test&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;param&quot;</span><span class="p">:</span> <span class="n">pyKeithley2000</span><span class="o">.</span><span class="n">current</span><span class="p">}}</span>
+
+
+<span class="n">current_sets</span> <span class="o">=</span> <span class="n">_get_mode_settings</span><span class="p">(</span><span class="s2">&quot;current&quot;</span><span class="p">)</span>
+<span class="n">voltage_sets</span> <span class="o">=</span> <span class="n">_get_mode_settings</span><span class="p">(</span><span class="s2">&quot;voltage&quot;</span><span class="p">)</span>
+<span class="n">resistance_sets</span> <span class="o">=</span> <span class="n">_get_mode_settings</span><span class="p">(</span><span class="s2">&quot;resistance&quot;</span><span class="p">)</span>
+<span class="n">frequency_sets</span> <span class="o">=</span> <span class="n">_get_mode_settings</span><span class="p">(</span><span class="s2">&quot;frequency&quot;</span><span class="p">)</span>
+<span class="n">period_sets</span> <span class="o">=</span> <span class="n">_get_mode_settings</span><span class="p">(</span><span class="s2">&quot;period&quot;</span><span class="p">)</span>
+<span class="n">temperature_sets</span> <span class="o">=</span> <span class="n">_get_mode_settings</span><span class="p">(</span><span class="s2">&quot;temperature&quot;</span><span class="p">)</span>
+<span class="n">trigger_sets</span> <span class="o">=</span> <span class="n">_get_mode_settings</span><span class="p">(</span><span class="s2">&quot;trigger&quot;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="Keithley2000"><a class="viewcode-back" href="../../../Instrumentation.keithley.html#Instrumentation.keithley.keithley2000.Keithley2000">[docs]</a><span class="k">class</span> <span class="nc">Keithley2000</span><span class="p">(</span><span class="n">pyKeithley2000</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Extension of the Instrument class for interfacing with Keithley 2000 multimeters.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">value</span> <span class="o">=</span> <span class="n">pyInstrument</span><span class="o">.</span><span class="n">measurement</span><span class="p">(</span><span class="s2">&quot;READ?&quot;</span><span class="p">,</span> <span class="s2">&quot;Will read from the Keithley whatever is currently being measured&quot;</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">adapter</span><span class="p">,</span> <span class="n">parent</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        
+        
+        <span class="c1">#self.clear()</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">adapter</span><span class="p">)</span>
+
+
+
+    <span class="c1"># Allowable measurement types. </span>
+    <span class="c1"># Assumes that the keithley will be read out using the &quot;:READ?&quot; command</span>
+    <span class="n">measurement_types</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;DC Voltage&quot;</span><span class="p">:</span> <span class="s2">&quot;VOLT:DC&quot;</span><span class="p">,</span>
+                         <span class="s2">&quot;TC&quot;</span><span class="p">:</span> <span class="s2">&quot;TEMP&quot;</span><span class="p">,</span>
+                         <span class="s2">&quot;2 Wire Resistance&quot;</span><span class="p">:</span> <span class="s2">&quot;RES&quot;</span><span class="p">,</span>
+                         <span class="s2">&quot;4 Wire Resistance&quot;</span><span class="p">:</span> <span class="s2">&quot;FRES&quot;</span><span class="p">,</span>
+                         <span class="s2">&quot;Diode&quot;</span><span class="p">:</span> <span class="s2">&quot;DIOD&quot;</span><span class="p">}</span>
+
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Available parameters to set. Should take the form of a dictionary of dictionaries, where the top level keys are</span>
+<span class="sd">    the names of the settable parameters. Each parameter name should point to a dictionary containing information on</span>
+<span class="sd">    that specific parameter.  The instrument control box will use this dictionary to figure out what values may be</span>
+<span class="sd">    changed. Each parameter dictionary MUST include, at minimum, &quot;getter&quot;, &quot;setter&quot;, and &quot;dtype&quot;. May also contain</span>
+<span class="sd">    &quot;limits&quot;, a tuple indicating what the min and max allowed values are, and &quot;allowable_value&quot; which should contain</span>
+<span class="sd">    a list of the possible inputs.</span>
+
+<span class="sd">    &quot;getter&quot; and &quot;setter&quot; should contain the actual functions used to get and set the parameter, while dtype is a string</span>
+<span class="sd">    indicating the data type. May change &quot;dtype&quot; to an actual python type if I can get that to work properly.</span>
+<span class="sd">    </span>
+<span class="sd">    &quot;limits&quot; should be a tuple with 2 values (either integers or floats), min value in position 0 and max in position 1</span>
+<span class="sd">    &quot;dtype&quot; should be the data type the setter expects. Should be a callable class or function. </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">current_settings</span> <span class="o">=</span> <span class="n">current_sets</span>
+    <span class="n">voltage_settings</span> <span class="o">=</span> <span class="n">voltage_sets</span>
+    <span class="n">resistance_settings</span> <span class="o">=</span> <span class="n">resistance_sets</span>
+    <span class="n">frequency_settings</span> <span class="o">=</span> <span class="n">frequency_sets</span>
+    <span class="n">period_settings</span> <span class="o">=</span> <span class="n">period_sets</span>
+    <span class="n">temperature_settings</span> <span class="o">=</span> <span class="n">temperature_sets</span>
+    <span class="n">trigger_settings</span> <span class="o">=</span> <span class="n">trigger_sets</span>
+
+    <span class="n">settable_parameters</span>  <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;Mode&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;param&quot;</span><span class="p">:</span> <span class="n">pyKeithley2000</span><span class="o">.</span><span class="n">mode</span><span class="p">,</span>
+            <span class="s2">&quot;allowable_values&quot;</span><span class="p">:</span> <span class="n">pyKeithley2000</span><span class="o">.</span><span class="n">MODES</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;Beep State&quot;</span><span class="p">:{</span>
+            <span class="s2">&quot;param&quot;</span><span class="p">:</span> <span class="n">pyKeithley2000</span><span class="o">.</span><span class="n">beep_state</span><span class="p">,</span>
+            <span class="s2">&quot;allowable_values&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;enabled&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;disabled&quot;</span><span class="p">:</span><span class="mi">0</span><span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Jacob Nellis, Matt Francom, Mark Kimball.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Instrumentation.InstrumentModels &mdash; Pyquisition 1.1.1 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> Pyquisition
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Guide Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Installation.html">Installation Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user_guide.html">User Guide</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer Guide Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Pyquisition.html">Configuration Window</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../MainUI.html">MainUI package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Instrumentation.html">Instrumentation package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Instrumentation.html#module-Instrumentation.InstrumentModels">Instrument Models (Subclasses)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Instrumentation.html#instrument-model-manager">Instrument Model Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Channel_Lib.html">Channel_Lib package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Channel_Lib.widgets.html">Channel Widgets</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Pyquisition</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">Instrumentation.InstrumentModels</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for Instrumentation.InstrumentModels</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="s2">&quot;..&quot;</span><span class="p">)</span>
+<span class="kn">import</span> <span class="nn">pyvisa</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">utils_lib.global_vars</span> <span class="k">as</span> <span class="nn">global_vars</span>
+<span class="kn">from</span> <span class="nn">pymeasure.instruments</span> <span class="kn">import</span> <span class="n">Instrument</span> <span class="k">as</span> <span class="n">pyInstrument</span>
+
+<span class="kn">from</span> <span class="nn">PyQt6</span> <span class="kn">import</span> <span class="n">QtWidgets</span> <span class="k">as</span> <span class="n">qtw</span><span class="p">,</span> <span class="n">QtCore</span> <span class="k">as</span> <span class="n">qtc</span><span class="p">,</span> <span class="n">QtGui</span> <span class="k">as</span> <span class="n">qtg</span>
+<span class="kn">from</span> <span class="nn">queue</span> <span class="kn">import</span> <span class="n">PriorityQueue</span> <span class="k">as</span> <span class="n">Queue</span>
+<span class="kn">from</span> <span class="nn">queue</span> <span class="kn">import</span> <span class="n">Empty</span>
+
+<span class="kn">from</span> <span class="nn">PyQt6.QtCore</span> <span class="kn">import</span> <span class="n">QMutex</span><span class="p">,</span> <span class="n">QMutexLocker</span>
+<span class="kn">from</span> <span class="nn">utils_lib.global_vars</span> <span class="kn">import</span> <span class="n">DisplayMessage</span>
+
+<span class="kn">import</span> <span class="nn">inspect</span>
+    
+    
+<div class="viewcode-block" id="Instrument_Model"><a class="viewcode-back" href="../../Instrumentation.html#Instrumentation.InstrumentModels.Instrument_Model">[docs]</a><span class="k">class</span> <span class="nc">Instrument_Model</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    ==========================================================================================================</span>
+<span class="sd">    </span>
+<span class="sd">    </span>
+<span class="sd">    Generic class for all instrument models. This class responsible for managing the communication</span>
+<span class="sd">    between a channel and a virtual instrument. When a channel requests communication with an instrument, </span>
+<span class="sd">    they will recieve an instrument model.</span>
+
+<span class="sd">    The instrument model will have a reference to the virtual instrument(s) that it controls. This class will</span>
+<span class="sd">    then wrap the virtual instrument properties with cached properties, so that we can enforce a queuing system </span>
+<span class="sd">    on the threads accessing the instrument. The cache will also save the responses from the instrument </span>
+<span class="sd">    so that we can quickly access the last value of a property without having to query the instrument.</span>
+
+<span class="sd">    :ivar instrument: The virtual instrument that this model controls.</span>
+
+<span class="sd">    :ivar locked: A boolean that indicates whether the instrument is currently locked by another thread.</span>
+
+<span class="sd">    :ivar mutex: A mutex that is used to lock the instrument when it is being accessed by a thread.</span>
+
+<span class="sd">    :ivar _cache: A dictionary that stores the last value of all instrument properties.</span>
+
+<span class="sd">    :ivar _settingDicts: A dictionary that stores all the instrument settings dictionaries.</span>
+
+<span class="sd">    :ivar _property_dictionary: A dictionary that stores all the instrument properties.</span>
+
+
+<span class="sd">    ==========================================================================================================</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">adapter</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">virtualInstrument</span> <span class="o">=</span> <span class="n">pyInstrument</span><span class="p">):</span>
+
+
+        <span class="c1"># Create the instrument that this model will control</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">instrument</span> <span class="o">=</span> <span class="n">virtualInstrument</span><span class="p">(</span><span class="n">adapter</span><span class="p">,</span> <span class="n">parent</span> <span class="o">=</span> <span class="bp">self</span><span class="p">)</span>
+        
+        <span class="c1"># Variable to lock the queuing system</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">locked</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mutex</span> <span class="o">=</span> <span class="n">QMutex</span><span class="p">()</span>
+
+        <span class="c1"># cache dictionary for all instrument properties</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;address&quot;</span> <span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_address</span><span class="p">()}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_settingDicts</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_property_dictionary</span> <span class="o">=</span> <span class="p">{}</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cache_all_properties</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_create_setting_dictionaries</span><span class="p">()</span>
+
+
+
+
+
+    <span class="c1">############################</span>
+    <span class="c1"># CACHE INTERNAL FUNCTIONS #</span>
+    <span class="c1">############################</span>
+
+
+    <span class="k">def</span> <span class="nf">_cache_all_properties</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Here we search all the properties of the instrument and redefine them to be &#39;cached&#39; properties in </span>
+<span class="sd">        the instrument model class.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Search through all the members of the instrument class</span>
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">inspect</span><span class="o">.</span><span class="n">getmembers</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">instrument</span><span class="o">.</span><span class="vm">__class__</span><span class="p">):</span>
+
+            <span class="c1"># If the member is a property, then we redefine it as a cached property</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">param</span><span class="p">,</span> <span class="nb">property</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_cache_property</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">name</span><span class="p">),</span> <span class="n">param</span><span class="p">,</span> <span class="n">param</span><span class="o">.</span><span class="n">fget</span><span class="p">,</span> <span class="n">param</span><span class="o">.</span><span class="n">fset</span><span class="p">)</span>
+
+    
+    <span class="k">def</span> <span class="nf">_cache_property</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> 
+                        <span class="n">param</span><span class="p">:</span> <span class="nb">property</span><span class="p">,</span> 
+                        <span class="n">getter</span><span class="p">,</span> 
+                        <span class="n">setter</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Redfine the instrument property, with the cache property wrappers.</span>
+
+<span class="sd">        This function takes a property, and wraps the properties getter and setter functions</span>
+<span class="sd">        into a &#39;cached_getter&#39; and &#39;cached_setter&#39; function, and then sets an attribute of this </span>
+<span class="sd">        class to the name of the original property. This allows channels to call properties from the instrument</span>
+<span class="sd">        model as if they were directly talking to the virtual instrument, and not need to worry about </span>
+<span class="sd">        the queuing system.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">private_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span>
+
+        <span class="k">def</span> <span class="nf">cached_getter</span><span class="p">():</span>
+
+            <span class="c1"># Lock the instrument models getter and setter functions</span>
+            <span class="k">with</span> <span class="n">QMutexLocker</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mutex</span><span class="p">):</span>
+
+                <span class="c1"># Try to get the value of the property from </span>
+                <span class="c1"># the instrument by calling the original getter function.</span>
+                <span class="k">try</span><span class="p">:</span> <span class="n">val</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">fget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">instrument</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span> <span class="n">val</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="c1"># return the error to the channel if failed</span>
+
+                <span class="c1"># Save the new value to the cache</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span><span class="p">[</span><span class="n">private_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
+
+            <span class="k">return</span> <span class="n">val</span>
+        
+        <span class="k">def</span> <span class="nf">cached_setter</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+            
+            <span class="k">with</span> <span class="n">QMutexLocker</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mutex</span><span class="p">):</span>
+                
+                <span class="k">try</span><span class="p">:</span> <span class="n">param</span><span class="o">.</span><span class="n">fset</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">instrument</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+                    
+                    <span class="c1"># If the setter fails with a type error, it&#39;s likely the channel</span>
+                    <span class="c1"># didn&#39;t correctly cast the argument to the correct type. We can try a </span>
+                    <span class="c1"># few different types to see if any of them work.</span>
+
+                    <span class="k">try</span><span class="p">:</span> <span class="n">param</span><span class="o">.</span><span class="n">fset</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">instrument</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+                    <span class="k">except</span> <span class="ne">TypeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                        <span class="k">try</span><span class="p">:</span> <span class="n">param</span><span class="o">.</span><span class="n">fset</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">instrument</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+                        <span class="k">except</span> <span class="ne">TypeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                            <span class="k">try</span><span class="p">:</span> <span class="n">param</span><span class="o">.</span><span class="n">fset</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">instrument</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+                            <span class="k">except</span> <span class="ne">TypeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span> <span class="k">raise</span> <span class="n">e</span>
+
+                <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span> <span class="k">pass</span> <span class="c1"># incorrect command</span>
+                
+                <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span><span class="p">[</span><span class="n">private_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">fget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">instrument</span><span class="p">)</span>
+        
+        <span class="c1"># Create the new cached property</span>
+        <span class="n">prop</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">cached_getter</span><span class="p">,</span> <span class="n">cached_setter</span><span class="p">)</span>
+        <span class="n">prop</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="vm">__doc__</span>
+
+        <span class="c1"># Set the attribute of this class to the name of the original property</span>
+        <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">prop</span><span class="p">)</span>
+
+        <span class="c1"># Add the property to the property dictionary</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_property_dictionary</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">prop</span>
+
+        
+    <span class="k">def</span> <span class="nf">_clear_cache</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        remove all cached values</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+
+
+    
+
+
+
+
+
+
+    <span class="c1">####################################</span>
+    <span class="c1">#  Instrument Dictionary Settings  #</span>
+    <span class="c1">####################################</span>
+
+    <span class="k">def</span> <span class="nf">_create_setting_dictionaries</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Search through the instrument parameters and collect the dictionaries that define the settings.</span>
+<span class="sd">        Create a new dictionary in the instrument model class, replacing the original properties with the</span>
+<span class="sd">        cached properties. This is necessary for the setting widget to work.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">inspect</span><span class="o">.</span><span class="n">getmembers</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">instrument</span><span class="o">.</span><span class="vm">__class__</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">param</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">name</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;set&quot;</span><span class="p">)</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                    <span class="n">newDict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_generate_replacement_dictionary</span><span class="p">(</span><span class="n">param</span><span class="p">)</span>
+                    <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">newDict</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_settingDicts</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">newDict</span>
+
+    <span class="k">def</span> <span class="nf">_generate_replacement_dictionary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">originalDict</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
+        
+        <span class="n">newDict</span> <span class="o">=</span> <span class="n">originalDict</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">originalDict</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">originalDict</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="nb">dict</span><span class="p">):</span>
+                <span class="n">newDict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_generate_replacement_dictionary</span><span class="p">(</span><span class="n">originalDict</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">originalDict</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="nb">property</span><span class="p">):</span>
+                <span class="n">newDict</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="n">newDict</span><span class="p">[</span><span class="s2">&quot;param_name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_find_property</span><span class="p">((</span><span class="n">originalDict</span><span class="p">[</span><span class="n">key</span><span class="p">]))</span>
+        <span class="k">return</span> <span class="n">newDict</span>
+    
+    <span class="k">def</span> <span class="nf">_find_property</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prop</span><span class="p">:</span> <span class="nb">property</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">inspect</span><span class="o">.</span><span class="n">getmembers</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">instrument</span><span class="o">.</span><span class="vm">__class__</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">param</span><span class="p">,</span> <span class="nb">property</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">param</span> <span class="o">==</span> <span class="n">prop</span><span class="p">:</span>
+                    <span class="k">for</span> <span class="n">privateName</span><span class="p">,</span> <span class="n">privateParam</span> <span class="ow">in</span> <span class="n">inspect</span><span class="o">.</span><span class="n">getmembers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+                        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">privateParam</span><span class="p">,</span> <span class="nb">property</span><span class="p">):</span>
+                            <span class="k">if</span> <span class="n">privateName</span> <span class="o">==</span> <span class="n">name</span><span class="p">:</span>
+                                <span class="k">return</span> <span class="n">privateParam</span><span class="p">,</span> <span class="n">privateName</span>
+                    
+        <span class="k">return</span> <span class="kc">None</span>
+
+
+
+    
+    <span class="c1">############################</span>
+    <span class="c1">#  Public Util Functions   #</span>
+    <span class="c1">############################</span>
+            
+<div class="viewcode-block" id="Instrument_Model.get_address"><a class="viewcode-back" href="../../Instrumentation.html#Instrumentation.InstrumentModels.Instrument_Model.get_address">[docs]</a>    <span class="k">def</span> <span class="nf">get_address</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> 
+        <span class="k">try</span><span class="p">:</span><span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">instrument</span><span class="o">.</span><span class="n">adapter</span><span class="o">.</span><span class="n">resource_name</span> <span class="o">+</span> <span class="s2">&quot; : &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">instrument</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">))</span>
+        <span class="k">except</span><span class="p">:</span><span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="Instrument_Model.saveState"><a class="viewcode-back" href="../../Instrumentation.html#Instrumentation.InstrumentModels.Instrument_Model.saveState">[docs]</a>    <span class="k">def</span> <span class="nf">saveState</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">specific_settings</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The saveState and restoreState methods enable users</span>
+<span class="sd">        to save the current instrument state to a dictionary and</span>
+<span class="sd">        restore the state from a dictionary, respectively. This can </span>
+<span class="sd">        be helpful for maintaining consistent instrument configurations across </span>
+<span class="sd">        different sessions or sharing configurations with other users.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">specific_settings</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span> <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        
+        <span class="n">state</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;address&quot;</span> <span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_address</span><span class="p">()}</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">specific_settings</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span><span class="n">name</span> <span class="o">=</span> <span class="n">specific_settings</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="s2">&quot;param_name&quot;</span><span class="p">]</span>
+            <span class="k">except</span><span class="p">:</span> <span class="k">pass</span>
+            <span class="k">try</span><span class="p">:</span> <span class="n">state</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+            <span class="k">except</span> <span class="ne">LookupError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span> <span class="k">pass</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">DisplayMessage</span><span class="p">(</span><span class="s2">&quot;ERROR: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">state</span></div>
+    
+<div class="viewcode-block" id="Instrument_Model.restoreState"><a class="viewcode-back" href="../../Instrumentation.html#Instrumentation.InstrumentModels.Instrument_Model.restoreState">[docs]</a>    <span class="k">def</span> <span class="nf">restoreState</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The saveState and restoreState methods enable users</span>
+<span class="sd">        to save the current instrument state to a dictionary </span>
+<span class="sd">        and restore the state from a dictionary, respectively. </span>
+<span class="sd">        This can be helpful for maintaining consistent </span>
+<span class="sd">        instrument configurations across different sessions or </span>
+<span class="sd">        sharing configurations with other users.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">state</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">key</span> <span class="o">!=</span> <span class="s2">&quot;address&quot;</span> <span class="ow">and</span> <span class="n">key</span> <span class="o">!=</span> <span class="s2">&quot;value&quot;</span> <span class="ow">and</span> <span class="n">key</span> <span class="o">!=</span> <span class="s2">&quot;settings_name&quot;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">state</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_property_dictionary</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">fget</span><span class="p">():</span>
+                    
+                         <span class="c1"># This is where we can ask the user if we </span>
+                         <span class="c1"># want to make changes to the instrument.</span>
+                
+                    <span class="k">try</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">_property_dictionary</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">fset</span><span class="p">(</span><span class="n">state</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
+                    <span class="k">except</span><span class="p">:</span> <span class="k">pass</span></div>
+<span class="w">        </span>
+
+
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Available parameters to set. Should take the form of a dictionary of dictionaries, where the top level keys are</span>
+<span class="sd">    the names of the settable parameters. Each parameter name should point to a dictionary containing information on</span>
+<span class="sd">    that specific parameter.  The instrument control box will use this dictionary to figure out what values may be</span>
+<span class="sd">    changed. Each parameter dictionary MUST include, at minimum, &quot;getter&quot;, &quot;setter&quot;, and &quot;dtype&quot;. May also contain</span>
+<span class="sd">    &quot;limits&quot;, a tuple indicating what the min and max allowed values are, and &quot;allowable_value&quot; which should contain</span>
+<span class="sd">    a list of the possible inputs.</span>
+
+<span class="sd">    &quot;getter&quot; and &quot;setter&quot; should contain the actual functions used to get and set the parameter, while dtype is a string</span>
+<span class="sd">    indicating the data type. May change &quot;dtype&quot; to an actual python type if I can get that to work properly.</span>
+<span class="sd">    </span>
+<span class="sd">    &quot;limits&quot; should be a tuple with 2 values (either integers or floats), min value in position 0 and max in position 1</span>
+<span class="sd">    &quot;dtype&quot; should be the data type the setter expects. Should be a callable class or function. </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">settable_parameters</span> <span class="o">=</span> <span class="p">{}</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Jacob Nellis, Matt Francom, Mark Kimball.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

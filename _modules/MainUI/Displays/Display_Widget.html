@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MainUI.Displays.Display_Widget &mdash; Pyquisition 1.1.1 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html" class="icon icon-home"> Pyquisition
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Guide Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Installation.html">Installation Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user_guide.html">User Guide</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer Guide Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Pyquisition.html">Configuration Window</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../MainUI.html">MainUI package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Instrumentation.html">Instrumentation package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Instrumentation.html#module-Instrumentation.InstrumentModels">Instrument Models (Subclasses)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Instrumentation.html#instrument-model-manager">Instrument Model Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Channel_Lib.html">Channel_Lib package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Channel_Lib.widgets.html">Channel Widgets</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Pyquisition</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">MainUI.Displays.Display_Widget</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for MainUI.Displays.Display_Widget</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">PyQt6</span> <span class="kn">import</span> <span class="n">QtWidgets</span> <span class="k">as</span> <span class="n">qtw</span><span class="p">,</span> <span class="n">QtCore</span> <span class="k">as</span> <span class="n">qtc</span><span class="p">,</span> <span class="n">QtGui</span> <span class="k">as</span> <span class="n">qtg</span>
+
+<div class="viewcode-block" id="DisplayWidget"><a class="viewcode-back" href="../../../MainUI.Displays.html#MainUI.Displays.Display_Widget.DisplayWidget">[docs]</a><span class="k">class</span> <span class="nc">DisplayWidget</span><span class="p">(</span><span class="n">qtw</span><span class="o">.</span><span class="n">QMdiSubWindow</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    ============================================================================================================================================================================================================</span>
+<span class="sd">    Abstract class to be used as a base class for all widgets that will be displayed in the mdi area, excluding channel control widgets.</span>
+
+<span class="sd">    :param name:           Name of the widget, this can be any string, should be unique if it&#39;s output will be used as an input for another widget.</span>
+
+<span class="sd">    :param configDict:    Dictionary containing the configuration of the widget. If present, the restoreState method will be called to restore the widget to the state it was in when the dictionary was created.</span>
+
+<span class="sd">    :param inputList:     List of input objects that can be used as inputs to the widget. This is used to populate the input comboboxes in the control widget.</span>
+<span class="sd">                        For example, if a widget is defined that takes a &#39;Channel&#39; object as an input, then the inputList should contain a list of &#39;Channel&#39; objects.</span>
+
+<span class="sd">    :ivar name:           Name of the widget</span>
+
+<span class="sd">    :ivar inputs:          Dictionary containing the inputs to the widget. Keys are the names of the inputs. The values are the input objects. The input objects can be any object, but should stay consistent across a subclass of DisplayWidget. For example, if a subclass of &#39;PlotWidget&#39; is defined and listens to a &#39;Channel&#39; object as an input, then the input object should be a &#39;Channel&#39; object.</span>
+
+<span class="sd">    :ivar outputs:         Dictionary containing the outputs of the widget. Keys are the names of the outputs. These values get updated after the process method is called. The output objects can then be used as inputs to other widgets.</span>
+<span class="sd">    ============================================================================================================================================================================================================</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span> <span class="n">configDict</span><span class="p">:</span><span class="nb">dict</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">inputList</span><span class="o">=</span><span class="p">[]):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">outputs</span> <span class="o">=</span> <span class="p">{}</span>
+
+<div class="viewcode-block" id="DisplayWidget.initialize"><a class="viewcode-back" href="../../../MainUI.Displays.html#MainUI.Displays.Display_Widget.DisplayWidget.initialize">[docs]</a>    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="k">return</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
+<div class="viewcode-block" id="DisplayWidget.addInput"><a class="viewcode-back" href="../../../MainUI.Displays.html#MainUI.Displays.Display_Widget.DisplayWidget.addInput">[docs]</a>    <span class="k">def</span> <span class="nf">addInput</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;input&#39;</span><span class="p">,</span> <span class="n">inputObject</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">inputObject</span></div>
+<div class="viewcode-block" id="DisplayWidget.addOutput"><a class="viewcode-back" href="../../../MainUI.Displays.html#MainUI.Displays.Display_Widget.DisplayWidget.addOutput">[docs]</a>    <span class="k">def</span> <span class="nf">addOutput</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;output&#39;</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">output</span></div>
+<div class="viewcode-block" id="DisplayWidget.ctrlWidget"><a class="viewcode-back" href="../../../MainUI.Displays.html#MainUI.Displays.Display_Widget.DisplayWidget.ctrlWidget">[docs]</a>    <span class="k">def</span> <span class="nf">ctrlWidget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span> <span class="k">return</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
+<div class="viewcode-block" id="DisplayWidget.process"><a class="viewcode-back" href="../../../MainUI.Displays.html#MainUI.Displays.Display_Widget.DisplayWidget.process">[docs]</a>    <span class="k">def</span> <span class="nf">process</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="k">return</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
+    <span class="k">def</span> <span class="nf">saveState</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="k">return</span> <span class="ne">NotImplementedError</span><span class="p">()</span>
+<div class="viewcode-block" id="DisplayWidget.restoreState"><a class="viewcode-back" href="../../../MainUI.Displays.html#MainUI.Displays.Display_Widget.DisplayWidget.restoreState">[docs]</a>    <span class="k">def</span> <span class="nf">restoreState</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span> <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
+<div class="viewcode-block" id="DisplayWidget.saveState"><a class="viewcode-back" href="../../../MainUI.Displays.html#MainUI.Displays.Display_Widget.DisplayWidget.saveState">[docs]</a>    <span class="k">def</span> <span class="nf">saveState</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
+<div class="viewcode-block" id="DisplayWidget.getOutputs"><a class="viewcode-back" href="../../../MainUI.Displays.html#MainUI.Displays.Display_Widget.DisplayWidget.getOutputs">[docs]</a>    <span class="k">def</span> <span class="nf">getOutputs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputs</span></div>
+<div class="viewcode-block" id="DisplayWidget.closeEvent"><a class="viewcode-back" href="../../../MainUI.Displays.html#MainUI.Displays.Display_Widget.DisplayWidget.closeEvent">[docs]</a>    <span class="k">def</span> <span class="nf">closeEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span> <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;closing the plot&#39;</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Jacob Nellis, Matt Francom, Mark Kimball.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,30 @@
+Channel\_Lib.widgets package
+
+Channel Widgets
+============================
+
+
+   Channel Settings Widget
+   ------------------------------------------------------
+
+
+   .. automodule:: Channel_Lib.widgets.Channel_Settings
+      :members:
+      :undoc-members:
+      :show-inheritance:
+
+   Channel\_Lib.widgets.channelWidgets module
+   ------------------------------------------
+
+   .. automodule:: Channel_Lib.widgets.channelWidgets
+      :members:
+      :undoc-members:
+      :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: _ChannelLibwidgets
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MainUI.channel_windows &mdash; Pyquisition 1.1.1 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> Pyquisition
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Guide Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Installation.html">Installation Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user_guide.html">User Guide</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer Guide Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Pyquisition.html">Configuration Window</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../MainUI.html">MainUI package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Instrumentation.html">Instrumentation package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Instrumentation.html#module-Instrumentation.InstrumentModels">Instrument Models (Subclasses)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Instrumentation.html#instrument-model-manager">Instrument Model Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Channel_Lib.html">Channel_Lib package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Channel_Lib.widgets.html">Channel Widgets</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Pyquisition</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">MainUI.channel_windows</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for MainUI.channel_windows</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">PyQt6</span> <span class="kn">import</span> <span class="n">QtWidgets</span> <span class="k">as</span> <span class="n">qtw</span><span class="p">,</span> <span class="n">QtCore</span> <span class="k">as</span> <span class="n">qtc</span><span class="p">,</span> <span class="n">QtGui</span> <span class="k">as</span> <span class="n">qtg</span>
+<span class="kn">from</span> <span class="nn">Channel_Lib.channel</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">PyQt6</span> <span class="kn">import</span> <span class="n">QtMultimedia</span>
+<span class="kn">from</span> <span class="nn">utils_lib.effects</span> <span class="kn">import</span> <span class="n">SoundEffect</span>
+<span class="kn">from</span> <span class="nn">Channel_Lib</span> <span class="kn">import</span> <span class="o">*</span>
+<div class="viewcode-block" id="ChannelWindow"><a class="viewcode-back" href="../../MainUI.html#MainUI.channel_windows.ChannelWindow">[docs]</a><span class="k">class</span> <span class="nc">ChannelWindow</span><span class="p">(</span><span class="n">qtw</span><span class="o">.</span><span class="n">QDockWidget</span><span class="p">):</span>
+    <span class="n">treeViewChanged</span> <span class="o">=</span> <span class="n">qtc</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">()</span>
+
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    =============================================================================================================================</span>
+<span class="sd">    Class for keeping track of all the channels in the specified state (active/inactive)</span>
+
+<span class="sd">    :param parent: The main window that the channel window will be docked to.</span>
+
+<span class="sd">    :param modelName: The name of the model that the channel window will be associated with.</span>
+<span class="sd">                            Either: &#39;ActiveChannelList&#39; or &#39;DeactiveChannelList&#39;</span>
+
+<span class="sd">    :param resource_manager: The resource manager that will be used to create instruments.</span>
+<span class="sd">                            This is likely going to be a global variable.</span>
+
+<span class="sd">    :ivar name: The name of the model.</span>
+
+<span class="sd">    :ivar model: The model that the channel window will be associated with.</span>
+
+<span class="sd">    :ivar view: The view that will be used to display the model.</span>
+
+<span class="sd">    :ivar selected_items: A list of the selected items in the channel window.</span>
+
+<span class="sd">    :ivar rm: The resource manager that will be used to create instruments.</span>
+
+<span class="sd">    :ivar mw: The main window that the channel window will be docked to.</span>
+
+<span class="sd">    =============================================================================================================================</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">modelName</span><span class="o">=</span><span class="s2">&quot;unnamed&quot;</span><span class="p">,</span> <span class="n">resource_manager</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        
+        
+        <span class="nb">super</span><span class="p">(</span><span class="n">ChannelWindow</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">modelName</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">qtg</span><span class="o">.</span><span class="n">QStandardItemModel</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">parentItem</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">invisibleRootItem</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">setAllowedAreas</span><span class="p">(</span><span class="n">qtc</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">DockWidgetArea</span><span class="o">.</span><span class="n">RightDockWidgetArea</span> <span class="o">|</span> <span class="n">qtc</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">DockWidgetArea</span><span class="o">.</span><span class="n">LeftDockWidgetArea</span> <span class="o">|</span>
+                                <span class="n">qtc</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">DockWidgetArea</span><span class="o">.</span><span class="n">BottomDockWidgetArea</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">view</span> <span class="o">=</span> <span class="n">qtw</span><span class="o">.</span><span class="n">QTreeView</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">view</span><span class="o">.</span><span class="n">setDragEnabled</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">view</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">modelName</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">view</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">objectName</span> <span class="o">=</span> <span class="n">modelName</span>
+        <span class="n">dockWidget</span> <span class="o">=</span> <span class="n">qtw</span><span class="o">.</span><span class="n">QWidget</span><span class="p">()</span>
+        <span class="n">layout</span> <span class="o">=</span> <span class="n">qtw</span><span class="o">.</span><span class="n">QVBoxLayout</span><span class="p">(</span><span class="n">dockWidget</span><span class="p">)</span>
+
+
+        <span class="n">layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">view</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setWidget</span><span class="p">(</span><span class="n">dockWidget</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">selected_items</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">view</span><span class="o">.</span><span class="n">setContextMenuPolicy</span><span class="p">(</span><span class="n">qtc</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ContextMenuPolicy</span><span class="o">.</span><span class="n">CustomContextMenu</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">view</span><span class="o">.</span><span class="n">customContextMenuRequested</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">menuContext</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">view</span><span class="o">.</span><span class="n">setFocusPolicy</span><span class="p">(</span><span class="n">qtc</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">FocusPolicy</span><span class="o">.</span><span class="n">NoFocus</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rm</span> <span class="o">=</span> <span class="n">resource_manager</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">mw</span> <span class="o">=</span> <span class="n">parent</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">newChannelSound</span> <span class="o">=</span> <span class="n">SoundEffect</span><span class="p">(</span><span class="s1">&#39;utils_lib/sounds/15.wav&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">deleteChannelSound</span> <span class="o">=</span> <span class="n">SoundEffect</span><span class="p">(</span><span class="s1">&#39;utils_lib/sounds/10.wav&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">deleteChannelSound</span><span class="o">.</span><span class="n">audioOutput</span><span class="o">.</span><span class="n">setVolume</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ctrlWidgetSound</span> <span class="o">=</span> <span class="n">SoundEffect</span><span class="p">(</span><span class="s1">&#39;utils_lib/sounds/5.wav&#39;</span><span class="p">)</span>
+        
+<div class="viewcode-block" id="ChannelWindow.restoreState"><a class="viewcode-back" href="../../MainUI.html#MainUI.channel_windows.ChannelWindow.restoreState">[docs]</a>    <span class="k">def</span> <span class="nf">restoreState</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">configDict</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">channel</span> <span class="ow">in</span> <span class="n">configDict</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span> 
+                <span class="n">channelClass</span> <span class="o">=</span> <span class="nb">globals</span><span class="p">()[</span><span class="n">channel</span><span class="p">[</span><span class="s2">&quot;Type&quot;</span><span class="p">]]</span>
+                <span class="n">channel</span><span class="p">[</span><span class="s2">&quot;paused&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;True&quot;</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">addChannel</span><span class="p">(</span><span class="n">channelClass</span><span class="p">(</span><span class="n">channel</span><span class="p">[</span><span class="s2">&quot;Name&quot;</span><span class="p">],</span> <span class="n">channel</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mw</span><span class="p">))</span>
+
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span> <span class="n">global_vars</span><span class="o">.</span><span class="n">DisplayMessage</span><span class="p">(</span><span class="s2">&quot;Error: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span></div>
+
+    
+<div class="viewcode-block" id="ChannelWindow.addChannel"><a class="viewcode-back" href="../../MainUI.html#MainUI.channel_windows.ChannelWindow.addChannel">[docs]</a>    <span class="k">def</span> <span class="nf">addChannel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">channel</span><span class="p">:</span><span class="n">Channel</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">newChannelSound</span><span class="o">.</span><span class="n">play</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">appendRow</span><span class="p">(</span><span class="n">channel</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;ActiveChannelList&#39;</span><span class="p">:</span>
+            <span class="n">channel</span><span class="o">.</span><span class="n">signals</span><span class="o">.</span><span class="n">outputChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mw</span><span class="o">.</span><span class="n">dataLog</span><span class="o">.</span><span class="n">record_output</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">treeViewChanged</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span></div>
+            
+    
+<div class="viewcode-block" id="ChannelWindow.menuContext"><a class="viewcode-back" href="../../MainUI.html#MainUI.channel_windows.ChannelWindow.menuContext">[docs]</a>    <span class="k">def</span> <span class="nf">menuContext</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        This method is used to create a context menu for the channel window</span>
+<span class="sd">        It has options to add a channel, remove a channel, and save the data</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">menu</span> <span class="o">=</span> <span class="n">qtw</span><span class="o">.</span><span class="n">QMenu</span><span class="p">()</span>
+        <span class="n">move</span> <span class="o">=</span> <span class="n">menu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="s1">&#39;Move Channel&#39;</span><span class="p">)</span>
+        <span class="n">properties</span> <span class="o">=</span> <span class="n">menu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="s1">&#39;Control Panel&#39;</span><span class="p">)</span>
+        <span class="n">pauseChannel</span> <span class="o">=</span> <span class="n">menu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="s1">&#39;Pause/Unpause Channel&#39;</span><span class="p">)</span>
+        <span class="n">deleteChannel</span> <span class="o">=</span> <span class="n">menu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="s1">&#39;Delete Channel&#39;</span><span class="p">)</span>
+        <span class="n">move</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">move_channel</span><span class="p">)</span>
+        <span class="n">properties</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">add_channel_properties</span><span class="p">)</span>
+        <span class="n">pauseChannel</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pauseChannel</span><span class="p">)</span>
+        <span class="n">deleteChannel</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">deleteChannel</span><span class="p">)</span>
+        <span class="n">cursor</span> <span class="o">=</span> <span class="n">qtg</span><span class="o">.</span><span class="n">QCursor</span><span class="p">()</span>
+        <span class="n">menu</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="n">cursor</span><span class="o">.</span><span class="n">pos</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="ChannelWindow.pauseChannel"><a class="viewcode-back" href="../../MainUI.html#MainUI.channel_windows.ChannelWindow.pauseChannel">[docs]</a>    <span class="k">def</span> <span class="nf">pauseChannel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">channel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">itemFromIndex</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">view</span><span class="o">.</span><span class="n">currentIndex</span><span class="p">())</span>
+        <span class="n">channel</span><span class="o">.</span><span class="n">pause_unpause</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="ChannelWindow.deleteChannel"><a class="viewcode-back" href="../../MainUI.html#MainUI.channel_windows.ChannelWindow.deleteChannel">[docs]</a>    <span class="k">def</span> <span class="nf">deleteChannel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">removeRow</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">view</span><span class="o">.</span><span class="n">currentIndex</span><span class="p">()</span><span class="o">.</span><span class="n">row</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">deleteChannelSound</span><span class="o">.</span><span class="n">play</span><span class="p">()</span>
+        <span class="k">return</span>      </div>
+    
+<div class="viewcode-block" id="ChannelWindow.add_channel_properties"><a class="viewcode-back" href="../../MainUI.html#MainUI.channel_windows.ChannelWindow.add_channel_properties">[docs]</a>    <span class="k">def</span> <span class="nf">add_channel_properties</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">properties</span><span class="p">:</span> <span class="n">Channel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">itemFromIndex</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">view</span><span class="o">.</span><span class="n">currentIndex</span><span class="p">())</span>
+        <span class="n">properties</span> <span class="o">=</span> <span class="n">properties</span><span class="o">.</span><span class="n">ctrlWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mw</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mw</span><span class="o">.</span><span class="n">cw</span><span class="o">.</span><span class="n">addSubWindow</span><span class="p">(</span><span class="n">properties</span><span class="p">)</span>
+        <span class="n">properties</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ctrlWidgetSound</span><span class="o">.</span><span class="n">play</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="ChannelWindow.move_channel"><a class="viewcode-back" href="../../MainUI.html#MainUI.channel_windows.ChannelWindow.move_channel">[docs]</a>    <span class="k">def</span> <span class="nf">move_channel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">view</span><span class="o">.</span><span class="n">currentIndex</span><span class="p">()</span>
+        <span class="n">channel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">itemFromIndex</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+                
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">view</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;DeactiveChannelList&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">takeRow</span><span class="p">(</span><span class="n">index</span><span class="o">.</span><span class="n">row</span><span class="p">())</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mw</span><span class="o">.</span><span class="n">actChW</span><span class="o">.</span><span class="n">addChannel</span><span class="p">(</span><span class="n">channel</span><span class="p">)</span>
+            
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">view</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;ActiveChannelList&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">takeRow</span><span class="p">(</span><span class="n">index</span><span class="o">.</span><span class="n">row</span><span class="p">())</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mw</span><span class="o">.</span><span class="n">deactChW</span><span class="o">.</span><span class="n">addChannel</span><span class="p">(</span><span class="n">channel</span><span class="p">)</span>
+        
+        <span class="n">channel</span><span class="o">.</span><span class="n">paused</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">channel</span><span class="o">.</span><span class="n">setBackground</span><span class="p">(</span><span class="n">qtg</span><span class="o">.</span><span class="n">QColor</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span></div>
+            
+<div class="viewcode-block" id="ChannelWindow.getChannels"><a class="viewcode-back" href="../../MainUI.html#MainUI.channel_windows.ChannelWindow.getChannels">[docs]</a>    <span class="k">def</span> <span class="nf">getChannels</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">channels</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">rowCount</span><span class="p">()):</span>
+            <span class="n">channels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">itemFromIndex</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">row</span><span class="p">,</span><span class="mi">0</span><span class="p">)))</span>
+        <span class="k">return</span> <span class="n">channels</span></div>
+    
+<div class="viewcode-block" id="ChannelWindow.getChannelNames"><a class="viewcode-back" href="../../MainUI.html#MainUI.channel_windows.ChannelWindow.getChannelNames">[docs]</a>    <span class="k">def</span> <span class="nf">getChannelNames</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">names</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">rowCount</span><span class="p">()):</span>
+            <span class="n">names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">itemFromIndex</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">row</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">names</span></div>
+    
+<div class="viewcode-block" id="ChannelWindow.getChannelFromName"><a class="viewcode-back" href="../../MainUI.html#MainUI.channel_windows.ChannelWindow.getChannelFromName">[docs]</a>    <span class="k">def</span> <span class="nf">getChannelFromName</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">channelName</span><span class="p">):</span>
+        <span class="n">channelList</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getChannels</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">channel</span> <span class="ow">in</span> <span class="n">channelList</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">channel</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">channelName</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">channel</span></div>
+    
+<div class="viewcode-block" id="ChannelWindow.getRowFromName"><a class="viewcode-back" href="../../MainUI.html#MainUI.channel_windows.ChannelWindow.getRowFromName">[docs]</a>    <span class="k">def</span> <span class="nf">getRowFromName</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">channelName</span><span class="p">):</span>
+        <span class="n">channelList</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getChannels</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">channelList</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">channelList</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">channelName</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">i</span></div>
+    
+<div class="viewcode-block" id="ChannelWindow.saveState"><a class="viewcode-back" href="../../MainUI.html#MainUI.channel_windows.ChannelWindow.saveState">[docs]</a>    <span class="k">def</span> <span class="nf">saveState</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">configDict</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">ch</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">getChannels</span><span class="p">():</span>
+            <span class="n">configDict</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ch</span><span class="o">.</span><span class="n">saveState</span><span class="p">())</span>
+
+        <span class="k">return</span> <span class="n">configDict</span></div>
+    
+<div class="viewcode-block" id="ChannelWindow.Record_Current_Channel_Values"><a class="viewcode-back" href="../../MainUI.html#MainUI.channel_windows.ChannelWindow.Record_Current_Channel_Values">[docs]</a>    <span class="k">def</span> <span class="nf">Record_Current_Channel_Values</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fileName</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="s2">&quot;Takes a snapshot of all the channels outputs&quot;</span>
+        <span class="k">for</span> <span class="n">channel</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">getChannels</span><span class="p">():</span>
+            <span class="nb">print</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">channel</span><span class="o">.</span><span class="n">outputs</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mw</span><span class="o">.</span><span class="n">dataLog</span><span class="o">.</span><span class="n">record_output</span><span class="p">([</span><span class="n">channel</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">channel</span><span class="o">.</span><span class="n">outputs</span><span class="p">],</span> <span class="n">fileName</span><span class="p">)</span></div></div>
+            
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Jacob Nellis, Matt Francom, Mark Kimball.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

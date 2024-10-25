@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MainUI.MainUI &mdash; Pyquisition 1.1.1 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> Pyquisition
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Guide Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Installation.html">Installation Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user_guide.html">User Guide</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer Guide Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Pyquisition.html">Configuration Window</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../MainUI.html">MainUI package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Instrumentation.html">Instrumentation package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Instrumentation.html#module-Instrumentation.InstrumentModels">Instrument Models (Subclasses)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Instrumentation.html#instrument-model-manager">Instrument Model Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Channel_Lib.html">Channel_Lib package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Channel_Lib.widgets.html">Channel Widgets</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Pyquisition</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">MainUI.MainUI</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for MainUI.MainUI</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">GUI file for the PyQuisition program.</span>
+
+<span class="sd">Installations</span>
+<span class="sd">pip install -U pyvisa</span>
+<span class="sd">pip install -U pyvisa-sim</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="kn">import</span> <span class="nn">pyvisa</span>
+<span class="kn">from</span> <span class="nn">PyQt6</span> <span class="kn">import</span> <span class="n">QtWidgets</span> <span class="k">as</span> <span class="n">qtw</span><span class="p">,</span> <span class="n">QtCore</span> <span class="k">as</span> <span class="n">qtc</span><span class="p">,</span> <span class="n">QtGui</span> <span class="k">as</span> <span class="n">qtg</span>
+
+<span class="kn">import</span> <span class="nn">MainUI.Data_Lib.accumulator</span> <span class="k">as</span> <span class="nn">acc</span>
+
+<span class="kn">from</span> <span class="nn">Channel_Lib</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">.Displays</span> <span class="kn">import</span> <span class="o">*</span>  
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">utils_lib.global_vars</span> <span class="k">as</span> <span class="nn">global_vars</span>
+<span class="kn">from</span> <span class="nn">utils_lib.effects</span> <span class="kn">import</span> <span class="n">SoundEffect</span>
+<span class="kn">from</span> <span class="nn">.Data_Lib.config_tracker</span> <span class="kn">import</span> <span class="n">compare</span>
+<span class="kn">from</span> <span class="nn">MainUI.mainMenu</span> <span class="kn">import</span> <span class="n">Main_UI_Menu</span> <span class="k">as</span> <span class="n">PyQuisitionMenu</span>
+<span class="kn">from</span> <span class="nn">MainUI.channel_windows</span> <span class="kn">import</span> <span class="n">ChannelWindow</span>
+<span class="kn">from</span> <span class="nn">Instrumentation.Instrument_Model_Manager</span> <span class="kn">import</span> <span class="n">InstrumentModel_Manager</span>
+
+<div class="viewcode-block" id="MainWindow"><a class="viewcode-back" href="../../MainUI.html#MainUI.MainUI.MainWindow">[docs]</a><span class="k">class</span> <span class="nc">MainWindow</span><span class="p">(</span><span class="n">qtw</span><span class="o">.</span><span class="n">QMainWindow</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;This is the main window for the GUI</span>
+<span class="sd">    It contains the main menu, the channel windows, and the plot windows</span>
+<span class="sd">    It holds plots and channels in lists to keep track of them</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        qtw (QMainWindow): Parent item</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<span class="c1">#    def __init__(self, *args, **kwargs):</span>
+<span class="c1">#        super().__init__(*args,**kwargs)</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config_file</span><span class="o">=</span><span class="n">global_vars</span><span class="o">.</span><span class="n">blank_config</span><span class="p">,</span> <span class="n">config_file_location</span><span class="o">=</span><span class="s1">&#39;./.temp/last_session_config.json&#39;</span><span class="p">):</span>
+        
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">bootSound</span> <span class="o">=</span> <span class="n">SoundEffect</span><span class="p">(</span><span class="s1">&#39;/src/utils_lib/sounds/boot.wav&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bootSound</span><span class="o">.</span><span class="n">play</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">new_subwindow_sound</span> <span class="o">=</span> <span class="n">SoundEffect</span><span class="p">(</span><span class="s1">&#39;utils_lib/sounds/5.wav&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">closeSound</span> <span class="o">=</span> <span class="n">SoundEffect</span><span class="p">(</span><span class="s1">&#39;/src/utils_lib/sounds/11.wav&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config_file</span> <span class="o">=</span> <span class="n">config_file</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config_file_location</span> <span class="o">=</span> <span class="n">config_file_location</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Blank Config&#39;</span>
+
+
+        <span class="c1"># Initialize the resource manager. If no instruments are found the system uses a simulator.</span>
+        <span class="c1"># May want to make this behavior more controllable/intelligent in the future.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rm</span> <span class="o">=</span> <span class="n">pyvisa</span><span class="o">.</span><span class="n">ResourceManager</span><span class="p">()</span>
+        <span class="n">sim_lib</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rm</span><span class="o">.</span><span class="n">list_resources</span><span class="p">())</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">rm</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="n">sim_lib</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span> <span class="o">+</span> <span class="s1">&#39;/src/Instrumentation/Instrument_Simulators.yaml@sim&#39;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">rm</span> <span class="o">=</span> <span class="n">pyvisa</span><span class="o">.</span><span class="n">ResourceManager</span><span class="p">(</span><span class="n">sim_lib</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">instManager</span> <span class="o">=</span> <span class="n">InstrumentModel_Manager</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rm</span><span class="p">,</span> <span class="n">sim_lib</span><span class="p">)</span>
+        <span class="c1">#Genral Parameters</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="s1">&#39;PyQuisition&#39;</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span><span class="mi">30</span><span class="p">,</span><span class="mi">1280</span><span class="p">,</span><span class="mi">800</span><span class="p">)</span>
+        
+        <span class="c1">#Define the central widget</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cw</span> <span class="o">=</span> <span class="n">qtw</span><span class="o">.</span><span class="n">QMdiArea</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cw</span><span class="o">.</span><span class="n">setMinimumSize</span><span class="p">(</span><span class="mi">600</span><span class="p">,</span><span class="mi">600</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">setCentralWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cw</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cw</span><span class="o">.</span><span class="n">setDocumentMode</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        
+        <span class="c1">#Creating the dock widgets to diplay the models</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actChW</span> <span class="o">=</span> <span class="n">ChannelWindow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;ActiveChannelList&#39;</span><span class="p">,</span> <span class="n">resource_manager</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">rm</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actChW</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="s1">&#39;Active Channels&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actChW</span><span class="o">.</span><span class="n">setFeatures</span><span class="p">(</span><span class="n">qtw</span><span class="o">.</span><span class="n">QDockWidget</span><span class="o">.</span><span class="n">DockWidgetFeature</span><span class="o">.</span><span class="n">NoDockWidgetFeatures</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">actChW</span><span class="o">.</span><span class="n">setMinimumWidth</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">deactChW</span> <span class="o">=</span> <span class="n">ChannelWindow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;DeactiveChannelList&#39;</span><span class="p">,</span> <span class="n">resource_manager</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">rm</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">deactChW</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="s1">&#39;Deactive Channels&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">deactChW</span><span class="o">.</span><span class="n">setFeatures</span><span class="p">(</span><span class="n">qtw</span><span class="o">.</span><span class="n">QDockWidget</span><span class="o">.</span><span class="n">DockWidgetFeature</span><span class="o">.</span><span class="n">NoDockWidgetFeatures</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">deactChW</span><span class="o">.</span><span class="n">setMinimumWidth</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+
+        <span class="c1">#Adding widgets to the main screen</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">addDockWidget</span><span class="p">(</span><span class="n">qtc</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">DockWidgetArea</span><span class="o">.</span><span class="n">LeftDockWidgetArea</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">actChW</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">addDockWidget</span><span class="p">(</span><span class="n">qtc</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">DockWidgetArea</span><span class="o">.</span><span class="n">LeftDockWidgetArea</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">deactChW</span><span class="p">)</span>
+        
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">paused</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">itemsToUnPause</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config_file</span><span class="p">:</span> 
+            <span class="bp">self</span><span class="o">.</span><span class="n">restoreState</span><span class="p">()</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config_file_location</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config_file</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">indent</span> <span class="o">=</span> <span class="mi">4</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataLog</span> <span class="o">=</span> <span class="n">acc</span><span class="o">.</span><span class="n">Accumulator</span><span class="p">(</span><span class="s1">&#39;/.temp/tmp.txt&#39;</span><span class="p">,</span><span class="kc">None</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">actChW</span><span class="p">)</span>
+
+        
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">setMenuBar</span><span class="p">(</span><span class="n">PyQuisitionMenu</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+
+
+<div class="viewcode-block" id="MainWindow.check_config_diffs"><a class="viewcode-back" href="../../MainUI.html#MainUI.MainUI.MainWindow.check_config_diffs">[docs]</a>    <span class="k">def</span> <span class="nf">check_config_diffs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">initial_config</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config_file_location</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">saveState</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config_file_location</span><span class="p">)</span>
+        <span class="n">final_config</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config_file_location</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">))</span>
+
+        <span class="n">diffs</span> <span class="o">=</span> <span class="n">compare</span><span class="p">(</span><span class="n">initial_config</span><span class="p">,</span> <span class="n">final_config</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">diffs</span> <span class="o">!=</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">&#39;</span><span class="p">:</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config_file_location</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">,</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;_journal.txt&quot;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">diffs</span><span class="p">)</span>
+                <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MainWindow.not_implemented"><a class="viewcode-back" href="../../MainUI.html#MainUI.MainUI.MainWindow.not_implemented">[docs]</a>    <span class="k">def</span> <span class="nf">not_implemented</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="n">qtw</span><span class="o">.</span><span class="n">QMessageBox</span><span class="p">()</span>
+        <span class="n">msg</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="s1">&#39;Not Implemented Error&#39;</span><span class="p">)</span>
+        <span class="n">msg</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s1">&#39;This feature is not yet implemented&#39;</span><span class="p">)</span>
+        <span class="n">msg</span><span class="o">.</span><span class="n">exec</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="MainWindow.initialize"><a class="viewcode-back" href="../../MainUI.html#MainUI.MainUI.MainWindow.initialize">[docs]</a>    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actChW</span> <span class="o">=</span> <span class="n">ChannelWindow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;ActiveChannelList&#39;</span><span class="p">,</span> <span class="n">resource_manager</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">rm</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">deactChW</span> <span class="o">=</span> <span class="n">ChannelWindow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;DeactiveChannelList&#39;</span><span class="p">,</span> <span class="n">resource_manager</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">rm</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">cw</span><span class="o">.</span><span class="n">subWindowList</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cw</span><span class="o">.</span><span class="n">removeSubWindow</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cw</span><span class="o">.</span><span class="n">closeAllSubWindows</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dataLog</span> <span class="o">=</span> <span class="n">acc</span><span class="o">.</span><span class="n">Accumulator</span><span class="p">(</span><span class="s1">&#39;Configurations/data.txt&#39;</span><span class="p">,</span><span class="kc">None</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">actChW</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MainWindow.File_Open_triggered"><a class="viewcode-back" href="../../MainUI.html#MainUI.MainUI.MainWindow.File_Open_triggered">[docs]</a>    <span class="k">def</span> <span class="nf">File_Open_triggered</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> 
+        <span class="n">file_dialog</span> <span class="o">=</span> <span class="n">qtw</span><span class="o">.</span><span class="n">QFileDialog</span><span class="p">()</span>
+        <span class="n">file_name</span> <span class="o">=</span> <span class="n">file_dialog</span><span class="o">.</span><span class="n">getOpenFileName</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;Select Configuration File&quot;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span> <span class="o">+</span> <span class="s1">&#39;/Configurations&#39;</span><span class="p">)</span>
+        <span class="n">file_name</span> <span class="o">=</span> <span class="n">file_name</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config_file</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config_file_location</span> <span class="o">=</span> <span class="n">file_name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">initialize</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">restoreState</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="MainWindow.File_Save_triggered"><a class="viewcode-back" href="../../MainUI.html#MainUI.MainUI.MainWindow.File_Save_triggered">[docs]</a>    <span class="k">def</span> <span class="nf">File_Save_triggered</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="bp">self</span><span class="o">.</span><span class="n">saveState</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config_file_location</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MainWindow.File_Save_as_triggered"><a class="viewcode-back" href="../../MainUI.html#MainUI.MainUI.MainWindow.File_Save_as_triggered">[docs]</a>    <span class="k">def</span> <span class="nf">File_Save_as_triggered</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">file_dialog</span> <span class="o">=</span> <span class="n">qtw</span><span class="o">.</span><span class="n">QFileDialog</span><span class="p">()</span>
+        <span class="n">save_file</span> <span class="o">=</span> <span class="n">file_dialog</span><span class="o">.</span><span class="n">getSaveFileName</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;save as&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config_file_location</span> <span class="o">=</span> <span class="n">save_file</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">saveState</span><span class="p">(</span><span class="n">save_file</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="MainWindow.Edit_Pause_triggered"><a class="viewcode-back" href="../../MainUI.html#MainUI.MainUI.MainWindow.Edit_Pause_triggered">[docs]</a>    <span class="k">def</span> <span class="nf">Edit_Pause_triggered</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> 
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Pauses all channels in the active channel widget</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">channel</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">actChW</span><span class="o">.</span><span class="n">getChannels</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">channel</span><span class="o">.</span><span class="n">paused</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
+                <span class="n">channel</span><span class="o">.</span><span class="n">pause_unpause</span><span class="p">()</span></div>
+                
+            
+<div class="viewcode-block" id="MainWindow.Edit_Resume_triggered"><a class="viewcode-back" href="../../MainUI.html#MainUI.MainUI.MainWindow.Edit_Resume_triggered">[docs]</a>    <span class="k">def</span> <span class="nf">Edit_Resume_triggered</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Resumes all channels in the active channel widget</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">channel</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">actChW</span><span class="o">.</span><span class="n">getChannels</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">channel</span><span class="o">.</span><span class="n">paused</span><span class="p">:</span>
+                <span class="n">channel</span><span class="o">.</span><span class="n">pause_unpause</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="MainWindow.restoreState"><a class="viewcode-back" href="../../MainUI.html#MainUI.MainUI.MainWindow.restoreState">[docs]</a>    <span class="k">def</span> <span class="nf">restoreState</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="n">config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config_file</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;Title&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">title</span><span class="p">)</span>
+        <span class="c1">#Setting the accumulator</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dataLog</span> <span class="o">=</span> <span class="n">acc</span><span class="o">.</span><span class="n">Accumulator</span><span class="p">(</span><span class="s1">&#39;test&#39;</span><span class="p">,</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;DataLog&#39;</span><span class="p">],</span><span class="bp">self</span><span class="o">.</span><span class="n">actChW</span><span class="p">)</span>
+        
+        <span class="c1">#Creating the channel lists</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actChW</span><span class="o">.</span><span class="n">restoreState</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;ActiveChannels&quot;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">deactChW</span><span class="o">.</span><span class="n">restoreState</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;DeactiveChannels&quot;</span><span class="p">])</span>
+
+
+        <span class="c1">#Creating the display widgets</span>
+        <span class="k">for</span> <span class="n">displayDict</span> <span class="ow">in</span> <span class="n">config</span><span class="p">[</span><span class="s2">&quot;Plots&quot;</span><span class="p">]:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">newPlotClass</span><span class="p">:</span> <span class="n">DisplayWidget</span> <span class="o">=</span> <span class="nb">globals</span><span class="p">()[</span><span class="n">displayDict</span><span class="p">[</span><span class="s1">&#39;Type&#39;</span><span class="p">]]</span>
+                <span class="n">newDisplay</span> <span class="o">=</span> <span class="n">newPlotClass</span><span class="p">(</span><span class="n">displayDict</span><span class="p">[</span><span class="s2">&quot;Name&quot;</span><span class="p">],</span> <span class="n">displayDict</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">actChW</span><span class="p">)</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="k">pass</span>
+            
+            <span class="bp">self</span><span class="o">.</span><span class="n">cw</span><span class="o">.</span><span class="n">addSubWindow</span><span class="p">(</span><span class="n">newDisplay</span><span class="p">)</span>
+            <span class="n">newDisplay</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">cw</span><span class="o">.</span><span class="n">tileSubWindows</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="MainWindow.saveState"><a class="viewcode-back" href="../../MainUI.html#MainUI.MainUI.MainWindow.saveState">[docs]</a>    <span class="k">def</span> <span class="nf">saveState</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_location</span><span class="p">):</span>
+        
+        <span class="n">configDict</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">configDict</span><span class="p">[</span><span class="s2">&quot;Title&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">title</span>
+        <span class="n">configDict</span><span class="p">[</span><span class="s2">&quot;ActiveChannels&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">actChW</span><span class="o">.</span><span class="n">saveState</span><span class="p">()</span>
+        <span class="n">configDict</span><span class="p">[</span><span class="s2">&quot;DeactiveChannels&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">deactChW</span><span class="o">.</span><span class="n">saveState</span><span class="p">()</span>
+        <span class="n">configDict</span><span class="p">[</span><span class="s2">&quot;Plots&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">display</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">cw</span><span class="o">.</span><span class="n">subWindowList</span><span class="p">():</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">newDisplay</span> <span class="o">=</span> <span class="n">display</span><span class="o">.</span><span class="n">saveState</span><span class="p">()</span>
+                <span class="n">configDict</span><span class="p">[</span><span class="s2">&quot;Plots&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">newDisplay</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">global_vars</span><span class="o">.</span><span class="n">recordError</span><span class="p">(</span><span class="s1">&#39;Error below: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">display</span><span class="p">))</span> <span class="o">+</span> <span class="s1">&#39; was not able to be saved.&#39;</span><span class="p">)</span>
+                <span class="n">global_vars</span><span class="o">.</span><span class="n">recordError</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+
+        <span class="n">configDict</span><span class="p">[</span><span class="s2">&quot;DataLog&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataLog</span><span class="o">.</span><span class="n">saveState</span><span class="p">()</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_location</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">configDict</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MainWindow.closeEvent"><a class="viewcode-back" href="../../MainUI.html#MainUI.MainUI.MainWindow.closeEvent">[docs]</a>    <span class="k">def</span> <span class="nf">closeEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="c1">#TODO: Need to figure out how to kill all threads when the program is closed</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;User has clicked the red x on the main window&quot;</span><span class="p">)</span>
+        <span class="n">global_vars</span><span class="o">.</span><span class="n">recordError</span><span class="p">(</span><span class="s2">&quot;Session Ended&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">closeSound</span><span class="o">.</span><span class="n">play</span><span class="p">()</span>
+
+        <span class="k">for</span> <span class="n">channel</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">actChW</span><span class="o">.</span><span class="n">getChannels</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">channel</span><span class="o">.</span><span class="n">paused</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span> <span class="n">channel</span><span class="o">.</span><span class="n">pause_unpause</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">channel</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">deactChW</span><span class="o">.</span><span class="n">getChannels</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">channel</span><span class="o">.</span><span class="n">paused</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span> <span class="n">channel</span><span class="o">.</span><span class="n">pause_unpause</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">saveState</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config_file_location</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">1.8</span><span class="p">)</span>
+        <span class="n">event</span><span class="o">.</span><span class="n">accept</span><span class="p">()</span>
+        <span class="n">exit</span><span class="p">()</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Jacob Nellis, Matt Francom, Mark Kimball.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

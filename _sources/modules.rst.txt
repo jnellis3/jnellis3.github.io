@@ -1,0 +1,11 @@
+Pyquisition Documentation
+===
+
+.. toctree::
+   :maxdepth: 4
+
+   Pyquisition
+   MainUI
+   Instrumentation
+   Channel_Lib
+   Channel_Lib.widgets
