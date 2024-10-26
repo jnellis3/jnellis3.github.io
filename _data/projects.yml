@@ -17,30 +17,30 @@
   # url: "#"
   description: SCOG is a local monthly meetup in Springfield where we share opportunities to volunteer in the community and organize support for families and neighborhoods in need of assistance that the community can provide.
 
-- project: <a href="static/PostDAQ">PostDAQ</a>
+- project: <a href="https://projects.nellisconsulting.com/static/html/index.html">PostDAQ</a>
   role: Founder and Primary Developer
   duration: 2024 &mdash; Present
   description: PostDAQ is a program I developed to organize and streamline the Cryogenics and Fluid's branch'es data analysis process. Key features of the program include a builtin equation library for common CADR analysis, line data plotting, built in thermometry calibration curve fitting, and advanced syntax for creating lab notes.
 
-- project: <a href="static/Pyquisition">Pyquisition</a>
+- project: <a href="https://projects.nellisconsulting.com/static/htmlPyquisition/index.html">Pyquisition</a>
   role: Founder and Primary Developer
   duration: 2024 &mdash; Present
   # url: "#"
   description: SCOG is a local monthly meetup in Springfield where we share opportunities to volunteer in the community and organize support for families and neighborhoods in need of assistance that the community can provide.
 
-- project: <a href="/static/CADR_Simulator">Continuous Adiabatic Demagnetization Refridgerator Simulator</a>
+- project: <a href="https://projects.nellisconsulting.com/static/htmlCADR/index.html">Continuous Adiabatic Demagnetization Refridgerator Simulator</a>
   role: Founder and Developer
   duration: 2024 &mdash; Present
   # url: "#"
   description: SCOG is a local monthly meetup in Springfield where we share opportunities to volunteer in the community and organize support for families and neighborhoods in need of assistance that the community can provide.
 
-- project: Parallel Computing for Machine Learning 
+- project: <a href="https://projects.nellisconsulting.com/static/CS759.pdf" >Parallel Computing for Machine Learning</a> 
   role: Founder and Developer
   duration: 2024 &mdash; Present
   # url: "#"
   description: This project was created for the CS 759, High Performance Computing Course. A neural network library was built from scratch in cpp and parallelized using OpenMP. The performance of the parallelized neural network was compared to the performance of a single threaded neural network.
 
-- project: Coronavirus Transmission Simulator
+- project: <a href="https://projects.nellisconsulting.com/static/ME459.pdf">Coronavirus Transmission Simulator</a>
   role: Founder and Developer
   duration: 2024 &mdash; Present
   # url: "#"
