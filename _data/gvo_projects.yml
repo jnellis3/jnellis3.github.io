@@ -1,0 +1,16 @@
+- project: <a href="">BoostSync Integration Tool</a>
+  role: Lead developer and maintainer
+  duration: 2024 &mdash; present
+  description: TODO
+
+- project: <a href="https://chromewebstore.google.com/detail/netsuite-query-tool/adfidpigmjbgddddnnhbiolnmfhfjjmm">NetSuite Query Extension</a>
+  role: Developer
+  duration: 2023 &mdash; Present
+  # url: "#"
+  description: This NetSuite Query extension is a Chrome extension that enables developers to execute SQL directly in the browser. Table schemas are dynamically pulled from the account to provide typing suggestions. The extension currently has over 100 daily users. 
+# Springfield Community Outreach Group
+- project: SimplePrompt (AI Integration for NetSuite)
+  role: Founder and Developer
+  duration: 2024 &mdash; Present
+  # url: "#"
+  description: SCOG is a local monthly meetup in Springfield where we share opportunities to volunteer in the community and organize support for families and neighborhoods in need of assistance that the community can provide.

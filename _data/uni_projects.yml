@@ -1,0 +1,11 @@
+- project: <a href="https://projects.nellisconsulting.com/static/CS759.pdf" >Parallel Computing for Machine Learning</a> 
+  role: Founder and Developer
+  duration: 2024 &mdash; Present
+  # url: "#"
+  description: This project was created for the CS 759, High Performance Computing Course. A neural network library was built from scratch in cpp and parallelized using OpenMP. The performance of the parallelized neural network was compared to the performance of a single threaded neural network.
+
+- project: <a href="https://projects.nellisconsulting.com/static/ME459.pdf">Coronavirus Transmission Simulator</a>
+  role: Founder and Developer
+  duration: 2024 &mdash; Present
+  # url: "#"
+  description: This project was created for the ME/CS 459, computing for applications in enineering course. The simulation and GUI were writting in Python. The simulation is used to predict the spread of infectionous disease and the impact of commonly suggested mitigation strategies.
