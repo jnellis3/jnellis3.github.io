@@ -1,7 +1,7 @@
 - project: <a href="https://govirtualoffice.com/services/netsuite-hubspot-integration/">BoostSync Integration Tool</a>
   role: Lead developer and maintainer
   duration: 2024 &mdash; present
-  description: TODO
+  description: The BoostSync Integration Tool is a NetSuite SuiteApplication that provides an interface for syncing data between arbitrary platforms similar to Celigo. The tool has strong developer support for custom transformation and mapping operations.
 
 - project: <a href="https://chromewebstore.google.com/detail/netsuite-query-tool/adfidpigmjbgddddnnhbiolnmfhfjjmm">NetSuite Query Extension</a>
   role: Developer
