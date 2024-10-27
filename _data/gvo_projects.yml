@@ -13,4 +13,4 @@
   role: Founder and Developer
   duration: 2024 &mdash; Present
   # url: "#"
-  description: SimplePrompt is a NetSuite SuiteApplication that provides an interface for creating custom "AI Agents" to perform tasks within NetSuite. The tool is designed with Tool-Use in mind, and is capable of performing a wide range of tasks. Typically, the tool has been used for email automation and data entry tasks. 
+  description: SimplePrompt is a NetSuite SuiteApplication that provides an interface for creating custom "AI Agents" to perform tasks within NetSuite. The application is designed with Tool-Use in mind, and is capable of performing a wide range of tasks. Typically, the tool has been used for email automation and data entry tasks. 
