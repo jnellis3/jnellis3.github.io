@@ -1,0 +1,16 @@
+- project: <a href="https://projects.nellisconsulting.com/static/html/index.html">PostDAQ</a>
+  role: Founder and Primary Developer
+  duration: 2024 &mdash; Present
+  description: PostDAQ is a program I developed to organize and streamline the Cryogenics and Fluid's branch'es data analysis process. Key features of the program include a builtin equation library for common CADR analysis, line data plotting, built in thermometry calibration curve fitting, and advanced syntax for creating lab notes.
+
+- project: <a href="https://projects.nellisconsulting.com/static/htmlPyquisition/index.html">Pyquisition</a>
+  role: Founder and Primary Developer
+  duration: 2024 &mdash; Present
+  # url: "#"
+  description: SCOG is a local monthly meetup in Springfield where we share opportunities to volunteer in the community and organize support for families and neighborhoods in need of assistance that the community can provide.
+
+- project: <a href="https://projects.nellisconsulting.com/static/htmlCADR/index.html">Continuous Adiabatic Demagnetization Refridgerator Simulator</a>
+  role: Founder and Developer
+  duration: 2024 &mdash; Present
+  # url: "#"
+  description: SCOG is a local monthly meetup in Springfield where we share opportunities to volunteer in the community and organize support for families and neighborhoods in need of assistance that the community can provide.
